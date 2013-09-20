@@ -9,10 +9,6 @@ angular.module('kundestyrtApp', ['ng', 'ngRoute', 'ngResource'])
         templateUrl: '/views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/test', {
-        templateUrl: '/views/test.html',
-        controller: 'MainCtrl'
-      })
       .otherwise({
         redirectTo: '/'
       });
