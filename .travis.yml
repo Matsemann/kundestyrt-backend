@@ -2,7 +2,9 @@ language: node_js
 node_js:
   - '0.8'
   - '0.10'
-  - '0.11'
+  #- '0.11'
 before_script:
   - 'npm install -g bower grunt-cli'
   - 'bower install'
+notifications:
+  irc: irc: "chat.freenode.net#kundestyrt-gr8"
