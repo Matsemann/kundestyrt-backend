@@ -7,4 +7,4 @@ before_script:
   - 'npm install -g bower grunt-cli'
   - 'bower install'
 notifications:
-  irc: irc: "chat.freenode.net#kundestyrt-gr8"
+  irc: "chat.freenode.net#kundestyrt-gr8"
