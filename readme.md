@@ -10,3 +10,8 @@ Setup
  * Run `npm install` inside the project folder
  * Run `bower install` inside the same folder
  * Start the server by running `server.sh` or `node server/server.js`
+
+Committing
+----------
+
+ * Before each push to github, allways run `grunt test`.
