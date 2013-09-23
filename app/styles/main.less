@@ -1,1 +1,17 @@
 @import 'bootstrap/bootstrap.less';
+
+@conversationBorder: 1px solid black;
+
+
+.conversation {
+
+    border-collapse: collapse;
+    height: 40px;
+    border-bottom: @conversationBorder;
+    border-left: @conversationBorder;
+    border-right: @conversationBorder;
+
+    &:first-child {
+        border-top: @conversationBorder;
+    }
+}

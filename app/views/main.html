@@ -1,9 +1,7 @@
-<div class="hero-unit">
-  <h1>'Allo, 'Allo!</h1>
-  <p>You now have</p>
-  <ul>
-      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-  </ul>
-  <p>installed.</p>
-  <h3>Enjoy coding! - Yeoman</h3>
+<div class="row">
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <div ng-repeat="conv in conversations" class="conversation">
+            {{conv.topic}}
+        </div>
+    </div>
 </div>
