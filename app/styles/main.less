@@ -1,17 +1,86 @@
 @import 'bootstrap/bootstrap.less';
 
-@conversationBorder: 1px solid black;
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+.conversations {
+    height: 100%;
+}
 
 
 .conversation {
+    height: 51px;
+    clear: both;
+    border-bottom: 1px solid gray;
+    cursor: pointer;
 
-    border-collapse: collapse;
-    height: 40px;
-    border-bottom: @conversationBorder;
-    border-left: @conversationBorder;
-    border-right: @conversationBorder;
+    .image {
+        float: left;
+        width: 50px;
+        height: 50px;
+    }
 
-    &:first-child {
-        border-top: @conversationBorder;
+    .topic {
+        float: left;
+        font-weight: bold;
+        padding-left: 10px;
+    }
+
+    .date {
+        float: left;
+        padding-left: 10px;
+    }
+
+    &:hover {
+        background-color: green;
+    }
+
+    &.selected {
+        background-color: blue;
+    }
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.message {
+    min-height: 51px;
+    clear: both;
+
+    .image {
+        float: left;
+        width: 50px;
+        height: 50px;
+    }
+
+    .content {
+        float: left;
+        padding-left: 10px;
+    }
+
+    .date {
+        float: left;
+        padding-left: 10px;
+    }
+
+    &.self {
+        .image {
+            float: right;
+        }
+
+        .content {
+            float: right;
+            padding-left: inherit;
+            padding-right: 10px;
+        }
+
+        .date {
+            float: right;
+            padding-left: inherit;
+            padding-right: 10px;
+        }
     }
 }
