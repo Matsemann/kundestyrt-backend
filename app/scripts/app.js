@@ -23,7 +23,7 @@ angular.module('kundestyrtApp', ['ng', 'ngRoute', 'ngResource'])
         return $location.path().substring(0, start.length) === start;
       }
 
-      return location == $location.path();
+      return location === $location.path();
     };
 
     $rootScope.$goTo = function(location) {

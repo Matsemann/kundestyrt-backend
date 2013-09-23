@@ -16,7 +16,8 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).to.equal(3);
+  it('should attach a list of conversations', function () {
+    expect(scope.conversations).to.be.instanceof(Array)
+      .and.have.length.above(0);
   });
 });
