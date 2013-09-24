@@ -6,60 +6,120 @@
             _id: 1,
             topic: 'Møte i dag?',
             lastDate: '2013-09-23T08:43Z',
-            unread: true
+            unread: true,
+            type: 0,
+            image: '5a87311ea4c9950793397f01eb208830',
+            messages: [
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-23T08:43Z',
+                    content: 'Dette er en test-melding, bare for å vise frem liksom :)',
+                    self: true
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-22T09:53Z',
+                    content: 'Dette er et svar, også bare for å teste litt.',
+                    self: false
+                }
+            ]
         },
         {
             _id: 2,
             topic: 'Lunch mandag',
             lastDate: '2013-09-20T10:42Z',
-            unread: false
+            unread: false,
+            type: 0,
+            image: '5a87311ea4c9950793397f01eb208830',
+            messages: [
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-23T08:43Z',
+                    content: 'Dette er en test-melding, den er i sammtale 2',
+                    self: true
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-22T09:53Z',
+                    content: 'Dette er et svar i sammtale 2, også bare for å teste litt.',
+                    self: false
+                }
+            ]
+        },
+        {
+            _id: 3,
+            topic: 'Klager',
+            lastDate: '2013-08-20T10:42Z',
+            unread: true,
+            type: 1,
+            image: '5a87311ea4c9950793397f01eb208830',
+            inquiry: 'Noen klager ang. arbeidstider?',
+            conversations: [
+                {
+                    recipent: 'Mats',
+                    unread: true,
+                    lastDate: '2013-08-20T10:42Z',
+                    messages: [
+                        {
+                            sender: 'Aleksander Heintz',
+                            date: '2013-09-23T08:43Z',
+                            content: 'Dette er en test-melding, den er i sammtale 1',
+                            self: true
+                        },
+                        {
+                            sender: 'Aleksander Heintz',
+                            date: '2013-09-22T09:53Z',
+                            content: 'Dette er et svar i sammtale 1, også bare for å teste litt.',
+                            self: false
+                        }
+                    ]
+                },
+                {
+                    recipent: 'Arne',
+                    unread: true,
+                    lastDate: '2013-08-20T10:42Z',
+                    messages: [
+                        {
+                            sender: 'Aleksander Heintz',
+                            date: '2013-09-23T08:43Z',
+                            content: 'Dette er en test-melding, den er i sammtale 2',
+                            self: true
+                        },
+                        {
+                            sender: 'Aleksander Heintz',
+                            date: '2013-09-22T09:53Z',
+                            content: 'Dette er et svar i sammtale 2, også bare for å teste litt.',
+                            self: false
+                        }
+                    ]
+                }
+            ]
         }
     ];
 
-    var messages = {
-        1: [
-            {
-                _id: 1,
-                sender: 'Aleksander Heintz',
-                date: '2013-09-23T08:43Z',
-                content: 'Dette er en test-melding, bare for å vise frem liksom :)',
-                self: true
-            },
-            {
-                _id: 1,
-                sender: 'Aleksander Heintz',
-                date: '2013-09-22T09:53Z',
-                content: 'Dette er et svar, også bare for å teste litt.',
-                self: false
-            }
-        ],
-
-        2: [
-            {
-                _id: 3,
-                sender: 'Aleksander Heintz',
-                date: '2013-09-23T08:43Z',
-                content: 'Dette er en test-melding, den er i sammtale 2',
-                self: true
-            },
-            {
-                _id: 4,
-                sender: 'Aleksander Heintz',
-                date: '2013-09-22T09:53Z',
-                content: 'Dette er et svar i sammtale 2, også bare for å teste litt.',
-                self: false
-            }
-        ]
-    };
-
     angular.module('kundestyrtApp').factory('Conversation', [function() {
         return {
-            get: function(id) {
+            get: function(id, sub) {
                 if(id === undefined) {
                     return conversations;
-                } else {
-                    return messages[id];
                 }
+
+                var conversation;
+
+                for(var i = 0, l = conversations.length; i < l; i++) {
+                    if(conversations[i]._id.toString() === id) {
+                        conversation = conversations[i];
+                        break;
+                    }
+                }
+
+                if(sub === undefined) {
+                    return conversation;
+                } else if(conversation) {
+                    return conversation.conversations[sub];
+                }
+
+                return null;
             }
         };
     }]);

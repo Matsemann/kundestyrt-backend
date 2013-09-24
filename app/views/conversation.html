@@ -1,0 +1,9 @@
+<div ng-repeat="msg in conversation.messages" class="message well" ng-class="{self: msg.self}">
+    <div class="image">
+        <img ng-src="https://en.gravatar.com/avatar/{{msg.image}}?s=50&r=g" alt="image" />
+    </div>
+    <div class="content">{{msg.content}}</div>
+    <br />
+    <div class="date">{{msg.date | date}}</div>
+    <br style="clear: both;" />
+</div>

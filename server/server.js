@@ -194,7 +194,10 @@ server.get(/^(?!api\/)/, function(request, response, next) {
     console.log('Request for: ' + request.url);
     var file = root + request.url;
     fs.stat(file, function(err, stats) {
-        if(err || !stats.isFile()) {
+        if((err || !stats.isFile()) && !(
+            request.url.substring(0, '/views'.length) === '/views' ||
+            request.url.substring(0, '/styles'.length) === '/styles' ||
+            request.url.substring(0, '/scripts'.length) === '/scripts')) {
             file = root + '/index.html';
         }
 

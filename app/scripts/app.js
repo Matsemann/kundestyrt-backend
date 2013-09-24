@@ -11,7 +11,11 @@ angular.module('kundestyrtApp', ['ng', 'ngRoute', 'ngResource'])
       })
       .when('/conversation/:id', {
         templateUrl: '/views/main.html',
-        controller: 'ConvCtrl'
+        controller: 'MainCtrl'
+      })
+      .when('/conversation/:id/:sub', {
+        templateUrl: '/views/main.html',
+        controller: 'MainCtrl'
       })
       .otherwise({
         redirectTo: '/'
