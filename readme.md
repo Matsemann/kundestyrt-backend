@@ -5,7 +5,7 @@ Setup
 -----
 
  * Install [NodeJS](http://nodejs.org/)
- * Run `npm install -g bower grunt`
+ * Run `npm install -g bower grunt-cli`
  * Clone the project
  * Run `npm install` inside the project folder
  * Run `bower install` inside the same folder
