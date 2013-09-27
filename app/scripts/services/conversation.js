@@ -120,6 +120,88 @@
                 }
 
                 return null;
+            },
+
+            send: function(id, sub, msg) {
+                if(id === undefined) {
+                    return;
+                }
+
+                var conversation;
+                for(var i = 0, l = conversations.length; i < l; i++) {
+                    if(conversations[i]._id.toString() === id) {
+                        conversation = conversations[i];
+                        break;
+                    }
+                }
+
+                if(sub === -1) {
+                    if(conversation.type !== 0) {
+                        return;
+                    }
+
+                    conversation.messages.push({
+                        sender: 'Aleksander Heintz',
+                        date: new Date().toISOString(),
+                        content: msg,
+                        self: true
+                    });
+                } else {
+                    var subConv = conversation.conversations[sub];
+                    subConv.messages.push({
+                        sender: 'Aleksander Heintz',
+                        date: new Date().toISOString(),
+                        content: msg,
+                        self: true
+                    });
+                }
+            },
+
+            create: function(isInquiry, recipents, topic, inquiry) {
+                var time = new Date().toISOString();
+
+                var newConv;
+
+                if(isInquiry) {
+                    newConv = {
+                        _id: conversations.length + 1,
+                        topic: topic,
+                        lastDate: time,
+                        unread: false,
+                        type: 1,
+                        image: '',
+                        inquiry: inquiry,
+                        conversations: []
+                    };
+
+                    for(var i = 0, l = recipents.length; i < l; i++) {
+                        newConv.conversations.push({
+                            recipent: recipents[i].recipent.name,
+                            unread: false,
+                            lastDate: time,
+                            messages: [
+                                {
+                                    sender: 'Aleksander Heintz',
+                                    date: time,
+                                    content: inquiry,
+                                    self: true
+                                }
+                            ]
+                        });
+                    }
+                } else {
+                    newConv = {
+                        _id: conversations.length + 1,
+                        topic: topic,
+                        lastDate: time,
+                        unread: false,
+                        type: 0,
+                        image: '5a87311ea4c9950793397f01eb208830',
+                        messages: []
+                    };
+                }
+
+                conversations.unshift(newConv);
             }
         };
     }]);

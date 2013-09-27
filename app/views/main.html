@@ -20,7 +20,7 @@
         <div class="input-group" style="margin-top: 20px;">
         <input type="text" class="form-control" ng-model="newMsg" />
         <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Send</button>
+            <button class="btn btn-default" type="button" ng-click="send(newMsg); newMsg = '';">Send</button>
         </span>
     </div>
 </div>

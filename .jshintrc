@@ -17,6 +17,7 @@
   "strict": true,
   "trailing": true,
   "smarttabs": true,
+  "laxbreak": true,
   "globals": {
     "angular": false
   }

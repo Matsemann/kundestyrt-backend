@@ -1,0 +1,79 @@
+<div class="new-conv row">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+            <div class="form-group">
+                <label for="inputTopic">Topic</label>
+                <div class="input-group">
+                    <input type="text" class="form-control"
+                     id="inputTopic" placeholder="Enter topic" ng-model="topic" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-disabled="!canSend" ng-click="send()">Send!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="recipents.length &gt; 1">
+        <div class="col-md-1 col-lg-1 col-xs-12 col-sm-2">
+            <div class="checkbox">
+                <label><input type="checkbox" ng-model="inquiry.enable" /> Inquiry?</label>
+            </div>
+        </div>
+        <div class="col-md-11 col-lg-11 col-xs-12 col-sm-10" ng-if="inquiry.enable">
+            <input type="text" class="form-control"
+             id="inputInquiry" placeholder="Enter inquiry" ng-model="inquiry.value" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="recievers well">
+            <div class="form-group">
+                <label for="inputFilter">Filter</label> 
+                <input type="text" class="form-control" id="inputFilter" placeholder="Filter"
+                 ng-model="filter" />
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-6 hidden-xs hidden-sm">
+                    <h5>Users</h5>
+
+                    <div class="user" ng-repeat="user in filteredUsers = (users | filter:filter | orderBy:'name')"
+                     ng-click="$selected = toggle(user, false, $selected)" ng-class="{selected: $selected}" ng-init="$selected = false">
+                        <div class="image">
+                            <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=g"
+                             alt="image" />
+                        </div>
+
+                        <div class="name">
+                            {{user.name}}
+                        </div>
+                    </div>
+
+                    <div class="no-users" ng-if="!filteredUsers.length">
+                        No users
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-6 hidden-xs hidden-sm">
+                    <h5>Groups</h5>
+
+                    <div class="group" ng-repeat="group in filteredGroups = (groups | filter:filter | orderBy:'name')"
+                     ng-click="toggle(group, true)" ng-class="{selected: group.$selected}">
+                        <div class="image">
+                            <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=g"
+                             alt="image" />
+                        </div>
+
+                        <div class="name">
+                            {{group.name}}
+                        </div>
+                    </div>
+
+                    <div class="no-groups" ng-if="!filteredGroups.length">
+                        No groups
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

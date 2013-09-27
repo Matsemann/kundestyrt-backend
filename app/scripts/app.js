@@ -9,6 +9,10 @@ angular.module('kundestyrtApp', ['ng', 'ngRoute', 'ngResource'])
         templateUrl: '/views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/conversation/new', {
+        templateUrl: '/views/newConv.html',
+        controller: 'NewConvCtrl'
+      })
       .when('/conversation/:id', {
         templateUrl: '/views/main.html',
         controller: 'MainCtrl'
@@ -34,3 +38,26 @@ angular.module('kundestyrtApp', ['ng', 'ngRoute', 'ngResource'])
       $location.path(location);
     };
   }]);
+
+if(!Date.prototype.toISOString) {
+  (function() {
+    function pad(number) {
+      var r = String(number);
+      if(r.length === 1) {
+        r = '0' + r;
+      }
+      return r;
+    }
+
+    Date.prototype.toISOString = function() {
+      return this.getUTCFullYear()
+        + '-' + pad( this.getUTCMonth() + 1 )
+        + '-' + pad( this.getUTCDate() )
+        + 'T' + pad( this.getUTCHours() )
+        + ':' + pad( this.getUTCMinutes() )
+        + ':' + pad( this.getUTCSeconds() )
+        + '.' + String( (this.getUTCMilliseconds()/1000).toFixed(3) ).slice( 2, 5 )
+        + 'Z';
+    };
+  })();
+}

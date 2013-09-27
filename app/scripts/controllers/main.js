@@ -31,4 +31,8 @@ angular.module('kundestyrtApp')
     }, function(value) {
         $scope.view = value;
     });
+
+    $scope.send = function(msg) {
+        Conversation.send($routeParams.id, parseInt($routeParams.sub || '0', 10) - 1, msg);
+    };
   }]);
