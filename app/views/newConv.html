@@ -45,7 +45,7 @@
                             <div class="user" ng-repeat="user in filteredUsers = (users | filter:filter | orderBy:'name')"
                              ng-click="user.$selected = toggle(user, false, user.$selected)" ng-class="{selected: user.$selected}">
                                 <div class="image">
-                                    <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=g"
+                                    <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
                                      alt="image" />
                                 </div>
 
@@ -67,7 +67,7 @@
                             <div class="group" ng-repeat="group in filteredGroups = (groups | filter:filter | orderBy:'name')"
                              ng-click="group.$selected = toggle(group, true, group.$selected)" ng-class="{selected: group.$selected}">
                                 <div class="image">
-                                    <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=g"
+                                    <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=pg"
                                      alt="image" />
                                 </div>
 
@@ -89,8 +89,8 @@
     <div class="hidden-md hidden-lg col-xs-12 col-sm-12">
         <div class="receivers well">
             <ul class="nav nav-tabs">
-                <li><a href="#users">Users</a></li>
-                <li><a href="#groups">Groups</a></li>
+                <li><a href="#users" data-toggle="tab">Users</a></li>
+                <li><a href="#groups" data-toggle="tab">Groups</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane" id="users">

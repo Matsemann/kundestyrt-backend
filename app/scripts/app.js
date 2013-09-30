@@ -21,6 +21,14 @@ angular.module('kundestyrtApp', ['ng', 'ngRoute', 'ngResource'])
         templateUrl: '/views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/notes', {
+        templateUrl: '/views/notes.html',
+        controller: 'NoteCtrl'
+      })
+      .when('/notes/:id', {
+        templateUrl: '/views/notes.html',
+        controller: 'NoteCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
