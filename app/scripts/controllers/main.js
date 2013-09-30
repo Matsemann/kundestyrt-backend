@@ -35,4 +35,14 @@ angular.module('kundestyrtApp')
     $scope.send = function(msg) {
         Conversation.send($routeParams.id, parseInt($routeParams.sub || '0', 10) - 1, msg);
     };
+
+    $scope.canSend = function() {
+        if(!$scope.conversation)
+            return false;
+
+        if($scope.conversation.type === 1 && !$scope.subConversation)
+            return false;
+
+        return true;
+    };
   }]);
