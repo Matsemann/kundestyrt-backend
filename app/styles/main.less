@@ -1,5 +1,9 @@
 @import 'bootstrap/bootstrap.less';
 
+@conversation-hover-bg: @nav-link-hover-bg;
+@conversation-active-bg: @brand-primary;
+@conversation-active-hover-bg: @conversation-active-bg;
+
 html, body {
     width: 100%;
     height: 100%;
@@ -34,11 +38,15 @@ html, body {
     }
 
     &:hover {
-        background-color: green;
+        background-color: @conversation-hover-bg;
     }
 
     &.selected {
-        background-color: blue;
+        background-color: @conversation-active-bg;
+
+        &:hover {
+            background-color: @conversation-active-hover-bg;
+        }
     }
 
     &:last-child {
@@ -86,12 +94,20 @@ html, body {
 }
 
 .new-conv {
-    .selected {
-        background-color: blue;
-    }
-
     .user, .group {
         cursor: pointer;
+
+        &.selected {
+            background-color: @conversation-active-bg;
+
+            &:hover {
+                background-color: @conversation-active-hover-bg;
+            }
+        }
+
+        &:hover {
+            background-color: @conversation-hover-bg;
+        }
     }
 }
 

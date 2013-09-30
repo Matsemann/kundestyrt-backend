@@ -8,6 +8,14 @@ angular.module('kundestyrtApp')
         value: ''
     };
 
+    function clearSelections() {
+        for(var i = 0, l = recipents.length; i < l; i++) {
+            delete recipents[i].recipent.$selected;
+        }
+
+        recipents.splice(0, recipents.length);
+    }
+
     var recipents = $scope.recipents = [];
 
     $scope.toggle = function(recipent, isGroup, oldValue) {
@@ -19,7 +27,7 @@ angular.module('kundestyrtApp')
             });
         } else {
             for(var i = 0, l = recipents.length; i < l; i++) {
-                if(recipents[i] === recipent) {
+                if(recipents[i].recipent === recipent) {
                     recipents.splice(i, 1);
                     return;
                 }
@@ -31,6 +39,8 @@ angular.module('kundestyrtApp')
 
     $scope.send = function() {
         if(!$scope.canSend) { return; }
+
+        clearSelections();
 
         Conversation.create(recipents.length > 1 && inquiry.enable, recipents, $scope.topic, inquiry.value);
         $location.path('/');

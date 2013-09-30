@@ -14,31 +14,88 @@
         </div>
     </div>
 
-    <div class="row" ng-if="recipents.length &gt; 1">
+    <div class="row">
         <div class="col-md-1 col-lg-1 col-xs-12 col-sm-2">
             <div class="checkbox">
-                <label><input type="checkbox" ng-model="inquiry.enable" /> Inquiry?</label>
+                <label><input type="checkbox" ng-model="inquiry.enable" ng-disabled="!(recipents.length &gt; 1)" /> Inquiry?</label>
             </div>
         </div>
-        <div class="col-md-11 col-lg-11 col-xs-12 col-sm-10" ng-if="inquiry.enable">
+        <div class="col-md-11 col-lg-11 col-xs-12 col-sm-10">
             <input type="text" class="form-control"
-             id="inputInquiry" placeholder="Enter inquiry" ng-model="inquiry.value" />
+             id="inputInquiry" placeholder="Enter inquiry" ng-model="inquiry.value" ng-disabled="!(recipents.length &gt; 1) || !inquiry.enable" />
         </div>
     </div>
-    <div class="row">
-        <div class="recievers well">
-            <div class="form-group">
-                <label for="inputFilter">Filter</label> 
-                <input type="text" class="form-control" id="inputFilter" placeholder="Filter"
-                 ng-model="filter" />
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-12 col-lg-12 hidden-xs hidden-sm">
+            <div class="recievers well">
+                <h3 style="margin-top: 0px;">Recipients</h3>
+
+                <div class="form-group">
+                    <label for="inputFilter">Filter</label> 
+                    <input type="text" class="form-control" id="inputFilter" placeholder="Filter"
+                     ng-model="filter" />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 hidden-xs hidden-sm">
+                        <fieldset>
+                            <legend>Users</legend>
+
+                            <div class="user" ng-repeat="user in filteredUsers = (users | filter:filter | orderBy:'name')"
+                             ng-click="user.$selected = toggle(user, false, user.$selected)" ng-class="{selected: user.$selected}">
+                                <div class="image">
+                                    <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=g"
+                                     alt="image" />
+                                </div>
+
+                                <div class="name">
+                                    {{user.name}}
+                                </div>
+                            </div>
+
+                            <div class="no-users" ng-if="!filteredUsers.length">
+                                No users
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6 col-lg-6 hidden-xs hidden-sm">
+                        <fieldset>
+                            <legend>Groups</legend>
+
+                            <div class="group" ng-repeat="group in filteredGroups = (groups | filter:filter | orderBy:'name')"
+                             ng-click="group.$selected = toggle(group, true, group.$selected)" ng-class="{selected: group.$selected}">
+                                <div class="image">
+                                    <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=g"
+                                     alt="image" />
+                                </div>
+
+                                <div class="name">
+                                    {{group.name}}
+                                </div>
+                            </div>
+
+                            <div class="no-groups" ng-if="!filteredGroups.length">
+                                No groups
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="col-md-6 col-lg-6 hidden-xs hidden-sm">
-                    <h5>Users</h5>
-
-                    <div class="user" ng-repeat="user in filteredUsers = (users | filter:filter | orderBy:'name')"
-                     ng-click="$selected = toggle(user, false, $selected)" ng-class="{selected: $selected}" ng-init="$selected = false">
+    <div class="hidden-md hidden-lg col-xs-12 col-sm-12">
+        <div class="receivers well">
+            <ul class="nav nav-tabs">
+                <li><a href="#users">Users</a></li>
+                <li><a href="#groups">Groups</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane" id="users">
+                    <div class="user" ng-repeat="user in filteredUsers"
+                     ng-click="user.$selected = toggle(user, false, user.$selected)" ng-class="{selected: user.$selected}">
                         <div class="image">
                             <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=g"
                              alt="image" />
@@ -53,12 +110,9 @@
                         No users
                     </div>
                 </div>
-
-                <div class="col-md-6 col-lg-6 hidden-xs hidden-sm">
-                    <h5>Groups</h5>
-
-                    <div class="group" ng-repeat="group in filteredGroups = (groups | filter:filter | orderBy:'name')"
-                     ng-click="toggle(group, true)" ng-class="{selected: group.$selected}">
+                <div class="tab-pane" id="groups">
+                    <div class="group" ng-repeat="group in filteredGroups"
+                     ng-click="group.$selected = toggle(group, true, group.$selected)" ng-class="{selected: group.$selected}">
                         <div class="image">
                             <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=g"
                              alt="image" />
