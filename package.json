@@ -55,6 +55,8 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+	"preinstall": "npm install -g grunt-cli bower",
+	"install": "bower install"
   }
 }
