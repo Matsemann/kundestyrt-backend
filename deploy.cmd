@@ -94,7 +94,10 @@ call :SelectNodeVersion
 :: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd %DEPLOYMENT_TARGET%
+  call !NPM_CMD! install -g grunt-cli bower
   call !NPM_CMD! install --production
+  for /f %%i in ('!NPM_CMD! config get prefix') do set PREFIX=%%i
+  call "!PREFIX!\bower install"
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
