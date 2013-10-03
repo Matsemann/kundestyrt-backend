@@ -46,6 +46,26 @@ IF NOT DEFINED KUDU_SYNC_CMD (
   :: Locally just running "kuduSync" would also work
   SET KUDU_SYNC_CMD=node "%appdata%\npm\node_modules\kuduSync\bin\kuduSync"
 )
+
+IF NOT DEFINED BOWER_CMD (
+  :: Install bower
+  echo Installing bower
+  call npm install bower -g --silent
+  IF !ERRORLEVEL! NEQ 0 goto error
+
+  :: Locally just running "bower" would also work
+  SET BOWER_CMD=node "%appdata%\npm\node_modules\bower\bin\bower"
+)
+
+IF NOT DEFINED GRUNT_CMD (
+  :: Install grunt
+  echo Installing grunt-cli
+  call npm install grunt-cli -g --silent
+  IF !ERRORLEVEL! NEQ 0 goto error
+
+  :: Locally just running "grunt" would also work
+  SET GRUNT_CMD=node "%appdata%\npm\node_modules\grunt-cli\bin\grunt"
+)
 goto Deployment
 
 :: Utility Functions
@@ -94,10 +114,8 @@ call :SelectNodeVersion
 :: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd %DEPLOYMENT_TARGET%
-  call !NPM_CMD! install -g grunt-cli bower
   call !NPM_CMD! install --production
-  for /f %%i in ('!NPM_CMD! config get prefix') do set PREFIX=%%i
-  call ""!PREFIX!\bower"" install
+  call %BOWER_CMD% install --production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
