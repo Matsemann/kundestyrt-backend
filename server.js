@@ -190,7 +190,7 @@ function serveLess(file, request, response, next) {
     });
 }
 
-server.get(/^(?!api\/)/, function(request, response, next) {
+server.get(/^(?!\/api\/)/, function(request, response, next) {
     console.log('Request for: ' + request.url);
     var file = root + request.url;
     fs.stat(file, function(err, stats) {
@@ -217,6 +217,22 @@ server.get(/^(?!api\/)/, function(request, response, next) {
             });
         } else {
             serveNormal(file, request, response, next);
+        }
+    });
+});
+
+server.get('/api/db', function(request, response, next) {
+    var username = "secret";
+    var password = "secret";
+    var dbName   = "defero.cloudant.com/db";
+    var dbString = 'https://' + username + ":" + password + "@" + dbName;
+
+    var db = require('nano')(dbString);
+    db.get("mats", function(err, body) {
+        if (err) {
+            response.send(err);
+        } else {
+            response.send(body);
         }
     });
 });
