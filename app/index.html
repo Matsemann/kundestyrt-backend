@@ -16,44 +16,46 @@
         <!-- endbuild -->
 </head>
   <body ng-app="kundestyrtApp">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+    <div class="wrap">
+      <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
 
-    <!--[if lt IE 9]>
-      <script src="/bower_components/es5-shim/es5-shim.js"></script>
-      <script src="/bower_components/json3/lib/json3.min.js"></script>
-    <![endif]-->
+      <!--[if lt IE 9]>
+        <script src="/bower_components/es5-shim/es5-shim.js"></script>
+        <script src="/bower_components/json3/lib/json3.min.js"></script>
+      <![endif]-->
 
-    <!-- navbar -->
-    <nav class="navbar navbar-default" role="navigation">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">Defero</a>
-      </div>
+      <!-- navbar -->
+      <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Defero</a>
+        </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-          <li ng-class="{active: $isActive('/') || $isActive('/conversation/%')}"><a href="/">Conversations</a></li>
-          <li ng-class="{active: $isActive('/notes')}"><a href="/notes">Notes</a></li>
-        </ul>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li ng-class="{active: $isActive('/') || $isActive('/conversation/%')}"><a href="/">Conversations</a></li>
+            <li ng-class="{active: $isActive('/notes')}"><a href="/notes">Notes</a></li>
+          </ul>
 
-        <ul class="nav navbar-nav pull-right">
-          <li><a href="/conversation/new">Compose</a></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </nav>
+          <ul class="nav navbar-nav pull-right">
+            <li><a href="/conversation/new">Compose</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
 
-    <!-- Add your site or application content here -->
-    <div class="container">
-      <div ng-fragments>
+      <!-- Add your site or application content here -->
+      <div class="container main">
+        <div ng-fragments>
+        </div>
       </div>
     </div>
 
@@ -70,39 +72,25 @@
 
     <script src="/bower_components/angular/angular.js"></script>
 
-        <!-- build:js /scripts/jquery.js -->
-        <script src="/bower_components/jquery/jquery.js"></script>
-        <!-- endbuild -->
+    <!-- build:js /scripts/jquery.js -->
+    <script src="/bower_components/jquery/jquery.js"></script>
+    <!-- endbuild -->
 
-        <!-- build:js /scripts/modules.js -->
-        <script src="/bower_components/angular-resource/angular-resource.js"></script>
-        <!-- endbuild -->
+    <!-- build:js /scripts/modules.js -->
+    <script src="/bower_components/angular-resource/angular-resource.js"></script>
+    <!-- endbuild -->
 
-        <!-- build:js /scripts/lib/bootstrap.js -->
-        <script src="/scripts/lib/bootstrap/affix.js"></script>
-        <script src="/scripts/lib/bootstrap/alert.js"></script>
-        <script src="/scripts/lib/bootstrap/button.js"></script>
-        <script src="/scripts/lib/bootstrap/carousel.js"></script>
-        <script src="/scripts/lib/bootstrap/collapse.js"></script>
-        <script src="/scripts/lib/bootstrap/dropdown.js"></script>
-        <script src="/scripts/lib/bootstrap/modal.js"></script>
-        <script src="/scripts/lib/bootstrap/scrollspy.js"></script>
-        <script src="/scripts/lib/bootstrap/tab.js"></script>
-        <script src="/scripts/lib/bootstrap/tooltip.js"></script>
-        <script src="/scripts/lib/bootstrap/transition.js"></script>
-        <script src="/scripts/lib/bootstrap/popover.js"></script>
-        <!-- endbuild -->
-
-        <!-- build:js /scripts/scripts.js -->
-        <script src="/scripts/app.js"></script>
-        <script src="/scripts/controllers/conversation/main.js"></script>
-        <script src="/scripts/controllers/conversation/list.js"></script>
-        <script src="/scripts/controllers/notes.js"></script>
-        <script src="/scripts/controllers/newConv.js"></script>
-        <script src="/scripts/services/conversation.js"></script>
-        <script src="/scripts/services/notes.js"></script>
-        <script src="/scripts/services/contacts.js"></script>
-        <script src="/scripts/modules/fragmentRoute/fragmentRoute.js"></script>
-        <!-- endbuild -->
+    <!-- build:js /scripts/scripts.js -->
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/controllers/conversation/main.js"></script>
+    <script src="/scripts/controllers/conversation/list.js"></script>
+    <script src="/scripts/controllers/conversation/inquiryMessages.js"></script>
+    <script src="/scripts/controllers/notes.js"></script>
+    <script src="/scripts/controllers/newConv.js"></script>
+    <script src="/scripts/services/conversation.js"></script>
+    <script src="/scripts/services/notes.js"></script>
+    <script src="/scripts/services/contacts.js"></script>
+    <script src="/scripts/modules/fragmentRoute/fragmentRoute.js"></script>
+    <!-- endbuild -->
 </body>
 </html>

@@ -1,11 +1,10 @@
-<legend>{{conversation.topic}}</legend>
+<legend class="main-fragment-only">{{conversation.topic}}</legend>
 
-<div ng-repeat="msg in conversation.messages" class="message well" ng-class="{self: msg.self}">
-    <div class="image">
-        <img ng-src="https://en.gravatar.com/avatar/{{msg.image}}?s=50&r=g" alt="image" />
+<div ng-switch="conversation.type">
+    <div ng-switch-when="0">
+        <div ng-include="'/views/conversation/messages.html'"></div>
     </div>
-    <div class="content">{{msg.content}}</div>
-    <br />
-    <div class="date">{{msg.date | date}}</div>
-    <br style="clear: both;" />
+    <div ng-switch-when="1">
+        <div ng-include="'/views/conversation/inquiry.html'"></div>
+    </div>
 </div>

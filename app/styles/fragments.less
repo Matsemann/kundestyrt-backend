@@ -2,7 +2,7 @@
     .make-row();
     overflow-x: auto;
 
-    .fragment {
+    > .fragment {
         display: none;
         position: relative;
         float: left;
@@ -20,18 +20,35 @@
 }
 
 @media (min-width: @screen-tablet) {
-    .fragments .fragment {
+    .fragments > .fragment {
+        &:last-child {
+            width: percentage((8 / @grid-columns));
+        }
+
+        &:nth-last-child(2) {
+            display: block;
+            width: percentage((4 / @grid-columns));
+            border-right: 1px solid #eee;
+
+            .main-fragment-only {
+                display: none;
+            }
+        }
+
+        &:only-child {
+            width: 100%;
+        }
+    }
+}
+
+@media (min-width: @screen-desktop) {
+    .fragments > .fragment {
         &:last-child {
             width: percentage((9 / @grid-columns));
         }
 
         &:nth-last-child(2) {
-            display: block;
             width: percentage((3 / @grid-columns));
-        }
-
-        &:only-child {
-            width: 100%;
         }
     }
 }

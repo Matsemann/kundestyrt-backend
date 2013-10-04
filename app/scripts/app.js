@@ -24,6 +24,13 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           conversation: serviceResolve('Conversation', 'get')
         }
+      },
+      inquiryMessages: {
+        controller: 'InquiryMessagesCtrl',
+        templateUrl: '/views/conversation/messages.html',
+        resolve: {
+          conversation: serviceResolve('Conversation', 'get')
+        }
       }
     };
 
@@ -42,8 +49,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         fragments: [f.conversationList, f.conversation]
       })
       .when('/conversation/:id/:sub', {
-        templateUrl: '/views/main.html',
-        controller: 'MainCtrl'
+        fragments: [f.conversationList, f.conversation, f.inquiryMessages]
       })
       .when('/notes', {
         templateUrl: '/views/notes.html',

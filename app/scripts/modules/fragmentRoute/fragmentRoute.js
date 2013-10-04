@@ -1,3 +1,5 @@
+/* jshint -W026 */
+/* jshint -W098 */
 /**
  * @license AngularJS v1.2.0-rc.2
  * (c) 2010-2012 Google, Inc. http://angularjs.org
@@ -35,8 +37,7 @@ function inherit(parent, extra) {
  *
  */
 
-var ngRouteModule = angular.module('fgmt', ['ng']).
-                        provider('$route', $RouteProvider);
+var ngRouteModule = angular.module('fgmt', ['ng']);
 
 /**
  * @ngdoc object
@@ -156,7 +157,7 @@ function $RouteProvider(){
 
     // create redirection for trailing slashes
     if (path) {
-      var redirectPath = (path[path.length-1] == '/')
+      var redirectPath = (path[path.length-1] === '/')
             ? path.substr(0, path.length-1)
             : path +'/';
 
@@ -454,15 +455,15 @@ function $RouteProvider(){
       var keys = route.keys,
           params = {};
 
-      if (!route.regexp) return null;
+      if (!route.regexp) { return null; }
 
       var m = route.regexp.exec(on);
-      if (!m) return null;
+      if (!m) { return null; }
 
       for (var i = 1, len = m.length; i < len; ++i) {
         var key = keys[i - 1];
 
-        var val = 'string' == typeof m[i]
+        var val = 'string' === typeof m[i]
               ? decodeURIComponent(m[i])
               : m[i];
 
@@ -528,7 +529,7 @@ function $RouteProvider(){
                   }
                 }
                 if (isDefined(template)) {
-                  locals['$template'] = template;
+                  locals.$template = template;
                 }
                 fragments.push($q.all(locals));
               });
@@ -536,7 +537,7 @@ function $RouteProvider(){
             }
           }).
           then(function(fragments) {
-            if (next == $route.current) {
+            if (next === $route.current) {
               if (next) {
                 next.locals = fragments;
                 copy(next.params, $routeParams);
@@ -544,7 +545,7 @@ function $RouteProvider(){
               $rootScope.$broadcast('$routeChangeSuccess', next, last);
             }
           }, function(error) {
-            if (next == $route.current) {
+            if (next === $route.current) {
               $rootScope.$broadcast('$routeChangeError', next, last, error);
             }
           });
@@ -635,8 +636,7 @@ function $RouteProvider(){
   }];
 }
 
-ngRouteModule.provider('$routeParams', $RouteParamsProvider);
-
+ngRouteModule.provider('$route', $RouteProvider);
 
 /**
  * @ngdoc object
@@ -674,8 +674,8 @@ ngRouteModule.provider('$routeParams', $RouteParamsProvider);
 function $RouteParamsProvider() {
   this.$get = function() { return {}; };
 }
+ngRouteModule.provider('$routeParams', $RouteParamsProvider);
 
-ngRouteModule.directive('ngFragments', ngViewFactory);
 
 /**
  * @ngdoc directive
@@ -877,9 +877,10 @@ function ngViewFactory(   $route,   $anchorScroll,   $compile,   $controller,   
         function update() {
           var fLocals = $route.current && $route.current.locals,
               fragments = $route.current && $route.current.fragments;
+          var i, l;
 
           if (fLocals) {
-            if(fLocals.length !== fragments.length) throw new Error('Huh?');
+            if(fLocals.length !== fragments.length) { throw new Error('Huh?'); }
 
             forEach(currentFragments, function(fragment) {
               fragment.scope.$destroy();
@@ -887,13 +888,13 @@ function ngViewFactory(   $route,   $anchorScroll,   $compile,   $controller,   
             });
 
             if (currentFragments.length > fragments.length) {
-              for (var i = fragments.length, l = currentFragments.length; i < l; i++) {
+              for (i = fragments.length, l = currentFragments.length; i < l; i++) {
                 cleanupFragment(currentFragments[i]);
               }
               currentFragments.splice(fragments.length, currentFragments.length - fragments.length);
             }
 
-            for (var i = 0, l = fragments.length; i < l; i++) {
+            for (i = 0, l = fragments.length; i < l; i++) {
               var fragment = fragments[i],
                   locals = fLocals[i],
                   stored = currentFragments.length > i && currentFragments[i],
@@ -910,7 +911,7 @@ function ngViewFactory(   $route,   $anchorScroll,   $compile,   $controller,   
               }
 
               stored.element.html(locals.$template);
-              if(isNew) $animate.enter(stored.element, $element);
+              if(isNew) { $animate.enter(stored.element, $element); }
 
               var link = $compile(stored.element.contents());
               stored.scope = newScope;
@@ -936,10 +937,10 @@ function ngViewFactory(   $route,   $anchorScroll,   $compile,   $controller,   
             currentFragments = [];
           }
         }
-      }
+      };
     }
   };
 }
-
+ngRouteModule.directive('ngFragments', ngViewFactory);
 
 })(window, window.angular);
