@@ -1,0 +1,33 @@
+.fragments {
+    .make-row();
+    overflow-x: auto;
+
+    .fragment {
+        display: none;
+        position: relative;
+        float: left;
+        // Prevent columns from collapsing when empty
+        min-height: 1px;
+        // Inner gutter via padding
+        padding-left:  (@grid-gutter-width / 2);
+        padding-right: (@grid-gutter-width / 2);
+        width: 100%;
+
+        &:last-child {
+            display: block;
+        }
+    }
+}
+
+@media (min-width: @screen-tablet) {
+    .fragments .fragment {
+        &:last-child {
+            width: percentage((9 / @grid-columns));
+        }
+
+        &:nth-last-child(2) {
+            display: block;
+            width: percentage((3 / @grid-columns));
+        }
+    }
+}

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kundestyrtApp', ['ng', 'ngRoute', 'ngResource'])
+angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true).hashPrefix('!');
 

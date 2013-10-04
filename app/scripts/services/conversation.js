@@ -21,6 +21,42 @@
                     date: '2013-09-22T09:53Z',
                     content: 'Dette er et svar, også bare for å teste litt.',
                     self: false
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-23T08:43Z',
+                    content: 'Dette er en test-melding, bare for å vise frem liksom :)',
+                    self: true
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-22T09:53Z',
+                    content: 'Dette er et svar, også bare for å teste litt.',
+                    self: false
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-23T08:43Z',
+                    content: 'Dette er en test-melding, bare for å vise frem liksom :)',
+                    self: true
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-22T09:53Z',
+                    content: 'Dette er et svar, også bare for å teste litt.',
+                    self: false
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-23T08:43Z',
+                    content: 'Dette er en test-melding, bare for å vise frem liksom :)',
+                    self: true
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-22T09:53Z',
+                    content: 'Dette er et svar, også bare for å teste litt.',
+                    self: false
                 }
             ]
         },

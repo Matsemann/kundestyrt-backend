@@ -52,7 +52,10 @@
     </nav>
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-view></div>
+    <div class="container">
+      <div fragments>
+      </div>
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -72,7 +75,6 @@
         <!-- endbuild -->
 
         <!-- build:js /scripts/modules.js -->
-        <script src="/bower_components/angular-route/angular-route.js"></script>
         <script src="/bower_components/angular-resource/angular-resource.js"></script>
         <!-- endbuild -->
 
@@ -99,6 +101,7 @@
         <script src="/scripts/services/conversation.js"></script>
         <script src="/scripts/services/notes.js"></script>
         <script src="/scripts/services/contacts.js"></script>
+        <script src="/scripts/modules/fragmentRoute/fragmentRoute.js"></script>
         <!-- endbuild -->
 </body>
 </html>
