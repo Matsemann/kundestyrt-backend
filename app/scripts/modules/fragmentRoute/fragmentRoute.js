@@ -11,6 +11,7 @@ var copy = angular.copy,
     forEach = angular.forEach,
     isDefined = angular.isDefined,
     isFunction = angular.isFunction,
+    isArray = angular.isArray,
     isString = angular.isString,
     jqLite = angular.element,
     noop = angular.noop,
@@ -499,40 +500,45 @@ function $RouteProvider(){
 
         $q.when(next).
           then(function() {
-            if (next) {
-              var locals = extend({}, next.resolve),
-                  template, templateUrl;
+            if (next && next.fragments) {
+              var fragments = [];
+              forEach(next.fragments, function(fragment) {
+                var locals = extend({}, fragment.resolve),
+                    template, templateUrl;
 
-              forEach(locals, function(value, key) {
-                locals[key] = isString(value) ? $injector.get(value) : $injector.invoke(value);
+                forEach(locals, function(value, key) {
+                  value = locals[key] = isString(value) ? $injector.get(value) : $injector.invoke(value);
+                  if(isFunction(value) || isArray(value)) {
+                    locals[key] = $injector.invoke(value, null, next.params);
+                  }
+                });
+
+                if (isDefined(template = fragment.template)) {
+                  if (isFunction(template)) {
+                    template = template(next.params);
+                  }
+                } else if (isDefined(templateUrl = fragment.templateUrl)) {
+                  if (isFunction(templateUrl)) {
+                    templateUrl = templateUrl(next.params);
+                  }
+                  templateUrl = $sce.getTrustedResourceUrl(templateUrl);
+                  if (isDefined(templateUrl)) {
+                    template = $http.get(templateUrl, {cache: $templateCache}).
+                        then(function(response) { return response.data; });
+                  }
+                }
+                if (isDefined(template)) {
+                  locals['$template'] = template;
+                }
+                fragments.push($q.all(locals));
               });
-
-              if (isDefined(template = next.template)) {
-                if (isFunction(template)) {
-                  template = template(next.params);
-                }
-              } else if (isDefined(templateUrl = next.templateUrl)) {
-                if (isFunction(templateUrl)) {
-                  templateUrl = templateUrl(next.params);
-                }
-                templateUrl = $sce.getTrustedResourceUrl(templateUrl);
-                if (isDefined(templateUrl)) {
-                  next.loadedTemplateUrl = templateUrl;
-                  template = $http.get(templateUrl, {cache: $templateCache}).
-                      then(function(response) { return response.data; });
-                }
-              }
-              if (isDefined(template)) {
-                locals['$template'] = template;
-              }
-              return $q.all(locals);
+              return $q.all(fragments);
             }
           }).
-          // after route change
-          then(function(locals) {
+          then(function(fragments) {
             if (next == $route.current) {
               if (next) {
-                next.locals = locals;
+                next.locals = fragments;
                 copy(next.params, $routeParams);
               }
               $rootScope.$broadcast('$routeChangeSuccess', next, last);
@@ -542,6 +548,50 @@ function $RouteProvider(){
               $rootScope.$broadcast('$routeChangeError', next, last, error);
             }
           });
+          // then(function() {
+          //   if (next) {
+          //     var locals = extend({}, next.resolve),
+          //         template, templateUrl;
+
+          //     forEach(locals, function(value, key) {
+          //       locals[key] = isString(value) ? $injector.get(value) : $injector.invoke(value);
+          //     });
+
+          //     if (isDefined(template = next.template)) {
+          //       if (isFunction(template)) {
+          //         template = template(next.params);
+          //       }
+          //     } else if (isDefined(templateUrl = next.templateUrl)) {
+          //       if (isFunction(templateUrl)) {
+          //         templateUrl = templateUrl(next.params);
+          //       }
+          //       templateUrl = $sce.getTrustedResourceUrl(templateUrl);
+          //       if (isDefined(templateUrl)) {
+          //         next.loadedTemplateUrl = templateUrl;
+          //         template = $http.get(templateUrl, {cache: $templateCache}).
+          //             then(function(response) { return response.data; });
+          //       }
+          //     }
+          //     if (isDefined(template)) {
+          //       locals['$template'] = template;
+          //     }
+          //     return $q.all(locals);
+          //   }
+          // }).
+          // // after route change
+          // then(function(locals) {
+          //   if (next == $route.current) {
+          //     if (next) {
+          //       next.locals = locals;
+          //       copy(next.params, $routeParams);
+          //     }
+          //     $rootScope.$broadcast('$routeChangeSuccess', next, last);
+          //   }
+          // }, function(error) {
+          //   if (next == $route.current) {
+          //     $rootScope.$broadcast('$routeChangeError', next, last, error);
+          //   }
+          // });
       }
     }
 
@@ -625,7 +675,7 @@ function $RouteParamsProvider() {
   this.$get = function() { return {}; };
 }
 
-ngRouteModule.directive('ngView', ngViewFactory);
+ngRouteModule.directive('ngFragments', ngViewFactory);
 
 /**
  * @ngdoc directive
@@ -802,64 +852,88 @@ function ngViewFactory(   $route,   $anchorScroll,   $compile,   $controller,   
     restrict: 'ECA',
     terminal: true,
     priority: 1000,
-    transclude: 'element',
+    //transclude: 'element',
+    scope: true,
     compile: function(element, attr, linker) {
       return function(scope, $element, attr) {
-        var currentScope,
-            currentElement,
-            onloadExp = attr.onload || '';
+        $element.addClass('fragments');
+
+        var currentFragments = [];
 
         scope.$on('$routeChangeSuccess', update);
         update();
 
-        function cleanupLastView() {
-          if (currentScope) {
-            currentScope.$destroy();
-            currentScope = null;
+        function cleanupFragment(fragment) {
+          if (fragment.scope) {
+            fragment.scope.$destroy();
+            fragment.scope = null;
           }
-          if(currentElement) {
-            $animate.leave(currentElement);
-            currentElement = null;
+          if(fragment.element) {
+            $animate.leave(fragment.element);
+            fragment.element = null;
           }
         }
 
         function update() {
-          var locals = $route.current && $route.current.locals,
-              template = locals && locals.$template;
+          var fLocals = $route.current && $route.current.locals,
+              fragments = $route.current && $route.current.fragments;
 
-          if (template) {
-            var newScope = scope.$new();
-            linker(newScope, function(clone) {
-              cleanupLastView();
+          if (fLocals) {
+            if(fLocals.length !== fragments.length) throw new Error('Huh?');
 
-              clone.html(template);
-              $animate.enter(clone, null, $element);
+            forEach(currentFragments, function(fragment) {
+              fragment.scope.$destroy();
+              fragment.scope = null;
+            });
 
-              var link = $compile(clone.contents()),
-                  current = $route.current;
+            if (currentFragments.length > fragments.length) {
+              for (var i = fragments.length, l = currentFragments.length; i < l; i++) {
+                cleanupFragment(currentFragments[i]);
+              }
+              currentFragments.splice(fragments.length, currentFragments.length - fragments.length);
+            }
 
-              currentScope = current.scope = newScope;
-              currentElement = clone;
+            for (var i = 0, l = fragments.length; i < l; i++) {
+              var fragment = fragments[i],
+                  locals = fLocals[i],
+                  stored = currentFragments.length > i && currentFragments[i],
+                  newScope = scope.$new();
 
-              if (current.controller) {
-                locals.$scope = currentScope;
-                var controller = $controller(current.controller, locals);
-                if (current.controllerAs) {
-                  currentScope[current.controllerAs] = controller;
-                }
-                clone.data('$ngControllerController', controller);
-                clone.contents().data('$ngControllerController', controller);
+              var isNew = false;
+              
+              if(!stored) {
+                stored = {
+                  element: angular.element('<div class="fragment"></div>')
+                };
+                isNew = true;
+                currentFragments.push(stored);
               }
 
-              link(currentScope);
-              currentScope.$emit('$viewContentLoaded');
-              currentScope.$eval(onloadExp);
+              stored.element.html(locals.$template);
+              if(isNew) $animate.enter(stored.element, $element);
 
-              // $anchorScroll might listen on event...
-              $anchorScroll();
-            });
+              var link = $compile(stored.element.contents());
+              stored.scope = newScope;
+
+              if(fragment.controller) {
+                locals.$scope = stored.scope;
+                var controller = $controller(fragment.controller, locals);
+                if(fragment.controllerAs) {
+                  stored.scope[fragment.controllerAs] = controller;
+                }
+                stored.element.data('$ngControllerController', controller);
+                stored.element.contents().data('$ngControllerController', controller);
+              }
+
+              link(stored.scope);
+              stored.scope.$emit('$viewContentLoaded');
+            }
+
+            // $anchorScroll might listen on event...
+            $anchorScroll();
           } else {
-            cleanupLastView();
+            forEach(currentFragments, cleanupFragment);
+            currentFragments = [];
           }
         }
       }
