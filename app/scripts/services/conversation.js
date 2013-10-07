@@ -21,6 +21,42 @@
                     date: '2013-09-22T09:53Z',
                     content: 'Dette er et svar, også bare for å teste litt.',
                     self: false
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-23T08:43Z',
+                    content: 'Dette er en test-melding, bare for å vise frem liksom :)',
+                    self: true
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-22T09:53Z',
+                    content: 'Dette er et svar, også bare for å teste litt.',
+                    self: false
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-23T08:43Z',
+                    content: 'Dette er en test-melding, bare for å vise frem liksom :)',
+                    self: true
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-22T09:53Z',
+                    content: 'Dette er et svar, også bare for å teste litt.',
+                    self: false
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-23T08:43Z',
+                    content: 'Dette er en test-melding, bare for å vise frem liksom :)',
+                    self: true
+                },
+                {
+                    sender: 'Aleksander Heintz',
+                    date: '2013-09-22T09:53Z',
+                    content: 'Dette er et svar, også bare for å teste litt.',
+                    self: false
                 }
             ]
         },
@@ -97,13 +133,16 @@
         }
     ];
 
-    angular.module('kundestyrtApp').factory('Conversation', [function() {
+    angular.module('kundestyrtApp').factory('Conversation', ['$q', function($q) {
         return {
-            get: function(id, sub) {
-                if(id === undefined) {
-                    return conversations;
-                }
+            list: [function() {
+                var deferred = $q.defer();
+                deferred.resolve(conversations);
+                return deferred.promise;
+            }],
 
+            get: ['id', function(id) {
+                var deferred = $q.defer();
                 var conversation;
 
                 for(var i = 0, l = conversations.length; i < l; i++) {
@@ -113,14 +152,13 @@
                     }
                 }
 
-                if(sub === undefined) {
-                    return conversation;
-                } else if(conversation) {
-                    return conversation.conversations[sub];
+                if(conversation === undefined) {
+                    deferred.reject(function() {throw new Error('not found');});
+                } else {
+                    deferred.resolve(conversation);
                 }
-
-                return null;
-            },
+                return deferred.promise;
+            }],
 
             send: function(id, sub, msg) {
                 if(id === undefined) {

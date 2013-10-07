@@ -1,0 +1,10 @@
+<legend class="main-fragment-only">{{conversation.topic}}</legend>
+
+<div ng-switch="conversation.type">
+    <div ng-switch-when="0">
+        <div ng-include="'/views/conversation/messages.html'"></div>
+    </div>
+    <div ng-switch-when="1">
+        <div ng-include="'/views/conversation/inquiry.html'"></div>
+    </div>
+</div>

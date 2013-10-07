@@ -11,8 +11,9 @@ describe('Controller: MainCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
-      $scope: scope
+    MainCtrl = $controller('ConversationListCtrl', {
+      $scope: scope,
+      conversations: [0,1,2] // TODO: insert actual mock-data
     });
   }));
 

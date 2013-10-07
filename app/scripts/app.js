@@ -1,25 +1,55 @@
 'use strict';
 
-angular.module('kundestyrtApp', ['ng', 'ngRoute', 'ngResource'])
+angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true).hashPrefix('!');
 
+    function serviceResolve(service, method) {
+      return [service, function(s) {
+        return s[method];
+      }];
+    }
+
+    var f = {
+      conversationList: {
+        controller: 'ConversationListCtrl',
+        templateUrl: '/views/conversation/list.html',
+        resolve: {
+          conversations: serviceResolve('Conversation', 'list')
+        }
+      },
+      conversation: {
+        controller: 'ConversationCtrl',
+        templateUrl: '/views/conversation/main.html',
+        resolve: {
+          conversation: serviceResolve('Conversation', 'get')
+        }
+      },
+      inquiryMessages: {
+        controller: 'InquiryMessagesCtrl',
+        templateUrl: '/views/conversation/messages.html',
+        resolve: {
+          conversation: serviceResolve('Conversation', 'get')
+        }
+      }
+    };
+
     $routeProvider
       .when('/', {
-        templateUrl: '/views/main.html',
-        controller: 'MainCtrl'
+        redirectTo: '/conversation'
+      })
+      .when('/conversation', {
+        fragments: [f.conversationList]
       })
       .when('/conversation/new', {
         templateUrl: '/views/newConv.html',
         controller: 'NewConvCtrl'
       })
       .when('/conversation/:id', {
-        templateUrl: '/views/main.html',
-        controller: 'MainCtrl'
+        fragments: [f.conversationList, f.conversation]
       })
       .when('/conversation/:id/:sub', {
-        templateUrl: '/views/main.html',
-        controller: 'MainCtrl'
+        fragments: [f.conversationList, f.conversation, f.inquiryMessages]
       })
       .when('/notes', {
         templateUrl: '/views/notes.html',
