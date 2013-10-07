@@ -115,6 +115,7 @@ call :SelectNodeVersion
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd %DEPLOYMENT_TARGET%
   call !NPM_CMD! install --production
+  call %BOWER_CMD% cache clean
   call %BOWER_CMD% install --production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
