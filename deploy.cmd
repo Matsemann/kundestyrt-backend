@@ -47,16 +47,6 @@ IF NOT DEFINED KUDU_SYNC_CMD (
   SET KUDU_SYNC_CMD=node "%appdata%\npm\node_modules\kuduSync\bin\kuduSync"
 )
 
-IF NOT DEFINED BOWER_CMD (
-  :: Install bower
-  echo Installing bower
-  call npm install bower -g --silent
-  IF !ERRORLEVEL! NEQ 0 goto error
-
-  :: Locally just running "bower" would also work
-  SET BOWER_CMD=node "%appdata%\npm\node_modules\bower\bin\bower"
-)
-
 IF NOT DEFINED GRUNT_CMD (
   :: Install grunt
   echo Installing grunt-cli
@@ -119,10 +109,6 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd %DEPLOYMENT_TARGET%
   echo Running npm install --production
   call !NPM_CMD! install --production
-  echo Running bower cache clean
-  call %BOWER_CMD% cache clean
-  echo Running bower install --production
-  call %BOWER_CMD% install --production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
