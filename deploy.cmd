@@ -102,6 +102,9 @@ goto :EOF
 :Deployment
 echo Handling node.js deployment.
 
+:: 0. Git config
+call git config --global url."https://".insteadOf git://
+
 :: 1. KuduSync
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   call %KUDU_SYNC_CMD% -v 50 -f "%DEPLOYMENT_SOURCE%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
@@ -114,8 +117,11 @@ call :SelectNodeVersion
 :: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd %DEPLOYMENT_TARGET%
+  echo Running npm install --production
   call !NPM_CMD! install --production
+  echo Running bower cache clean
   call %BOWER_CMD% cache clean
+  echo Running bower install --production
   call %BOWER_CMD% install --production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
