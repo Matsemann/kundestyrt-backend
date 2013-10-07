@@ -8,7 +8,13 @@ module.exports = function(server) {
             if (err) {
                 response.send(err);
             } else {
-                response.send(body);
+                response.send({
+                    total_rows: body.total_rows,
+                    offset: body.offset,
+                    rows: body.rows.map(function(row) {
+                        return row.value;
+                    })
+                });
             }
         });
     });
