@@ -222,6 +222,7 @@ server.get(/^(?!\/api\/)/, function(request, response, next) {
 });
 
 require('./server/users')(server);
+require('./server/groups')(server);
 
 server.listen(port, function() {
     console.log('Listening on port ' + port);

@@ -12,9 +12,9 @@
             },
 
             getGroups: function() {
-                var deferred = $q.defer();
-                deferred.resolve([]);
-                return deferred.promise;
+                return $http.get('/api/groups').then(function(xhr) {
+                    return xhr.data.rows;
+                });
             }
         };
     }]);
