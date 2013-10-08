@@ -109,6 +109,8 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd %DEPLOYMENT_TARGET%
   echo Running npm install --production
   call !NPM_CMD! install --production
+  echo Running grunt build
+  call !GRUNT_CMD! build
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )

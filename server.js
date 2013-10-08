@@ -14,7 +14,7 @@ var port = process.env.PORT || 9000;
 var server = restify.createServer();
 server.use(restify.bodyParser());
 
-var root = path.resolve('app');
+var root = path.resolve(port === 9000 ? 'app' : 'dist');
 
 var WError = require('verror').WError;
 var slice = Function.prototype.call.bind(Array.prototype.slice);
