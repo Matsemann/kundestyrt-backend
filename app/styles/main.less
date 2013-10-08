@@ -108,7 +108,7 @@ html, body {
     }
 }
 
-.new-conv {
+.conversation-new {
     .user, .group {
         cursor: pointer;
 
@@ -123,10 +123,14 @@ html, body {
         &:hover {
             background-color: @conversation-hover-bg;
         }
+
+        .name {
+            line-height: 50px;
+        }
     }
 }
 
-.user {
+.user, .group {
     clear: both;
     height: 50px;
     margin-bottom: 5px;
