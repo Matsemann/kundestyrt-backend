@@ -1,18 +1,21 @@
-<div>
+<div class="conversation-new">
     <div class="row">
         <div class="col-xs-12">
             <div class="form-group">
                 <label for="topic">Emne</label>
-                <input ng-model="message.topic" type="text" id="topic" class="form-control" placeholder="Skriv inn emne">
+                <input ng-model="message.topic" type="text" id="topic" class="form-control"
+                       placeholder="Skriv inn emne">
             </div>
             <div class="form-group">
                 <label for="message">Melding</label>
-                <textarea ng-model="message.message" id="message" class="form-control" rows="5" placeholder="Skriv inn meldingen"></textarea>
+                <textarea ng-model="message.message" id="message" class="form-control" rows="5"
+                          placeholder="Skriv inn meldingen"></textarea>
             </div>
 
             <div class="form-group">
                 <div class="checkbox">
-                    <label><input type="checkbox" ng-model="message.inquiry"> Inquiry &mdash; alle svarer bare til deg</label>
+                    <label><input type="checkbox" ng-model="message.inquiry"> Inquiry &mdash; alle svarer bare til
+                        deg</label>
                 </div>
             </div>
         </div>
@@ -35,23 +38,46 @@
             <!-- Small screens -->
             <div class="visible-xs visible-sm hidden-md hidden-lg">
                 <ul class="nav nav-tabs">
-                    <li ng-class="{active: tab == 'users'}"><a ng-click="tab = 'users'" class="btn" >Users</a></li>
-                    <li ng-class="{active: tab == 'groups'}"><a ng-click="tab = 'groups'" class="btn">Groups</a></li>
+                    <li ng-class="{active: tab == 'users'}"><a ng-click="tab = 'users'" class="btn">Personer</a></li>
+                    <li ng-class="{active: tab == 'groups'}"><a ng-click="tab = 'groups'" class="btn">Grupper</a></li>
                 </ul>
 
                 <div ng-show="tab == 'users'">
 
-                    <div ng-repeat="user in filteredUsers = (users | filter:{name: filter} | orderBy:'name')">
-                        {{user.name}}
+                    <div class="user"
+                         ng-repeat="user in filteredUsers = (users | filter:{name: filter} | orderBy:'name')"
+                         ng-click="toggleUser(user)"
+                         ng-class="{ selected: isUserSelected(user) }">
+                        <div class="image">
+                            <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
+                                 alt="image"/>
+                        </div>
+                        <div class="name">{{user.name}}</div>
                     </div>
 
                     <div ng-show="!filteredUsers.length">
-                        Ingen brukere
+                        Ingen brukere matcher filteret
                     </div>
 
                 </div>
                 <div ng-show="tab == 'groups'">
-                    groups
+                    <div class="group"
+                         ng-repeat="group in filteredGroups = (groups | filter:{name: filter} | orderBy:'name')"
+                         ng-click="toggleGroup(group)"
+                         ng-class="{ selected: isGroupSelected(group) }">
+
+                        <div class="image">
+                            <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=pg"
+                                 alt="image"/>
+                        </div>
+                        <div class="name">{{group.name}}</div>
+                    </div>
+
+
+                    <div ng-show="!filteredGroups.length">
+                        Ingen grupper matcher filteret
+                    </div>
+
                 </div>
             </div>
 
@@ -61,26 +87,47 @@
                 <div class="col-md-6">
 
 
+                    <div class="user"
+                         ng-repeat="user in filteredUsers = (users | filter:{name: filter} | orderBy:'name')"
+                         ng-click="toggleUser(user)"
+                         ng-class="{ selected: isUserSelected(user) }">
+                        <div class="image">
+                            <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
+                                 alt="image"/>
+                        </div>
+                        <div class="name">{{user.name}}</div>
+                    </div>
+
+                    <div ng-show="!filteredUsers.length">
+                        Ingen brukere matcher filteret
+                    </div>
+
+
                 </div>
                 <div class="col-md-6">
-                    groups
+
+                    <div class="group"
+                         ng-repeat="group in filteredGroups = (groups | filter:{name: filter} | orderBy:'name')"
+                         ng-click="toggleGroup(group)"
+                         ng-class="{ selected: isGroupSelected(group) }">
+
+                        <div class="image">
+                            <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=pg"
+                                 alt="image"/>
+                        </div>
+                        <div class="name">{{group.name}}</div>
+                    </div>
+
+
+                    <div ng-show="!filteredGroups.length">
+                        Ingen grupper matcher filteret
+                    </div>
+
+
+
                 </div>
             </div>
 
         </div>
     </div>
-
-    emne {{message.topic}}<br>
-    melding {{message.message}}<br>
-    tab {{tab}}<br>
-    type inquiry {{message.inquiry}}<br>
-    mottakere:
-    <span ng-repeat="user in message.recipients.users">{{user.name}} </span><br>
-    filter: {{filter}}
 </div>
-
-<ul>
-    <li ng-repeat="user in users">
-        {{user.name}}
-    </li>
-</ul>
