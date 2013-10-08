@@ -1,3 +1,86 @@
+<div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label for="topic">Emne</label>
+                <input ng-model="message.topic" type="text" id="topic" class="form-control" placeholder="Skriv inn emne">
+            </div>
+            <div class="form-group">
+                <label for="message">Melding</label>
+                <textarea ng-model="message.message" id="message" class="form-control" rows="5" placeholder="Skriv inn meldingen"></textarea>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label><input type="checkbox" ng-model="message.inquiry"> Inquiry &mdash; alle svarer bare til deg</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label for="filter">Mottakere</label>
+                    <div class="input-group">
+                        <input type="text" id="filter" ng-model="filter" class="form-control" style="border-right: none;" placeholder="Skriv her for å filtrere">
+
+                        <div class="input-group-btn">
+                            <button ng-click="filter = ''" class="btn btn-default" style="border-left: none"><span class="glyphicon glyphicon-remove"></span></button>
+
+                        </div>
+                    <!--<button ng-show="filter != ''" ng-click="filter = ''" class="btn btn-defaukt"><span class="glyphicon glyphicon-remove"></span> Fjern filter</button>-->
+                    </div>
+            </div>
+
+
+            <!-- Small screens -->
+            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                <ul class="nav nav-tabs">
+                    <li ng-class="{active: tab == 'users'}"><a ng-click="tab = 'users'" class="btn" >Users</a></li>
+                    <li ng-class="{active: tab == 'groups'}"><a ng-click="tab = 'groups'" class="btn">Groups</a></li>
+                </ul>
+
+                <div ng-show="tab == 'users'">
+
+                    <div ng-repeat="user in filteredUsers = (users | filter:{name: filter} | orderBy:'name')">
+                        {{user.name}}
+                    </div>
+
+                    <div ng-show="!filteredUsers.length">
+                        Ingen brukere
+                    </div>
+
+                </div>
+                <div ng-show="tab == 'groups'">
+                    groups
+                </div>
+            </div>
+
+            <!-- Big screens, show side by side -->
+            <div class="hidden-xs hidden-sm visible-md visible-lg">
+
+                <div class="col-md-6">
+
+
+                </div>
+                <div class="col-md-6">
+                    groups
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    emne {{message.topic}}<br>
+    melding {{message.message}}<br>
+    tab {{tab}}<br>
+    type inquiry {{message.inquiry}}<br>
+    mottakere:
+    <span ng-repeat="user in message.recipients.users">{{user.name}} </span><br>
+    filter: {{filter}}
+</div>
+
 <ul>
     <li ng-repeat="user in users">
         {{user.name}}
