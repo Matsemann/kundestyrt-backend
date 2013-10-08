@@ -190,7 +190,7 @@ function serveLess(file, request, response, next) {
     });
 }
 
-server.get(/^(?!api\/)/, function(request, response, next) {
+server.get(/^(?!\/api\/)/, function(request, response, next) {
     console.log('Request for: ' + request.url);
     var file = root + request.url;
     fs.stat(file, function(err, stats) {
@@ -220,6 +220,8 @@ server.get(/^(?!api\/)/, function(request, response, next) {
         }
     });
 });
+
+require('./server/users')(server);
 
 server.listen(port, function() {
     console.log('Listening on port ' + port);

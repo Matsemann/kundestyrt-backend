@@ -31,6 +31,14 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           conversation: serviceResolve('Conversation', 'get')
         }
+      },
+      newConversation: {
+        controller: 'NewConversationCtrl',
+        templateUrl: '/views/conversation/new.html',
+        resolve: {
+          users: serviceResolve('Contacts', 'getUsers'),
+          groups: serviceResolve('Contacts', 'getGroups')
+        }
       }
     };
 
@@ -42,8 +50,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         fragments: [f.conversationList]
       })
       .when('/conversation/new', {
-        templateUrl: '/views/newConv.html',
-        controller: 'NewConvCtrl'
+        fragments: [f.conversationList, f.newConversation]
       })
       .when('/conversation/:id', {
         fragments: [f.conversationList, f.conversation]
