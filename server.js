@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var restify = require('restify');
 var path = require('path');
 var fs = require('fs');
@@ -221,8 +223,7 @@ server.get(/^(?!\/api\/)/, function(request, response, next) {
     });
 });
 
-require('./server/users')(server);
-require('./server/groups')(server);
+require('./server/routing')(server);
 
 server.listen(port, function() {
     console.log('Listening on port ' + port);
