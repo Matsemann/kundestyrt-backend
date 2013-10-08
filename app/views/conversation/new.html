@@ -22,14 +22,12 @@
         <div class="col-xs-12">
             <div class="form-group">
                 <label for="filter">Mottakere</label>
-                    <div class="input-group">
+                    <div class="input-group input-group-singular">
                         <input type="text" id="filter" ng-model="filter" class="form-control" style="border-right: none;" placeholder="Skriv her for å filtrere">
 
                         <div class="input-group-btn">
-                            <button ng-click="filter = ''" class="btn btn-default" style="border-left: none"><span class="glyphicon glyphicon-remove"></span></button>
-
+                            <button ng-click="filter = ''" ng-disabled="!filter.length" disabled class="btn btn-default" style="border-left: none"><span class="glyphicon glyphicon-remove"></span></button>
                         </div>
-                    <!--<button ng-show="filter != ''" ng-click="filter = ''" class="btn btn-defaukt"><span class="glyphicon glyphicon-remove"></span> Fjern filter</button>-->
                     </div>
             </div>
 

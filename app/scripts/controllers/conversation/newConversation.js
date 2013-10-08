@@ -9,12 +9,12 @@ angular.module('kundestyrtApp')
         $scope.filter = '';
 
         $scope.message = {
-            topic: "",
-            message: "",
+            topic: '',
+            message: '',
             inquiry: false,
             recipients: {
                 users: [],
                 groups: []
             }
-        }
+        };
     }]);

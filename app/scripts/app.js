@@ -82,7 +82,19 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
     $rootScope.$goTo = function(location) {
       $location.path(location);
     };
-  }]);
+  }]).directive('inputGroupSingular', function() {
+    return {
+      restrict: 'C',
+      link: function(scope, elm, ctrls) {
+        /*jshint unused:false */
+        elm.children().on('focus', function() {
+          elm.addClass('focus');
+        }).on('blur', function() {
+          elm.removeClass('focus');
+        });
+      }
+    };
+  });
 
 if(!Date.prototype.toISOString) {
   (function() {

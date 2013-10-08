@@ -1,0 +1,46 @@
+.input-group-singular {
+    .form-control-focus(@color: @input-border-focus) {
+        @color-rgba: rgba(red(@color), green(@color), blue(@color), .6);
+        &.focus {
+            border-color: @color;
+            outline: 0;
+            .box-shadow(~"inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px @{color-rgba}");
+        }
+    }
+
+    border: 1px solid @input-group-addon-border-color;
+    border-radius: @border-radius-base;
+    .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+    .form-control-focus();
+
+    > input {
+        .box-shadow(none);
+        border: none;
+        outline: none !important;
+
+        &:focus {
+            border: none;
+            .box-shadow(none);
+        }
+    }
+
+    > .input-group-btn {
+        > button {
+            .box-shadow(none);
+            border: none;
+            background-color: transparent;
+            opacity: 0.6;
+            .transition(~"opacity .2s ease-in-out");
+
+            &:hover {
+                background-color: transparent;
+                opacity: 1;
+            }
+
+            &:disabled {
+                opacity: 0;
+            }
+        }
+    }
+}
+
