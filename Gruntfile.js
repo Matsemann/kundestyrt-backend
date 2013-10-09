@@ -320,12 +320,14 @@ module.exports = function (grunt) {
 
     if(rootStat && rootStat.isDirectory()) {
       grunt.log.oklns('dist-dir found');
+      rmDir(root);
     } else {
       grunt.log.errorlns('dist-dir not found');
     }
 
     if(tmpStat && tmpStat.isDirectory()) {
       grunt.log.oklns('tmp-dir found');
+      rmDir(tmp);
     } else {
       grunt.log.errorlns('tmp-dir not found');
     }
