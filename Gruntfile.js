@@ -345,7 +345,7 @@ module.exports = function (grunt) {
           rmDir(itemPath);
         } else {
           grunt.log.oklns('deleting file "' + itemPath + '"');
-          //fs.unlinkSync(itemPath);
+          fs.unlinkSync(itemPath);
         }
       }
       grunt.log.oklns('removing (now empty) directory "' + dir + '"');
