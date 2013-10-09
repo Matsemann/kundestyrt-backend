@@ -12,6 +12,8 @@ var less = require('less');
 var port = process.env.PORT || 9000;
 
 var server = restify.createServer();
+server.use(restify.CORS());
+server.use(restify.fullResponse());
 server.use(restify.bodyParser());
 
 var root = path.resolve(port === 9000 ? 'app' : 'dist');
