@@ -39,6 +39,20 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
           users: serviceResolve('Contacts', 'getUsers'),
           groups: serviceResolve('Contacts', 'getGroups')
         }
+      },
+      noteList: {
+        controller: 'NoteListCtrl',
+        templateUrl: '/views/note/noteList.html',
+        resolve: {
+          notes: serviceResolve('Notes', 'getNotes')
+        }
+      },
+      note: {
+        controller: 'NoteCtrl',
+        templateUrl: '/views/note/note.html',
+        resolve: {
+          note: serviceResolve('Notes', 'getNote')
+        }
       }
     };
 
@@ -59,12 +73,10 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         fragments: [f.conversationList, f.conversation, f.inquiryMessages]
       })
       .when('/notes', {
-        templateUrl: '/views/notes.html',
-        controller: 'NoteCtrl'
+        fragments: [f.noteList]
       })
       .when('/notes/:id', {
-        templateUrl: '/views/notes.html',
-        controller: 'NoteCtrl'
+        fragments: [f.noteList, f.note]
       })
       .otherwise({
         redirectTo: '/'

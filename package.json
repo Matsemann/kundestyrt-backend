@@ -8,7 +8,8 @@
     "nano": "~4.1.3",
     "util": "~0.4.9",
     "verror": "~1.3.6",
-    "less": "~1.4.2"
+    "less": "~1.4.2",
+    "marked": "0.2.9"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

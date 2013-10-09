@@ -1,29 +1,19 @@
 'use strict';
 
 (function(undefined) {
-    var notes = [
-        {
-            _id: 1,
-            name: 'Test',
-            content: 'This is a test note'
-        },
-        {
-            _id: 2,
-            name: 'Test 2',
-            content: 'This is also simply a test note.'
-        }
-
-    ];
-
-    angular.module('kundestyrtApp').factory('Notes', [function() {
+    angular.module('kundestyrtApp').factory('Notes', ["$http", function($http) {
         return {
             getNotes: function() {
-                return notes;
+                return $http.get('/api/notes').then(function(xhr) {
+                    return xhr.data.rows;
+                });
             },
 
-            getNote: function(id) {
-                return notes[id - 1];
-            }
+            getNote: ['id', function(id) {
+                return $http.get('/api/notes/' + id).then(function(xhr) {
+                    return xhr.data;
+                });
+            }]
         };
     }]);
 })();
