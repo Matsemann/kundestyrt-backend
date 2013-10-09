@@ -16,7 +16,11 @@
             }],
 
             save: function(note) {
-                return $http.put('/api/notes/' + note._id, {note: note});
+                if(note._id) { // update
+                    return $http.put('/api/notes/' + note._id, note);
+                } else { // save new
+                    return $http.post('/api/notes', note);
+                }
             }
         };
     }]);

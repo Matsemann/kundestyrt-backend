@@ -1,4 +1,4 @@
-<button ng-click="saveNote()" class="btn btn-default">Lagre</button>
+<button ng-click="saveNote()" ng-disabled="note.name === '' || note.content === ''" class="btn btn-default">Lagre</button>
 
 <div class="form-group">
     <label for="name">Navn</label>

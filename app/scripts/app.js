@@ -60,6 +60,11 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           note: serviceResolve('Notes', 'getNote')
         }
+      },
+      noteNew: {
+        controller: 'NoteNewCtrl',
+        templateUrl: '/views/note/edit.html',
+        resolve: {}
       }
     };
 
@@ -81,6 +86,9 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       })
       .when('/notes', {
         fragments: [f.noteList]
+      })
+      .when('/notes/new', {
+        fragments: [f.noteList, f.noteNew]
       })
       .when('/notes/:id', {
         fragments: [f.noteList, f.note]

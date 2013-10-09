@@ -41,7 +41,7 @@ module.exports = function(server) {
         var db = connect();
         console.log('trying to save note');
 
-        var sentNote = request.params.note;
+        var sentNote = request.params;
         var note = {
             "_id": sentNote._id,
             "_rev": sentNote._rev,
@@ -57,7 +57,29 @@ module.exports = function(server) {
                 console.log('it worked');
                 response.send(body);
             }
-        })
+        });
 
+    });
+
+    server.post('api/notes', function(request, response, next) {
+        var db = connect();
+        console.log('trying to save note');
+
+        var sentNote = request.params;
+        var note = {
+            "doc_type": "note",
+            "name": sentNote.name,
+            "content": sentNote.content
+        };
+
+        db.insert(note, function(err, body) {
+            if (err) {
+                response.send(err);
+            } else {
+                console.log('it worked');
+                response.setHeader('location', '/api/notes/' + body.id);
+                response.send(201, body);
+            }
+        });
     });
 };
