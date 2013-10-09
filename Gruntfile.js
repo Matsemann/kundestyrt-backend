@@ -307,7 +307,28 @@ module.exports = function (grunt) {
   // });
 
   grunt.registerTask('predeploy', function(target) {
-    console.log('predeploying');
+    var path = require('path');
+    var fs = require('fs');
+    grunt.log.writeln('predeploying');
+
+    var root = path.resolve('dist');
+    var tmp = path.resolve('.tmp');
+
+    var rootStat, tmpStat;
+    try { rootStat = fs.statSync(root); } catch(e) {}
+    try { tmpStat = fs.statSync(tmp); } catch(e) {}
+
+    if(rootStat && rootStat.isDirectory()) {
+      grunt.log.oklns('dist-dir found');
+    } else {
+      grunt.log.errorlns('dist-dir not found');
+    }
+
+    if(tmpStat && tmpStat.isDirectory()) {
+      grunt.log.oklns('dist-dir found');
+    } else {
+      grunt.log.errorlns('tmp-dir not found');
+    }
   });
 
   grunt.registerTask('test', [
