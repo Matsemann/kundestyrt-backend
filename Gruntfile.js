@@ -307,9 +307,7 @@ module.exports = function (grunt) {
   // });
 
   grunt.registerTask('predeploy', function(target) {
-    try {
-      grunt.task.run(['clean:dist']);
-    } catch(e) {}
+    console.log('predeploying');
   });
 
   grunt.registerTask('test', [
