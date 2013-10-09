@@ -2,6 +2,8 @@ module.exports = function(server) {
     var connect = require('./db').connect;
 
     server.get('/api/conversations/:user', function(request, response, next) {
+        request.authorize();
+
         var db = connect();
 
         db.view('conversations', 'by_user', {keys: [request.params.user]}, function(err, body) {

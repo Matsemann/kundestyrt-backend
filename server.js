@@ -8,13 +8,67 @@ var crypto = require('crypto');
 var util = require('util');
 var http = require('http');
 var less = require('less');
+var express = require('express');
+var passport = require('passport');
+var once = require('once');
+//var auth = require('./server/auth');
 
 var port = process.env.PORT || 9000;
 
 var server = restify.createServer();
+server.use(function(request, response, next) {
+    request.originalUrl = request.url;
+    next();
+});
+
+server.use(restify.gzipResponse());
 server.use(restify.CORS());
+server.use(restify.queryParser({ mapParams: false }));
+server.use(restify.jsonp());
 server.use(restify.fullResponse());
 server.use(restify.bodyParser());
+
+var useSession = (function() {
+    var handlers = [
+        express.cookieParser(),
+        express.session({ secret: 'cats\'r us' }),
+        passport.initialize(),
+        passport.session(),
+        function(request, response, next) {
+            response.setHeader('X-Use-Session', 'true');
+            next();
+        }
+    ];
+
+    return function(h) {
+        return function(request, response, next) {
+            var arr = new Array(handlers.length + 1);
+            for(var i = 0, l = handlers.length; i < l; i++) {
+                arr[i] = handlers[i];
+            }
+            arr[handlers.length] = h;
+
+            i = -1;
+            var run = function(arg) {
+                if(arg === false) {
+                    next(false);
+                    return;
+                }
+
+                ++i;
+                if(i >= arr.length) {
+                    next();
+                } else {
+                    arr[i](request, response, once(run));
+                }
+            };
+            run();
+        };
+    };
+})();
+
+var auth = require('./server/auth');
+server.post('/login', auth.login);
 
 var root = path.resolve(port === 9000 ? 'app' : 'dist');
 
@@ -194,14 +248,16 @@ function serveLess(file, request, response, next) {
     });
 }
 
-server.get(/^(?!\/api\/)/, function(request, response, next) {
+function staticFileRoute(request, response, next) {
     console.log('Request for: ' + request.url);
     var file = root + request.url;
     fs.stat(file, function(err, stats) {
         if((err || !stats.isFile()) && !(
             request.url.substring(0, '/views'.length) === '/views' ||
             request.url.substring(0, '/styles'.length) === '/styles' ||
-            request.url.substring(0, '/scripts'.length) === '/scripts')) {
+            request.url.substring(0, '/scripts'.length) === '/scripts' ||
+            request.url.substring(0, '/fonts'.length) === '/fonts' ||
+            request.url.substring(0, '/bower_components'.length === '/bower_components'))) {
             file = root + '/index.html';
         }
 
@@ -223,9 +279,17 @@ server.get(/^(?!\/api\/)/, function(request, response, next) {
             serveNormal(file, request, response, next);
         }
     });
-});
+}
 
-require('./server/routing')(server);
+require('./server/routes')(server);
+
+server.get(/^(?!\/api\/).*\.(js|less|css|html)$/, staticFileRoute);
+server.get(/^(?!\/api\/)/, useSession(staticFileRoute));
+
+server.on('uncaughtException', function(request, response, route, error) {
+    debugger;
+    console.log(error);
+});
 
 server.listen(port, function() {
     console.log('Listening on port ' + port);
