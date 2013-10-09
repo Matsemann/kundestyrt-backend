@@ -337,7 +337,9 @@ module.exports = function (grunt) {
       var list = fs.readdirSync(dir);
       for(var i = 0, l = list.length; i < l; i++) {
         var item = list[i];
-        if(item === '.' || item === '..') { continue; }
+        if(item === '.' || item === '..') {
+          continue;
+        }
 
         var itemPath = path.join(dir, item);
         grunt.log.oklns('found item "' + itemPath + '"');

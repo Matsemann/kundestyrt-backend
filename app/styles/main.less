@@ -13,6 +13,10 @@ html, body {
     -webkit-text-size-adjust: none;
 }
 
+body {
+    padding-top: 70px
+}
+
 .wrap {
     min-height: 100%;
 }
@@ -69,12 +73,11 @@ html, body {
     }
 }
 
-.note {
-    .note-content {
-        h1, .h1 { font-size: floor(@font-size-base * 2.60 * 0.7); }
-        h2, .h2 { font-size: floor(@font-size-base * 2.15 * 0.7); }
-        h3, .h3 { font-size: ceil( @font-size-base * 1.70 * 0.7); }
-    }
+
+.note-content {
+    h1, .h1 { font-size: floor(@font-size-base * 2.60 * 0.7); }
+    h2, .h2 { font-size: floor(@font-size-base * 2.15 * 0.7); }
+    h3, .h3 { font-size: ceil( @font-size-base * 1.70 * 0.7); }
 }
 
 .message {
