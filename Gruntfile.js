@@ -325,9 +325,29 @@ module.exports = function (grunt) {
     }
 
     if(tmpStat && tmpStat.isDirectory()) {
-      grunt.log.oklns('dist-dir found');
+      grunt.log.oklns('tmp-dir found');
     } else {
       grunt.log.errorlns('tmp-dir not found');
+    }
+
+    function rmDir(dir) {
+      var list = fs.readdirSync(dir);
+      for(var i = 0, l = list.length; i < l; i++) {
+        var item = list[i];
+        if(item === '.' || item === '..') continue;
+
+        var itemPath = path.join(dir, item);
+        grunt.log.oklns('found item "' + itemPath + '"');
+        var stat = fs.statSync(itemPath);
+        if(stat && stat.isDirectory()) {
+          rmDir(itemPath);
+        } else {
+          grunt.log.oklns('deleting file "' + itemPath + '"');
+          fs.unlinkSync(itemPath);
+        }
+      }
+      grunt.log.oklns('removing (now empty) directory "' + dir + '"');
+      fs.rmDir(dir);
     }
   });
 
