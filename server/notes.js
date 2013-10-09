@@ -23,11 +23,15 @@ module.exports = function(server) {
     server.get('/api/notes/:id', function(request, response, next) {
         var db = connect();
 
+        marked.setOptions({
+            breaks: true
+        });
+
         db.get(request.params.id, function(err, body) {
             if (err) {
                 response.send(err);
             } else {
-                body.markdown = marked(body.content);
+                body.html = marked(body.content);
                 response.send(body);
             }
         });
