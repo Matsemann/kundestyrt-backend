@@ -27,12 +27,12 @@ server.use(restify.queryParser({ mapParams: false }));
 server.use(restify.jsonp());
 server.use(restify.fullResponse());
 server.use(restify.bodyParser());
+server.use(passport.initialize());
 
 var useSession = (function() {
     var handlers = [
         express.cookieParser(),
         express.session({ secret: 'cats\'r us' }),
-        passport.initialize(),
         passport.session(),
         function(request, response, next) {
             response.setHeader('X-Use-Session', 'true');
@@ -41,34 +41,44 @@ var useSession = (function() {
     ];
 
     return function(h) {
-        return function(request, response, next) {
-            var arr = new Array(handlers.length + 1);
-            for(var i = 0, l = handlers.length; i < l; i++) {
-                arr[i] = handlers[i];
-            }
-            arr[handlers.length] = h;
+        // return function(request, response, next) {
+        //     var arr = new Array(handlers.length + 1);
+        //     for(var i = 0, l = handlers.length; i < l; i++) {
+        //         arr[i] = handlers[i];
+        //     }
+        //     arr[handlers.length] = h;
 
-            i = -1;
-            var run = function(arg) {
-                if(arg === false) {
-                    next(false);
-                    return;
-                }
+        //     i = -1;
+        //     var run = function(arg) {
+        //         if(arg === false) {
+        //             next(false);
+        //             return;
+        //         }
 
-                ++i;
-                if(i >= arr.length) {
-                    next();
-                } else {
-                    arr[i](request, response, once(run));
-                }
-            };
-            run();
-        };
+        //         ++i;
+        //         if(i >= arr.length) {
+        //             next();
+        //         } else {
+        //             arr[i](request, response, once(run));
+        //         }
+        //     };
+        //     run();
+        // };
+        if(typeof h === 'function') h = [h];
+
+        var arr = new Array(handlers.length + h.length);
+        for(var i = 0, l = handlers.length; i < l; i++) {
+            arr[i] = handlers[i];
+        }
+        for(i = 0, l = h.length; i < l; i++) {
+            arr[handlers.length + i] = h[i];
+        }
+        return arr;
     };
 })();
 
 var auth = require('./server/auth');
-server.post('/login', auth.login);
+server.post('/login', useSession(auth.login));
 
 var root = path.resolve(port === 9000 ? 'app' : 'dist');
 
