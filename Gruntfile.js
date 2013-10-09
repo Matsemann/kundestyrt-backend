@@ -306,6 +306,12 @@ module.exports = function (grunt) {
   //   ]);
   // });
 
+  grunt.registerTask('predeploy', function(target) {
+    try {
+      grunt.task.run(['clean:dist']);
+    } catch(e) {}
+  });
+
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
@@ -337,6 +343,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('deploy', [
+    'predeploy',
     'useminPrepare',
     'less:dist',
     'concurrent:dist',
