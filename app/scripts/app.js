@@ -42,21 +42,21 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       noteList: {
         controller: 'NoteListCtrl',
-        templateUrl: '/views/note/noteList.html',
+        templateUrl: '/views/note/list.html',
         resolve: {
           notes: serviceResolve('Notes', 'getNotes')
         }
       },
       note: {
         controller: 'NoteCtrl',
-        templateUrl: '/views/note/note.html',
+        templateUrl: '/views/note/main.html',
         resolve: {
           note: serviceResolve('Notes', 'getNote')
         }
       },
       noteEdit: {
         controller: 'NoteEditCtrl',
-        templateUrl: '/views/note/noteEdit.html',
+        templateUrl: '/views/note/edit.html',
         resolve: {
           note: serviceResolve('Notes', 'getNote')
         }
