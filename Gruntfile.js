@@ -335,4 +335,19 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.registerTask('deploy', [
+    'useminPrepare',
+    'less:dist',
+    'concurrent:dist',
+    'autoprefixer',
+    'concat',
+    'copy:dist',
+    'cdnify',
+    'ngmin',
+    'cssmin',
+    'uglify',
+    'rev',
+    'usemin'
+  ]);
 };
