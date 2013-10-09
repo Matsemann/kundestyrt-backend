@@ -53,6 +53,13 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           note: serviceResolve('Notes', 'getNote')
         }
+      },
+      noteEdit: {
+        controller: 'NoteEditCtrl',
+        templateUrl: '/views/note/noteEdit.html',
+        resolve: {
+          note: serviceResolve('Notes', 'getNote')
+        }
       }
     };
 
@@ -77,6 +84,9 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       })
       .when('/notes/:id', {
         fragments: [f.noteList, f.note]
+      })
+      .when('/notes/:id/edit', {
+        fragments: [f.noteList, f.noteEdit]
       })
       .otherwise({
         redirectTo: '/'

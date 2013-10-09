@@ -1,7 +1,7 @@
 'use strict';
 
 (function(undefined) {
-    angular.module('kundestyrtApp').factory('Notes', ["$http", function($http) {
+    angular.module('kundestyrtApp').factory('Notes', ['$http', function($http) {
         return {
             getNotes: function() {
                 return $http.get('/api/notes').then(function(xhr) {
@@ -13,7 +13,11 @@
                 return $http.get('/api/notes/' + id).then(function(xhr) {
                     return xhr.data;
                 });
-            }]
+            }],
+
+            save: function(note) {
+                return $http.put('/api/notes/' + note._id, {note: note});
+            }
         };
     }]);
 })();

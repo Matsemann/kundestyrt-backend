@@ -36,4 +36,28 @@ module.exports = function(server) {
             }
         });
     });
+
+    server.put('api/notes/:id', function(request, response, next) {
+        var db = connect();
+        console.log('trying to save note');
+
+        var sentNote = request.params.note;
+        var note = {
+            "_id": sentNote._id,
+            "_rev": sentNote._rev,
+            "doc_type": "note",
+            "name": sentNote.name,
+            "content": sentNote.content
+        };
+
+        db.insert(note, function(err, body) {
+            if (err) {
+                response.send(err);
+            } else {
+                console.log('it worked');
+                response.send(body);
+            }
+        })
+
+    });
 };

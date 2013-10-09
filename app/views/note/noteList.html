@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-xs-12 col-sm-3 conversations">
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 conversations">
         <div ng-repeat="note in notes" class="conversation" ng-class="{selected: $isActive('/notes/{{note._id}}%')}" ng-click="$goTo('/notes/{{note._id}}')">
             <div class="topic">{{note.name}}</div>
             <br />
