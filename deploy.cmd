@@ -85,6 +85,20 @@ IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
 
 goto :EOF
 
+:CleanDistAndTemp
+
+IF EXIST "%DEPLOYMENT_TARGET%\dist" (
+  echo Deleting dist
+  call rmdir /s /q "%DEPLOYMENT_TARGET%\dist"
+)
+
+IF EXIST "%DEPLOYMENT_TARGET%\.tmp" (
+  echo Deleting tmp
+  call rmdir /s /q "%DEPLOYMENT_TARGET%\.tmp"
+)
+
+goto :EOF
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deployment
 :: ----------
@@ -105,7 +119,10 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 :: 2. Select node version
 call :SelectNodeVersion
 
-:: 3. Install npm packages
+:: 3. Clean
+call :CleanDistAndTemp
+
+:: 4. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd %DEPLOYMENT_TARGET%
   echo Running npm install --production
