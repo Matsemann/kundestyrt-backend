@@ -306,7 +306,7 @@ module.exports = function (grunt) {
   //   ]);
   // });
 
-  grunt.registerTask('predeploy', function(target) {
+  grunt.registerTask('predeploy', function() {
     var path = require('path');
     var fs = require('fs');
     grunt.log.writeln('predeploying');
@@ -336,7 +336,7 @@ module.exports = function (grunt) {
       var list = fs.readdirSync(dir);
       for(var i = 0, l = list.length; i < l; i++) {
         var item = list[i];
-        if(item === '.' || item === '..') continue;
+        if(item === '.' || item === '..'){ continue;}
 
         var itemPath = path.join(dir, item);
         grunt.log.oklns('found item "' + itemPath + '"');
