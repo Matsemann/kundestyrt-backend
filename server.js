@@ -28,42 +28,26 @@ server.use(restify.jsonp());
 server.use(restify.fullResponse());
 server.use(restify.bodyParser());
 server.use(passport.initialize());
+server.use(express.cookieParser());
+server.use(express.session({ secret: 'cats\'r us' }));
+server.use(passport.session());
+server.use(function(request, response, next) {
+    response.setHeader('X-Use-Session', 'true');
+    next();
+});
 
 var useSession = (function() {
     var handlers = [
-        express.cookieParser(),
-        express.session({ secret: 'cats\'r us' }),
-        passport.session(),
-        function(request, response, next) {
-            response.setHeader('X-Use-Session', 'true');
-            next();
-        }
+        // express.cookieParser(),
+        // express.session({ secret: 'cats\'r us' }),
+        // passport.session(),
+        // function(request, response, next) {
+        //     response.setHeader('X-Use-Session', 'true');
+        //     next();
+        // }
     ];
 
     return function(h) {
-        // return function(request, response, next) {
-        //     var arr = new Array(handlers.length + 1);
-        //     for(var i = 0, l = handlers.length; i < l; i++) {
-        //         arr[i] = handlers[i];
-        //     }
-        //     arr[handlers.length] = h;
-
-        //     i = -1;
-        //     var run = function(arg) {
-        //         if(arg === false) {
-        //             next(false);
-        //             return;
-        //         }
-
-        //         ++i;
-        //         if(i >= arr.length) {
-        //             next();
-        //         } else {
-        //             arr[i](request, response, once(run));
-        //         }
-        //     };
-        //     run();
-        // };
         if(typeof h === 'function') h = [h];
 
         var arr = new Array(handlers.length + h.length);
@@ -76,6 +60,7 @@ var useSession = (function() {
         return arr;
     };
 })();
+
 
 var auth = require('./server/auth');
 server.post('/login', useSession(auth.login));
