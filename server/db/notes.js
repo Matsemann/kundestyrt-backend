@@ -46,8 +46,21 @@ function save(note, done) {
     });
 }
 
+function remove(id, rev, done) {
+    var db = connect();
+
+    db.destroy(id, rev, function(err, body) {
+        if (err) {
+            done(err);
+        } else {
+            done(null, body);
+        }
+    });
+}
+
 module.exports = {
     find: find,
     all: all,
-    save: save
+    save: save,
+    remove: remove
 };

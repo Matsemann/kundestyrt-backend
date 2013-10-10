@@ -50,9 +50,9 @@ module.exports = function(server) {
     function postNote(request, response, next) {
         var sentNote = request.params;
         var note = {
-            "doc_type": "note",
-            "name": sentNote.name,
-            "content": sentNote.content
+            'doc_type': "note",
+            'name': sentNote.name,
+            'content': sentNote.content
         };
 
         db.notes.save(note, function(err, id) {
@@ -65,8 +65,23 @@ module.exports = function(server) {
         });
     }
 
+    function deleteNote(request, response, next) {
+        var id = request.params.id;
+        var rev = request.params.rev;
+
+        db.notes.remove(id, rev, function(err, id) {
+            if (err) {
+                response.send(err);
+            } else {
+                response.send(200);
+                next();
+            }
+        });
+    }
+
     server.get('/api/notes', getNotes);
     server.get('/api/notes/:id', getNote);
     server.put('/api/notes/:id', putNote);
     server.post('/api/notes', postNote);
+    server.del('api/notes/:id/:rev', deleteNote);
 };

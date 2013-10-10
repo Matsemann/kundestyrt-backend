@@ -21,6 +21,15 @@
                 } else { // save new
                     return $http.post('/api/notes', note);
                 }
+            },
+
+            delete: function(note) {
+                if(note._id) { // delete
+                    return $http.delete('/api/notes/' + note._id +'/'+ note._rev, note);
+                } else {
+                    console.log("services/notes.js: Error! Can not delete note that does not exist.");
+                    return null; //vil nok krasje
+                }
             }
         };
     }]);

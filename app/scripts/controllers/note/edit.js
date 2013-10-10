@@ -9,4 +9,10 @@ angular.module('kundestyrtApp')
                 $location.path('/notes/' + note._id);
             });
         };
+
+        $scope.deleteNote = function() {
+            Notes.delete($scope.note).then(function() {
+                $location.path('/notes');
+            })
+        }
     }]);

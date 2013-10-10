@@ -2,6 +2,7 @@
 
 angular.module('kundestyrtApp')
     .controller('NoteNewCtrl', ['$scope', '$location', 'Notes', function ($scope, $location, Notes) {
+
         $scope.note = {
             name: '',
             content: ''
