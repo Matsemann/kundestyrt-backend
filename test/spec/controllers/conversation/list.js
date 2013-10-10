@@ -154,6 +154,6 @@ describe('Controller: ConversationListCtrl', function () {
 
   it('should attach a list of conversations', function () {
     expect(scope.conversations).to.be.an('array').
-      and.have.property('length').that.equal(3);
+      and.have.property('length').that.equal(123);
   });
 });

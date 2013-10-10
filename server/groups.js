@@ -1,7 +1,7 @@
 module.exports = function(server) {
     var db = require('./db');
 
-    server.get('/api/groups', function(request, response, next) {
+    function getGroups(request, response, next) {
         db.groups.all(function(err, body) {
             if (err) {
                 response.send(err);
@@ -10,5 +10,7 @@ module.exports = function(server) {
                 next();
             }
         });
-    });
+    }
+
+    server.get('/api/groups', getGroups)
 };

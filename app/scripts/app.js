@@ -65,6 +65,17 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         controller: 'NoteNewCtrl',
         templateUrl: '/views/note/edit.html',
         resolve: {}
+      },
+      groupList: {
+        controller: 'GroupListCtrl',
+        templateUrl: '/views/group/list.html',
+        resolve: {
+            groups: serviceResolve('Groups', 'getGroups')
+        }
+      },
+      groupEdit: {
+        controller: 'GroupEditCtrl',
+        templateUrl: '/views/group/edit.html'
       }
     };
 
@@ -95,6 +106,12 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       })
       .when('/notes/:id/edit', {
         fragments: [f.noteList, f.noteEdit]
+      })
+      .when('/groups', {
+        fragments: [f.groupList]
+      })
+      .when('/groups/:id', {
+        fragments: [f.groupList, f.groupEdit]
       })
       .otherwise({
         redirectTo: '/'

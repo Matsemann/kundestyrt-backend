@@ -59,6 +59,7 @@
           <ul class="nav navbar-nav">
             <li ng-class="{active: $isActive('/') || $isActive('/conversation%')}"><a href="/">Conversations</a></li>
             <li ng-class="{active: $isActive('/notes')}"><a href="/notes">Notes</a></li>
+            <li ng-class="{active: $isActive('/groups')}"><a href="/groups">Groups</a></li>
           </ul>
 
           <ul class="nav navbar-nav pull-right">
@@ -102,10 +103,13 @@
     <script src="/scripts/controllers/note/edit.js"></script>
     <script src="/scripts/controllers/note/note.js"></script>
     <script src="/scripts/controllers/note/new.js"></script>
+    <script src="/scripts/controllers/group/list.js"></script>
+    <script src="/scripts/controllers/group/edit.js"></script>
     <script src="/scripts/controllers/newConv.js"></script>
     <script src="/scripts/services/conversation.js"></script>
     <script src="/scripts/services/notes.js"></script>
     <script src="/scripts/services/contacts.js"></script>
+    <script src="/scripts/services/groups.js"></script>
     <script src="/scripts/filters/marked.js"></script>
     <script src="/scripts/modules/fragmentRoute/fragmentRoute.js"></script>
     <!-- endbuild -->
