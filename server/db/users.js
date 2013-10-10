@@ -31,7 +31,26 @@ function find(id, done) {
     });
 }
 
+function all(done) {
+    var db = connect();
+
+    db.view('users', 'all', function(err, body) {
+        if (err) {
+            done(err);
+        } else {
+            done(null, {
+                total_rows: body.total_rows,
+                offset: body.offset,
+                rows: body.rows.map(function(row) {
+                    return row.value;
+                })
+            });
+        }
+    });
+}
+
 module.exports = {
     find: find,
-    findByUsername: findByUsername
+    findByUsername: findByUsername,
+    all: all
 };

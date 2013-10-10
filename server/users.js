@@ -1,20 +1,13 @@
 module.exports = function(server) {
-    var connect = require('./db').connect;
+    var db = require('./db');
 
     server.get('/api/users', function(request, response, next) {
-        var db = connect();
-
-        db.view('users', 'all', function(err, body) {
+        db.users.all(function(err, body) {
             if (err) {
                 response.send(err);
             } else {
-                response.send({
-                    total_rows: body.total_rows,
-                    offset: body.offset,
-                    rows: body.rows.map(function(row) {
-                        return row.value;
-                    })
-                });
+                response.send(200, body);
+                next();
             }
         });
     });

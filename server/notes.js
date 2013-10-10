@@ -7,7 +7,8 @@ module.exports = function(server) {
             if (err) {
                 response.send(err);
             } else {
-                response.send(body);
+                response.send(200, body);
+                next();
             }
         });
     }
@@ -21,6 +22,7 @@ module.exports = function(server) {
                 response.send(err);
             } else {
                 response.send(responseCode, body);
+                next();
             }
         });
     }
@@ -40,6 +42,7 @@ module.exports = function(server) {
                 response.send(err);
             } else {
                 getNote(request, response, next, id);
+                next();
             }
         });
     }

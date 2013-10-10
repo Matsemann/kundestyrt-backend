@@ -238,6 +238,7 @@ function serveLess(file, request, response, next) {
 
                 response.writeHead(200);
                 response.end(buffer);
+                next(false);
             });
         });
     });
