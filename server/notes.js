@@ -2,7 +2,7 @@ module.exports = function(server) {
     var db = require('./db');
     var marked = require('marked');
 
-    server.get('/api/notes', function(request, response, next) {
+    function getNotes(request, response, next) {
         db.notes.all(function(err, body) {
             if (err) {
                 response.send(err);
@@ -10,68 +10,60 @@ module.exports = function(server) {
                 response.send(body);
             }
         });
-    });
+    }
 
-    server.get('/api/notes/:id', function(request, response, next) {
-        marked.setOptions({
-            breaks: true
-        });
+    function getNote(request, response, next, id, responseCode) {
+        var id = id || request.params.id;
+        var responseCode = responseCode || 200;
 
-        db.notes.find(request.params.id, function(err, body) {
+        db.notes.find(id, function(err, body) {
             if (err) {
                 response.send(err);
             } else {
-                body.html = marked(body.content);
-                response.send(body);
+                response.send(responseCode, body);
             }
         });
-    });
+    }
 
-    server.put('api/notes/:id', function(request, response, next) {
-        // var db = connect();
-        // console.log('trying to save note');
+    function putNote(request, response, next) {
+        var sentNote = request.params;
+        var note = {
+            '_id': request.params.id, // we wan't the ID from the url
+            '_rev': sentNote._rev,
+            'doc_type': 'note',
+            'name': sentNote.name,
+            'content': sentNote.content
+        };
 
-        // var sentNote = request.params;
-        // var note = {
-        //     "_id": sentNote._id,
-        //     "_rev": sentNote._rev,
-        //     "doc_type": "note",
-        //     "name": sentNote.name,
-        //     "content": sentNote.content
-        // };
+        db.notes.save(note, function(err, id) {
+            if(err) {
+                response.send(err);
+            } else {
+                getNote(request, response, next, id);
+            }
+        });
+    }
 
-        // db.insert(note, function(err, body) {
-        //     if (err) {
-        //         response.send(err);
-        //     } else {
-        //         console.log('it worked');
-        //         response.send(body);
-        //     }
-        // });
+    function postNote(request, response, next) {
+        var sentNote = request.params;
+        var note = {
+            "doc_type": "note",
+            "name": sentNote.name,
+            "content": sentNote.content
+        };
 
-        throw new Error('not implemented');
-    });
+        db.notes.save(note, function(err, id) {
+            if(err) {
+                response.send(err);
+            } else {
+                response.setHeader('Location', '/api/notes/' + id);
+                getNote(request, response, next, id, 201);
+            }
+        });
+    }
 
-    server.post('api/notes', function(request, response, next) {
-        // var db = connect();
-        // console.log('trying to save note');
-
-        // var sentNote = request.params;
-        // var note = {
-        //     "doc_type": "note",
-        //     "name": sentNote.name,
-        //     "content": sentNote.content
-        // };
-
-        // db.insert(note, function(err, body) {
-        //     if (err) {
-        //         response.send(err);
-        //     } else {
-        //         console.log('it worked');
-        //         response.setHeader('location', '/api/notes/' + body.id);
-        //         response.send(201, body);
-        //     }
-        // });
-        throw new Error('not implemented');
-    });
+    server.get('/api/notes', getNotes);
+    server.get('/api/notes/:id', getNote);
+    server.put('/api/notes/:id', putNote);
+    server.post('/api/notes', postNote);
 };

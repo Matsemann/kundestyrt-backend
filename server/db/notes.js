@@ -34,7 +34,20 @@ function all(done) {
     });
 }
 
+function save(note, done) {
+    var db = connect();
+    
+    db.insert(note, function(err, body) {
+        if (err) {
+            done(err);
+        } else {
+            done(null, body.id);
+        }
+    });
+}
+
 module.exports = {
     find: find,
-    all: all
+    all: all,
+    save: save
 };
