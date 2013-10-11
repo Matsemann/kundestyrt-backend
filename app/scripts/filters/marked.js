@@ -1,3 +1,6 @@
+/* jshint -W117 */
+'use strict';
+
 (function(angular, undefined) {
     var app = angular.module('kundestyrtApp');
 
@@ -16,7 +19,7 @@
         var cache = $cacheFactory('filter-marked', {capacity: 10});
 
         return function(input) {
-            if(!input || !input.length) return null;
+            if(!input || !input.length) { return null; }
 
             var cached = cache.get(input);
             if(!cached) {

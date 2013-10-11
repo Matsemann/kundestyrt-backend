@@ -13,6 +13,6 @@ angular.module('kundestyrtApp')
         $scope.deleteNote = function() {
             Notes.delete($scope.note).then(function() {
                 $location.path('/notes');
-            })
-        }
+            });
+        };
     }]);
