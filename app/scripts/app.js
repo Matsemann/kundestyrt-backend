@@ -37,7 +37,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         templateUrl: '/views/conversation/new.html',
         resolve: {
           users: serviceResolve('Contacts', 'getUsers'),
-          groups: serviceResolve('Contacts', 'getGroups')
+          groups: serviceResolve('Groups', 'getGroups')
         }
       },
       noteList: {
@@ -70,12 +70,24 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         controller: 'GroupListCtrl',
         templateUrl: '/views/group/list.html',
         resolve: {
-            groups: serviceResolve('Groups', 'getGroups')
+          groups: serviceResolve('Groups', 'getGroups')
         }
       },
       groupEdit: {
         controller: 'GroupEditCtrl',
-        templateUrl: '/views/group/edit.html'
+        templateUrl: '/views/group/edit.html',
+        resolve: {
+          group: serviceResolve('Groups', 'getGroup'),
+          users: serviceResolve('Contacts', 'getUsers')
+        }
+      },
+      groupNew: {
+        controller: 'GroupEditCtrl',
+        templateUrl: '/views/group/edit.html',
+        resolve: {
+          group: function(){}, // no group
+          users: serviceResolve('Contacts', 'getUsers')
+        }
       }
     };
 
@@ -109,6 +121,9 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       })
       .when('/groups', {
         fragments: [f.groupList]
+      })
+      .when('/groups/new', {
+        fragments: [f.groupList, f.groupNew]
       })
       .when('/groups/:id', {
         fragments: [f.groupList, f.groupEdit]

@@ -13,7 +13,15 @@
                 return $http.get('/api/groups/' + id).then(function(xhr) {
                     return xhr.data;
                 });
-            }]
+            }],
+
+            save: function(group) {
+                if(group._id) { // update
+                    return $http.put('/api/groups/' + group._id, group);
+                } else { // save new
+                    return $http.post('/api/groups', group);
+                }
+            }
         };
     }]);
 })();

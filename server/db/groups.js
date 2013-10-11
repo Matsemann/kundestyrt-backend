@@ -2,6 +2,21 @@
 
 var connect = require('./connect');
 
+function find(id, done) {
+    var db = connect();
+
+    db.get(id, function(err, body) {
+        if(err) {
+            done(err);
+        } else if(body.doc_type !== 'group') {
+            done(new Error('doc not a note'));
+        } else {
+            done(null, body);
+        }
+    });
+}
+
+
 function all(done) {
     var db = connect();
 
@@ -20,6 +35,20 @@ function all(done) {
     });
 }
 
+function save(group, done) {
+    var db = connect();
+
+    db.insert(group, function(err, body) {
+        if (err) {
+            done(err);
+        } else {
+            done(null, body.id);
+        }
+    });
+}
+
 module.exports = {
-    all: all
+    all: all,
+    find: find,
+    save: save
 };

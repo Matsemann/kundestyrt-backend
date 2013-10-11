@@ -1,0 +1,38 @@
+<button ng-click="saveNote()" ng-disabled="group.name === '' || group.members.length == 0" class="btn btn-default">Lagre</button>
+
+<div class="form-group">
+    <label for="name">Navn</label>
+    <input ng-model="group.name" type="text" id="name" class="form-control" placeholder="Navn på gruppa">
+</div>
+<div class="form-group">
+    <label>Gruppemedlemmer:</label>
+    <span ng-repeat="user in users | filter:isInGroup()| orderBy:'name'">{{user.name}}<span
+            ng-show="!$last">, </span></span>
+</div>
+
+
+
+<div class="form-group group-edit">
+    <label>Velg medlemmer:</label>
+    <div class="form-group">
+        <div class="input-group input-group-singular">
+            <input type="text" id="filter" ng-model="filter" class="form-control" style="border-right: none;"
+                   placeholder="Skriv her for å filtrere">
+
+            <div class="input-group-btn">
+                <button ng-click="filter = ''" ng-disabled="!filter.length" disabled class="btn btn-default"
+                        style="border-left: none"><span class="glyphicon glyphicon-remove"></span></button>
+            </div>
+        </div>
+    </div>
+    <div class="user"
+         ng-repeat="user in users | filter:{name: filter} | orderBy:'name'"
+         ng-click="toggleUser(user)"
+         ng-class="{ selected: isUserIdInGroup(user._id) }">
+        <div class="image">
+            <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
+                 alt="image"/>
+        </div>
+        <div class="name">{{user.name}}</div>
+    </div>
+</div>
