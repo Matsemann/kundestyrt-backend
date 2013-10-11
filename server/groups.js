@@ -64,8 +64,23 @@ module.exports = function(server) {
         });
     }
 
+    function deleteGroup(request, response, next) {
+        var id = request.params.id;
+        var rev = request.params.rev;
+
+        db.notes.remove(id, rev, function(err, id) {
+            if (err) {
+                response.send(err);
+            } else {
+                response.send(200);
+                next();
+            }
+        });
+    }
+
     server.get('/api/groups', getGroups);
     server.get('/api/groups/:id', getGroup);
     server.put('/api/groups/:id', putGroup);
     server.post('/api/groups', postGroup);
+    server.del('api/groups/:id/:rev', deleteGroup)
 };

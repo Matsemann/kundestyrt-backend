@@ -21,6 +21,15 @@
                 } else { // save new
                     return $http.post('/api/groups', group);
                 }
+            },
+
+            delete: function(group) {
+                if(group._id) { // delete
+                    return $http.delete('/api/groups/' + group._id +'/'+ group._rev);
+                } else {
+                    console.log('services/groups.js: Error! Can not delete group that does not exist.');
+                    return null;
+                }
             }
         };
     }]);

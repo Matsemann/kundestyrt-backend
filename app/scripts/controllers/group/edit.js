@@ -6,7 +6,7 @@ angular.module('kundestyrtApp')
         $scope.group = group || {name: '', members: []};
         $scope.users = users;
 
-        $scope.saveNote = function() {
+        $scope.saveGroup = function() {
             Groups.save($scope.group).then(function(xhr) {
                 console.log(xhr);
                 if ($scope.group._id) {
@@ -14,6 +14,12 @@ angular.module('kundestyrtApp')
                 } else {
                     $location.path('/groups/' + xhr.data.id);
                 }
+            });
+        };
+
+        $scope.deleteGroup = function() {
+            Groups.delete($scope.group).then(function() {
+                $location.path('/groups');
             });
         };
 
