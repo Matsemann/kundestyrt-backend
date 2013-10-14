@@ -506,8 +506,9 @@ function $RouteProvider(){
             }
           }).
           then(function() {
+            var user;
             if(next.auth) {
-              var user = $rootScope.$user;
+              user = $rootScope.$user;
               if(!user) {
                 $rootScope.$login();
               }
@@ -518,7 +519,7 @@ function $RouteProvider(){
                 }
               }
             } else if(next.auth === false) {
-              var user = $rootScope.$user;
+              user = $rootScope.$user;
               if(user) {
                 $location.path('/');
               }

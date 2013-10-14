@@ -11,5 +11,5 @@ angular.module('kundestyrtApp')
         $http.post('/login', data).success(function() {
             $scope.$login.$complete();
         });
-    }
+    };
   }]);
