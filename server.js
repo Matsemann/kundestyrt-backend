@@ -27,9 +27,9 @@ server.use(restify.queryParser({ mapParams: false }));
 server.use(restify.jsonp());
 server.use(restify.fullResponse());
 server.use(restify.bodyParser());
-server.use(passport.initialize());
 server.use(express.cookieParser());
 server.use(express.session({ secret: 'cats\'r us' }));
+server.use(passport.initialize());
 server.use(passport.session());
 server.use(function(request, response, next) {
     response.setHeader('X-Use-Session', 'true');

@@ -501,6 +501,30 @@ function $RouteProvider(){
 
         $q.when(next).
           then(function() {
+            if(next.auth) {
+              return $rootScope.$userPromise;
+            }
+          }).
+          then(function() {
+            if(next.auth) {
+              var user = $rootScope.$user;
+              if(!user) {
+                $rootScope.$login();
+              }
+
+              if(isString(next.auth) && user) {
+                if(user.role !== next.auth) {
+                  $location.path('/unauthorized');
+                }
+              }
+            } else if(next.auth === false) {
+              var user = $rootScope.$user;
+              if(user) {
+                $location.path('/');
+              }
+            }
+          }).
+          then(function() {
             if (next && next.fragments) {
               var fragments = [];
               forEach(next.fragments, function(fragment) {

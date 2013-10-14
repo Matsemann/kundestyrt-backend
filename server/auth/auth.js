@@ -26,7 +26,7 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     console.log('authenticate');
     db.users.findByUsername(username, function(err, user) {
-      var hash = sha256(password);
+      var hash = sha256(password + user._id);
       console.log('user \'' + user.name + '\' with password-hash: ' + user.password);
 
       if (err) { return done(err); }
@@ -38,13 +38,12 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
+  debugger;
   done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-  db.users.find(id, function (err, user) {
-    done(err, user);
-  });
+  db.users.find(id, done);
 });
 
 
