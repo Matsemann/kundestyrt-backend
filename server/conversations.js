@@ -29,6 +29,18 @@ module.exports = function(server) {
         });
     }
 
+    function createConversation(request, response, next)
+    {
+        var sentConversation = request.params;
+
+        console.log(sentConversation)
+
+        next();
+        // set variables
+
+        // include the message as a new message by this user
+    }
+
     function sendMessage(request, response, next) {
         var newMessage = {
             content: request.params.content,
@@ -87,6 +99,11 @@ module.exports = function(server) {
     server.get('/api/conversations/:id', [
         auth.authorize(),
         getConversation
+    ]);
+
+    server.post('/api/conversations', [
+        auth.authorize(),
+        createConversation
     ]);
 
     server.post('/api/conversations/:id/send', [

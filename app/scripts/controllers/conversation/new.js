@@ -41,4 +41,8 @@ angular.module('kundestyrtApp')
                 $scope.message.recipients.groups.push(group);
             }
         };
+
+        $scope.createConversation = function() {
+
+        }
     }]);

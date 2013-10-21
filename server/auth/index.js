@@ -12,11 +12,18 @@ var login = [
     }
 ];
 
-function authorize() {
+function authorize(role) {
     return function requestAuthorize(request, response, next) {
         if(!request.user) {
             response.send(401);
             next(false);
+            return;
+        }
+
+        if(role !== undefined && request.user.role !== role) {
+            response.send(401);
+            next(false);
+            return;
         }
 
         next();
