@@ -156,7 +156,7 @@
                 url += '/send';
 
                 return $http.post(url, data).then(function(xhr) {
-                    return xhr.data
+                    return xhr.data;
                 });
             },
 
