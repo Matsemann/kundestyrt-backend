@@ -29,16 +29,59 @@ module.exports = function(server) {
         });
     }
 
-    function createConversation(request, response, next)
-    {
+    function createConversation(request, response, next) {
         var sentConversation = request.params;
+        var sentFromUserId = request.user._id;
 
-        console.log(sentConversation)
+        // Create the conversation
+        var conversation = {
+            topic: sentConversation.topic,
+            doc_type: 'conversation',
+            type: sentConversation.inquiry ? 1 : 0,
+            participants: [],
+            messages: []
+        };
 
-        next();
-        // set variables
+        // Add the users
+        for (var i = 0; i < sentConversation.recipients.users.length; i++) {
+            conversation.participants.push({
+                _id: sentConversation.recipients.users[i]._id,
+                type: "user"
+            });
+        }
+        // Add the sender as a participant
+        conversation.participants.push({
+            _id: sentFromUserId,
+            type: "user"
+        })
 
-        // include the message as a new message by this user
+        // And the groups
+        for (var j = 0; i < sentConversation.recipients.groups.length; j++) {
+            conversation.participants.push({
+                _id: sentConversation.recipients.groups[j]._id,
+                type: "group"
+            });
+        }
+
+        // Add the first message
+        var firstMessage = {
+            content: sentConversation.message,
+            sender: sentFromUserId,
+            date: new Date().toISOString()
+        };
+        conversation.messages.push(firstMessage);
+
+
+        db.conversation.save(conversation, function(err, id) {
+            if(err) {
+                response.send(err);
+                next(false);
+            } else {
+                response.send(201, {id: id});
+                next();
+            }
+        });
+
     }
 
     function sendMessage(request, response, next) {
