@@ -62,8 +62,8 @@
             <li ng-class="{active: $isActive('/groups')}"><a href="/groups">Groups</a></li>
           </ul>
 
-          <ul class="nav navbar-nav pull-right">
-            <li><a href="/conversation/new">Compose</a></li>
+          <ul class="nav navbar-nav pull-right" ng-if="$navigation.action">
+            <li><a ng-href="{{$navigation.action.url}}">{{$navigation.action.title}}</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </nav>
@@ -73,6 +73,7 @@
         <div ng-fragments>
         </div>
       </div>
+      {{$navigation | json}}
     </div>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>

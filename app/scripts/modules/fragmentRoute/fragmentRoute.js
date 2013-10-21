@@ -227,8 +227,8 @@ function $RouteProvider(){
   };
 
 
-  this.$get = ['$rootScope', '$location', '$routeParams', '$q', '$injector', '$http', '$templateCache', '$sce',
-      function( $rootScope,   $location,   $routeParams,   $q,   $injector,   $http,   $templateCache,   $sce) {
+  this.$get = ['$rootScope', '$location', '$routeParams', '$q', '$injector', '$http', '$templateCache', '$sce', '$interpolate',
+      function( $rootScope,   $location,   $routeParams,   $q,   $injector,   $http,   $templateCache,   $sce, $interpolate) {
 
     /**
      * @ngdoc object
@@ -568,6 +568,29 @@ function $RouteProvider(){
                 copy(next.params, $routeParams);
               }
               $rootScope.$broadcast('$routeChangeSuccess', next, last);
+
+
+              var back = null, action = null;
+              if(next && next.fragments) {
+                if(next.fragments[next.fragments.length - 1].back) {
+                  back = next.fragments[next.fragments.length - 1].back;
+                }
+
+                if(next.fragments[next.fragments.length - 1].action) {
+                  action = next.fragments[next.fragments.length - 1].action;
+                }
+              }
+
+              if(!$rootScope.$navigation) { $rootScope.$navigation = {}; }
+              $rootScope.$navigation.back = back === null ? null : {
+                url: $interpolate(back.url)($routeParams),
+                title: back.title
+              };
+
+              $rootScope.$navigation.action = action === null ? null : {
+                url: $interpolate(action.url)($routeParams),
+                title: action.title
+              };
             }
           }, function(error) {
             if (next === $route.current) {

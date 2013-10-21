@@ -133,66 +133,31 @@
         }
     ];
 
-    angular.module('kundestyrtApp').factory('Conversation', ['$q', function($q) {
+    angular.module('kundestyrtApp').factory('Conversation', ['$q', '$http', function($q, $http) {
         return {
             list: [function() {
-                var deferred = $q.defer();
-                deferred.resolve(conversations);
-                return deferred.promise;
+                return $http.get('/api/conversations').then(function(xhr) {
+                    return xhr.data.rows;
+                });
             }],
 
             get: ['id', function(id) {
-                var deferred = $q.defer();
-                var conversation;
-
-                for(var i = 0, l = conversations.length; i < l; i++) {
-                    if(conversations[i]._id.toString() === id) {
-                        conversation = conversations[i];
-                        break;
-                    }
-                }
-
-                if(conversation === undefined) {
-                    deferred.reject(function() {throw new Error('not found');});
-                } else {
-                    deferred.resolve(conversation);
-                }
-                return deferred.promise;
+                return $http.get('/api/conversations/' + id).then(function(xhr) {
+                    return xhr.data;
+                });
             }],
 
-            send: function(id, sub, msg) {
-                if(id === undefined) {
-                    return;
+            send: function(msg, id, sub) {
+                var data = {content: msg};
+                var url = '/api/conversations/' + id;
+                if(sub) {
+                    url += '/' + sub;
                 }
+                url += '/send';
 
-                var conversation;
-                for(var i = 0, l = conversations.length; i < l; i++) {
-                    if(conversations[i]._id.toString() === id) {
-                        conversation = conversations[i];
-                        break;
-                    }
-                }
-
-                if(sub === -1) {
-                    if(conversation.type !== 0) {
-                        return;
-                    }
-
-                    conversation.messages.push({
-                        sender: 'Aleksander Heintz',
-                        date: new Date().toISOString(),
-                        content: msg,
-                        self: true
-                    });
-                } else {
-                    var subConv = conversation.conversations[sub];
-                    subConv.messages.push({
-                        sender: 'Aleksander Heintz',
-                        date: new Date().toISOString(),
-                        content: msg,
-                        self: true
-                    });
-                }
+                return $http.post(url, data).then(function(xhr) {
+                    return xhr.data
+                });
             },
 
             create: function(isInquiry, recipents, topic, inquiry) {

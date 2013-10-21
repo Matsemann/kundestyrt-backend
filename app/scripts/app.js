@@ -11,27 +11,49 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       }];
     }
 
+    var a = {
+      conversation: {
+        url: '/conversation/new',
+        title: 'Compose'
+      },
+      note: {
+        url: '/notes/new',
+        title: 'Compose'
+      },
+      noteEdit: {
+        url: '/notes/{{id}}/edit',
+        title: 'Edit'
+      }
+    };
+
     var f = {
       conversationList: {
         controller: 'ConversationListCtrl',
         templateUrl: '/views/conversation/list.html',
         resolve: {
           conversations: serviceResolve('Conversation', 'list')
-        }
+        },
+        action: a.conversation
       },
       conversation: {
         controller: 'ConversationCtrl',
         templateUrl: '/views/conversation/main.html',
         resolve: {
           conversation: serviceResolve('Conversation', 'get')
-        }
+        },
+        back: {
+          url: '/conversation',
+          title: 'Conversations'
+        },
+        action: a.conversation
       },
       inquiryMessages: {
         controller: 'InquiryMessagesCtrl',
         templateUrl: '/views/conversation/messages.html',
         resolve: {
           conversation: serviceResolve('Conversation', 'get')
-        }
+        },
+        action: a.conversation
       },
       newConversation: {
         controller: 'NewConversationCtrl',
@@ -39,33 +61,38 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           users: serviceResolve('Contacts', 'getUsers'),
           groups: serviceResolve('Groups', 'getGroups')
-        }
+        },
+        action: a.conversation
       },
       noteList: {
         controller: 'NoteListCtrl',
         templateUrl: '/views/note/list.html',
         resolve: {
           notes: serviceResolve('Notes', 'getNotes')
-        }
+        },
+        action: a.note
       },
       note: {
         controller: 'NoteCtrl',
         templateUrl: '/views/note/main.html',
         resolve: {
           note: serviceResolve('Notes', 'getNote')
-        }
+        },
+        action: a.noteEdit
       },
       noteEdit: {
         controller: 'NoteEditCtrl',
         templateUrl: '/views/note/edit.html',
         resolve: {
           note: serviceResolve('Notes', 'getNote')
-        }
+        },
+        action: a.note
       },
       noteNew: {
         controller: 'NoteNewCtrl',
         templateUrl: '/views/note/edit.html',
-        resolve: {}
+        resolve: {},
+        action: a.note
       },
       groupList: {
         controller: 'GroupListCtrl',

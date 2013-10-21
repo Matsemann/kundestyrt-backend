@@ -6,6 +6,7 @@ module.exports = function(server) {
         db.notes.all(function(err, body) {
             if (err) {
                 response.send(err);
+                next(false);
             } else {
                 response.send(200, body);
                 next();
@@ -20,6 +21,7 @@ module.exports = function(server) {
         db.notes.find(id, function(err, body) {
             if (err) {
                 response.send(err);
+                next(false);
             } else {
                 response.send(responseCode, body);
                 next();
@@ -40,6 +42,7 @@ module.exports = function(server) {
         db.notes.save(note, function(err, id) {
             if(err) {
                 response.send(err);
+                next(false);
             } else {
                 getNote(request, response, next, id);
                 next();
@@ -58,6 +61,7 @@ module.exports = function(server) {
         db.notes.save(note, function(err, id) {
             if(err) {
                 response.send(err);
+                next(false);
             } else {
                 response.setHeader('Location', '/api/notes/' + id);
                 getNote(request, response, next, id, 201);
@@ -72,6 +76,7 @@ module.exports = function(server) {
         db.notes.remove(id, rev, function(err, id) {
             if (err) {
                 response.send(err);
+                next(false);
             } else {
                 response.send(200);
                 next();

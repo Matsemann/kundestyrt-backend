@@ -5,6 +5,7 @@ module.exports = function(server) {
         db.groups.all(function(err, body) {
             if (err) {
                 response.send(err);
+                next(false);
             } else {
                 response.send(200, body);
                 next();
@@ -18,6 +19,7 @@ module.exports = function(server) {
         db.groups.find(id, function(err, body) {
             if (err) {
                 response.send(err);
+                next(false);
             } else {
                 response.send(200, body);
                 next();
@@ -39,6 +41,7 @@ module.exports = function(server) {
         db.groups.save(group, function(err, id) {
             if(err) {
                 response.send(err);
+                next(false);
             } else {
                 // return updated group
                 getGroup(request, response, next, id);
@@ -58,8 +61,10 @@ module.exports = function(server) {
         db.groups.save(note, function(err, id) {
             if(err) {
                 response.send(err);
+                next(false);
             } else {
                 response.send(201, {'id': id});
+                next();
             }
         });
     }
@@ -71,6 +76,7 @@ module.exports = function(server) {
         db.notes.remove(id, rev, function(err, id) {
             if (err) {
                 response.send(err);
+                next(false);
             } else {
                 response.send(200);
                 next();
