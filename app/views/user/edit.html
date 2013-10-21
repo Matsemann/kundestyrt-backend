@@ -1,19 +1,16 @@
-<button ng-click="saveUser()" ng-disabled="user.name === '' || user.content === ''" class="btn btn-default">Lagre</button>
-<button ng-click="deleteUser()" ng-show="user._id" class="btn btn-default">Slett</button>
+<button ng-click="saveUser()" ng-disabled="user.name === ''" class="btn btn-default">Lagre</button>
+<!--<button ng-click="deleteUser()" ng-show="user._id" class="btn btn-default">Slett</button>-->
+
+<h2>{{user.name || 'Ny bruker'}}</h2>
+<hr>
 
 <div class="form-group">
     <label for="name">Navn</label>
-    <input type="text" id="name" class="form-control" ng-model="user.name">
+    <input ng-model="user.name" type="text" id="name" class="form-control"
+           placeholder="Skriv inn navn">
 </div>
-
-<!--
-<div class="form-group">
-    <label for="image">Bilde</label>
-    <input type="text" id="image" class="form-control" ng-model="user.name">
-</div>
--->
-
 <div class="form-group">
     <label for="email">E-post</label>
-    <input type="text" id="email" class="form-control" ng-model="user.email">
+    <input ng-model="user.email" type="text" id="email" class="form-control"
+           placeholder="Skriv inn e-post">
 </div>

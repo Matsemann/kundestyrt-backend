@@ -33,6 +33,6 @@
                     return null; //vil nok krasje
                 }
             }
-        }
+        };
     }]);
 })();

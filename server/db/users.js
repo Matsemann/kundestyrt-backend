@@ -49,8 +49,21 @@ function all(done) {
     });
 }
 
+function save(user, done) {
+    var db = connect();
+
+    db.insert(user, function(err, body) {
+        if (err) {
+            done(err);
+        } else {
+            done(null, body.id);
+        }
+    });
+}
+
 module.exports = {
     find: find,
     findByUsername: findByUsername,
-    all: all
+    all: all,
+    save: save
 };

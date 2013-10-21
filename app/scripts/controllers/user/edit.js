@@ -5,8 +5,10 @@ angular.module('kundestyrtApp')
         $scope.user = user;
 
         $scope.saveUser = function() {
+            console.log('Save user');
             Users.save($scope.user).then(function() {
                 $location.path('/users/' + user._id);
+                console.log('done');
             });
         };
 
