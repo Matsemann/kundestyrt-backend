@@ -1,16 +1,19 @@
 <div ng-repeat="msg in conversation.messages" class="message well" ng-class="{self: msg.sender === $user._id}">
     <div class="image">
-        <img ng-src="https://en.gravatar.com/avatar/{{msg.image}}?s=50&r=g" alt="image" />
+        <img ng-src="https://en.gravatar.com/avatar/{{msg.image}}?s=50&r=g" alt="image"/>
     </div>
     <div class="content">{{msg.content}}</div>
-    <br />
+    <br/>
+
     <div class="date">{{msg.date | date}}</div>
-    <br style="clear: both;" />
+    <br style="clear: both;"/>
 </div>
 
-<div class="input-group">
-  <input type="text" class="form-control" ng-model="msg" />
-  <span class="input-group-btn">
-    <button class="btn btn-default" type="button" ng-click="send(msg)">Send</button>
-  </span>
-</div><!-- /input-group -->
+<form>
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="msg"/>
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit" ng-click="send(msg)">Send</button>
+        </span>
+    </div>
+</form>

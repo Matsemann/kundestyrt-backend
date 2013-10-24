@@ -36,12 +36,10 @@ function forUser(userId, done) {
             });
             userGroups.unshift(userId);
 
-            debugger;
             db.view_with_list('conversations', 'by_user', 'no_duplicates', {keys: userGroups}, function(err, body) {
                 if(err) {
                     done(err);
                 } else {
-                    debugger;
                     done(null, {
                         total_rows: -1,
                         offset: -1,

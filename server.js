@@ -191,10 +191,10 @@ function serveFileFromStats(file, err, stats, isGzip, request, response, next) {
     var fstream = fs.createReadStream(file + (isGzip ? '.gz' : ''));
     var maxAge = 3600; // 1hr
     fstream.once('open', function(fd) {
-        response.cache({maxAge: maxAge});
+//        response.cache({maxAge: maxAge});
         response.set('Content-Length', stats.size);
         response.set('Content-Type', mime.lookup(file));
-        response.set('Last-Modified', stats.mtime);
+//        response.set('Last-Modified', stats.mtime);
 
         response.writeHead(200);
         fstream.pipe(response);
