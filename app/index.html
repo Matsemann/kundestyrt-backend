@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,22 +12,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <!-- build:css(.tmp) /styles/main.css -->
-        <link rel="stylesheet" href="/styles/main.less">
-        <!-- endbuild -->
+    <!-- build:css(.tmp) /styles/main.css -->
+    <link rel="stylesheet" href="/styles/main.less">
+    <!-- endbuild -->
 
-      <script>
-          if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-              var msViewportStyle = document.createElement("style");
-              msViewportStyle.appendChild(
-                      document.createTextNode(
-                              "@-ms-viewport{width:auto!important}"
-                      )
-              );
-              document.getElementsByTagName("head")[0].
-                      appendChild(msViewportStyle);
-          }
-      </script>
+    <script>
+        if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+            var msViewportStyle = document.createElement("style");
+            msViewportStyle.appendChild(
+                    document.createTextNode(
+                            "@-ms-viewport{width:auto!important}"
+                    )
+            );
+            document.getElementsByTagName("head")[0].
+                    appendChild(msViewportStyle);
+        }
+    </script>
 </head>
   <body ng-app="kundestyrtApp">
     <div class="wrap">
@@ -59,7 +59,8 @@
           <ul class="nav navbar-nav">
             <li ng-class="{active: $isActive('/') || $isActive('/conversation%')}"><a href="/">Conversations</a></li>
             <li ng-class="{active: $isActive('/notes')}"><a href="/notes">Notes</a></li>
-            <li ng-class="{active: $isActive('/groups')}"><a href="/groups">Groups</a></li>
+              <li ng-class="{active: $isActive('/groups')}"><a href="/groups">Groups</a></li>
+              <li ng-class="{active: $isActive('/users')}"><a href="/users">Users</a></li>
           </ul>
 
           <ul class="nav navbar-nav pull-right" ng-if="$navigation.action">
@@ -96,6 +97,10 @@
 
     <!-- build:js /scripts/scripts.js -->
     <script src="/scripts/app.js"></script>
+    <script src="/scripts/controllers/user/list.js"></script>
+    <script src="/scripts/controllers/user/edit.js"></script>
+    <script src="/scripts/controllers/user/user.js"></script>
+    <script src="/scripts/controllers/user/new.js"></script>
     <script src="/scripts/controllers/conversation/main.js"></script>
     <script src="/scripts/controllers/conversation/list.js"></script>
     <script src="/scripts/controllers/conversation/inquiry.js"></script>
@@ -107,6 +112,7 @@
     <script src="/scripts/controllers/group/list.js"></script>
     <script src="/scripts/controllers/group/edit.js"></script>
     <script src="/scripts/controllers/login.js"></script>
+    <script src="/scripts/services/users.js"></script>
     <script src="/scripts/services/conversation.js"></script>
     <script src="/scripts/services/notes.js"></script>
     <script src="/scripts/services/contacts.js"></script>

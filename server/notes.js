@@ -30,14 +30,14 @@ module.exports = function(server) {
     }
 
     function putNote(request, response, next) {
-        var sentNote = request.params;
-        var note = {
-            '_id': request.params.id, // we wan't the ID from the url
-            '_rev': sentNote._rev,
-            'doc_type': 'note',
-            'name': sentNote.name,
-            'content': sentNote.content
-        };
+            var sentNote = request.params;
+            var note = {
+                '_id': request.params.id, // we wan't the ID from the url
+                '_rev': sentNote._rev,
+                'doc_type': 'note',
+                'name': sentNote.name,
+                'content': sentNote.content
+            };
 
         db.notes.save(note, function(err, id) {
             if(err) {
