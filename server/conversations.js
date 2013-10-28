@@ -42,34 +42,55 @@ module.exports = function(server) {
             messages: []
         };
 
-        // Add the users
-        for (var i = 0; i < sentConversation.recipients.users.length; i++) {
-            conversation.participants.push({
-                _id: sentConversation.recipients.users[i]._id,
-                type: "user"
-            });
-        }
-        // Add the sender as a participant
-        conversation.participants.push({
-            _id: sentFromUserId,
-            type: "user"
-        })
-
-        // And the groups
-        for (var j = 0; i < sentConversation.recipients.groups.length; j++) {
-            conversation.participants.push({
-                _id: sentConversation.recipients.groups[j]._id,
-                type: "group"
-            });
-        }
-
-        // Add the first message
         var firstMessage = {
             content: sentConversation.message,
             sender: sentFromUserId,
             date: new Date().toISOString()
         };
-        conversation.messages.push(firstMessage);
+
+        if (conversation.type === 1) { // inquiry
+            var userIds = [];
+
+            // Add the selected users
+            for (var k = 0; k < sentConversation.recipients.users.length; k++) {
+                conversation.participants.push(sentConversation.recipients.users[k]._id);
+            }
+
+            // Add all users from the selected groups (make sure there aren't duplicates)
+
+            // Add a new conversation per user, containing the firstMessage
+
+            // more?
+
+        } else { // group
+
+            // Add the selected users
+            for (var i = 0; i < sentConversation.recipients.users.length; i++) {
+                conversation.participants.push({
+                    _id: sentConversation.recipients.users[i]._id,
+                    type: "user"
+                });
+            }
+
+            // Add the sender as a participant
+            conversation.participants.push({
+                _id: sentFromUserId,
+                type: "user"
+            });
+
+            // And the groups
+            for (var j = 0; i < sentConversation.recipients.groups.length; j++) {
+                conversation.participants.push({
+                    _id: sentConversation.recipients.groups[j]._id,
+                    type: "group"
+                });
+            }
+
+            // Add the first message
+            conversation.messages.push(firstMessage);
+        }
+
+
 
 
         db.conversation.save(conversation, function(err, id) {

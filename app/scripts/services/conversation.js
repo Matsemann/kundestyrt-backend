@@ -30,7 +30,7 @@
 
             create: function(conversation) {
                 return $http.post('/api/conversations', conversation).then(function (xhr) {
-                    return xhr.data;
+                    return xhr.data.id;
                 });
             }
         };

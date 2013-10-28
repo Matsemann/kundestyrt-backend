@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('kundestyrtApp')
-    .controller('NewConversationCtrl', ['$scope', 'users', 'groups', 'Conversation', function ($scope, users, groups, Conversation) {
+    .controller('NewConversationCtrl', ['$scope', 'users', 'groups', 'Conversation', '$location', function ($scope, users, groups, Conversation, $location) {
         $scope.users = users;
         $scope.groups = groups;
 
@@ -43,11 +43,9 @@ angular.module('kundestyrtApp')
         };
 
         $scope.createConversation = function() {
-//            var toSend = {
-//                topic: $scope.conversation.topic,
-//                type: $scope.conversation.inquiry ? 1 : 0,
-//                part
-//            }
-            Conversation.create($scope.conversation);
-        }
+            Conversation.create($scope.conversation).then(function(id) {
+                console.log(id);
+                $location.path('/conversation/' + id);
+            });
+        };
     }]);
