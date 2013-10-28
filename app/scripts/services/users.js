@@ -4,7 +4,7 @@
     angular.module('kundestyrtApp').factory('Users', ['$http', function($http) {
         return {
             getUsers: function() {
-                return $http.get('api/users').then(
+                return $http.get('/api/users').then(
                     function(xhr) {
                         return xhr.data.rows;
                     });

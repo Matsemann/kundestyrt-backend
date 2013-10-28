@@ -64,6 +64,32 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         },
         action: a.conversation
       },
+      userList: {
+        controller: 'UserListCtrl',
+        templateUrl: '/views/user/list.html',
+        resolve: {
+          users: serviceResolve('Users', 'getUsers')
+        }
+      },
+      user: {
+        controller: 'UserCtrl',
+        templateUrl: '/views/user/main.html',
+        resolve: {
+          user: serviceResolve('Users', 'getUser')
+        }
+      },
+      userEdit: {
+        controller: 'UserEditCtrl',
+        templateUrl: '/views/user/edit.html',
+        resolve: {
+          user: serviceResolve('Users', 'getUser')
+        }
+      },
+      userNew: {
+        controller: 'UserNewCtrl',
+        templateUrl: '/views/user/edit.html',
+        resolve: {}
+      },
       noteList: {
         controller: 'NoteListCtrl',
         templateUrl: '/views/note/list.html',
@@ -140,6 +166,22 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       .when('/unauthorized', {
         auth: true,
         fragments: [f.unauthorized]
+      })
+      .when('/users', {
+      auth: 'admin',
+          fragments: [f.userList]
+      })
+      .when('/users/new', {
+        auth: 'admin',
+        fragments: [f.userList, f.userNew]
+      })
+      .when('/users/:id', {
+        auth: 'admin',
+        fragments: [f.userList, f.user]
+      })
+      .when('/users/:id/edit', {
+        auth: 'admin',
+        fragments: [f.userList, f.userEdit]
       })
       .when('/conversation', {
         auth: true,
