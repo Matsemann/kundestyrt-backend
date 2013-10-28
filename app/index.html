@@ -50,17 +50,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Defero</a>
+          <a class="navbar-brand" href="#/">Defero</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="navbar-collapse"
              ng-class="{in: barShowing, collapse: !barShowing}"
              ng-click="barShowing = false"><!-- Hide it when menu item is clicked -->
           <ul class="nav navbar-nav">
-            <li ng-class="{active: $isActive('/') || $isActive('/conversation%')}"><a href="/">Conversations</a></li>
-            <li ng-class="{active: $isActive('/notes')}"><a href="/notes">Notes</a></li>
-              <li ng-class="{active: $isActive('/groups')}"><a href="/groups">Groups</a></li>
-              <li ng-class="{active: $isActive('/users')}"><a href="/users">Users</a></li>
+            <li ng-class="{active: $isActive('/') || $isActive('/conversation%')}"><a href="#/">Conversations</a></li>
+            <li ng-class="{active: $isActive('/notes')}"><a href="#/notes">Notes</a></li>
+              <li ng-class="{active: $isActive('/groups')}"><a href="#/groups">Groups</a></li>
+              <li ng-class="{active: $isActive('/users')}"><a href="#/users">Users</a></li>
           </ul>
 
           <ul class="nav navbar-nav pull-right" ng-if="$navigation.action">

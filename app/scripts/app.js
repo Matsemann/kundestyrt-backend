@@ -2,7 +2,6 @@
 
 angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
   .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
-    $locationProvider.html5Mode(true).hashPrefix('!');
     $httpProvider.interceptors.push('AuthInterceptor');
 
     function serviceResolve(service, method) {

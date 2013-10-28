@@ -1,4 +1,4 @@
-<a href="/users/new" class="btn btn-default">Ny bruker</a>
+<a href="#/users/new" class="btn btn-default">Ny bruker</a>
 
 <div ng-repeat="user in users" class="conversation" ng-class="{selected: $isActive('/users/{{user._id}}%')}" ng-click="$goTo('/users/{{user._id}}')">
     <div class="topic">{{user.name}}</div>

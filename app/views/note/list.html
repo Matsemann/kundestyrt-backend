@@ -1,4 +1,4 @@
-<a href="/notes/new" class="btn btn-default">Nytt notat</a>
+<a href="#/notes/new" class="btn btn-default">Nytt notat</a>
 
 <div ng-repeat="note in notes" class="conversation" ng-class="{selected: $isActive('/notes/{{note._id}}%')}" ng-click="$goTo('/notes/{{note._id}}')">
     <div class="topic">{{note.name}}</div>
