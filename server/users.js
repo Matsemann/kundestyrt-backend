@@ -2,7 +2,7 @@ module.exports = function(server) {
     var db = require('./db'),
         auth = require('./auth');
 
-    server.get('/api/users', function(request, response, next) {
+     function getUsers(request, response, next) {
         db.users.all(function(err, body) {
             if (err) {
                 response.send(err);
@@ -12,15 +12,12 @@ module.exports = function(server) {
                 next();
             }
         });
-    });
+    }
 
-    server.get('/api/users/me', [
-        auth.authorize(),
-        function(request, response, next) {
-            response.send(200, request.user);
-            next();
-        }
-    ]);
+    function getMe(request, response, next) {
+        response.send(200, request.user);
+        next();
+    }
 
     function getUser(request, response, next) {
         db.users.find(request.params.id, function(err, body) {
@@ -57,7 +54,22 @@ module.exports = function(server) {
         });
     }
 
-    server.get('/api/users/:id', getUser);
-    server.put('/api/users/:id', putUser);
+    server.get('/api/users', [
+        auth.authorize(),
+        getUsers
+    ]);
+    server.get('/api/users/me', [
+        auth.authorize(),
+        getMe
+    ]);
+
+    server.get('/api/users/:id', [
+        auth.authorize(),
+        getUser
+    ]);
+    server.put('/api/users/:id', [
+        auth.authorize(),
+        putUser
+    ]);
 
 };

@@ -1,6 +1,7 @@
 module.exports = function(server) {
-    var db = require('./db');
-    var marked = require('marked');
+    var db = require('./db'),
+        marked = require('marked'),
+        auth = require('./auth');
 
     function getNotes(request, response, next) {
         db.notes.all(function(err, body) {
@@ -84,9 +85,24 @@ module.exports = function(server) {
         });
     }
 
-    server.get('/api/notes', getNotes);
-    server.get('/api/notes/:id', getNote);
-    server.put('/api/notes/:id', putNote);
-    server.post('/api/notes', postNote);
-    server.del('api/notes/:id/:rev', deleteNote);
+    server.get('/api/notes', [
+        auth.authorize(),
+        getNotes
+    ]);
+    server.get('/api/notes/:id', [
+        auth.authorize(),
+        getNote
+    ]);
+    server.put('/api/notes/:id', [
+        auth.authorize("admin"),
+        putNote
+    ]);
+    server.post('/api/notes', [
+        auth.authorize("admin"),
+        postNote
+    ]);
+    server.del('api/notes/:id/:rev', [
+        auth.authorize("admin"),
+        deleteNote
+    ]);
 };

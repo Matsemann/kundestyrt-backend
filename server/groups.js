@@ -1,5 +1,6 @@
 module.exports = function(server) {
-    var db = require('./db');
+    var db = require('./db'),
+        auth = require('./auth');
 
     function getGroups(request, response, next) {
         db.groups.all(function(err, body) {
@@ -84,9 +85,25 @@ module.exports = function(server) {
         });
     }
 
-    server.get('/api/groups', getGroups);
-    server.get('/api/groups/:id', getGroup);
-    server.put('/api/groups/:id', putGroup);
-    server.post('/api/groups', postGroup);
-    server.del('api/groups/:id/:rev', deleteGroup)
+
+    server.get('/api/groups', [
+        auth.authorize(),
+        getGroups
+    ]);
+    server.get('/api/groups/:id', [
+        auth.authorize(),
+        getGroup
+    ]);
+    server.put('/api/groups/:id', [
+        auth.authorize("admin"),
+        putGroup
+    ]);
+    server.post('/api/groups', [
+        auth.authorize("admin"),
+        postGroup
+    ]);
+    server.del('api/groups/:id/:rev', [
+        auth.authorize("admin"),
+        deleteGroup
+    ]);
 };
