@@ -38,8 +38,7 @@ module.exports = function(server) {
             topic: sentConversation.topic,
             doc_type: 'conversation',
             type: sentConversation.inquiry ? 1 : 0,
-            participants: [],
-            messages: []
+            participants: []
         };
 
         var firstMessage = {
@@ -53,12 +52,20 @@ module.exports = function(server) {
 
             // Add the selected users
             for (var k = 0; k < sentConversation.recipients.users.length; k++) {
-                conversation.participants.push(sentConversation.recipients.users[k]._id);
+                userIds.push(sentConversation.recipients.users[k]._id);
             }
 
             // Add all users from the selected groups (make sure there aren't duplicates)
 
+
             // Add a new conversation per user, containing the firstMessage
+            conversation.conversations = [];
+            for (var l = 0; l < userIds.length; l++) {
+                conversation.conversations.push({
+                    recipient: userIds[l],
+                    messages: [firstMessage]
+                });
+            }
 
             // more?
 
@@ -86,7 +93,9 @@ module.exports = function(server) {
                 });
             }
 
+
             // Add the first message
+            conversation.messages = [];
             conversation.messages.push(firstMessage);
         }
 
