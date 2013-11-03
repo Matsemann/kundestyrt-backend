@@ -112,20 +112,20 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         },
         context: [function() {
           return {
-            title: 'New Conversation',
+            title: 'Ny samtale',
             left: {
               type: 'link',
               url: '/conversation/',
-              title: 'Cancel'
+              title: 'Avbryt'
             },
             right: {
               type: 'action',
-              title: 'Create',
+              title: 'Send',
               action: 'create()'
             },
             action: {
               type: 'action',
-              title: 'Create',
+              title: 'Send',
               action: 'create()'
             }
           };
@@ -163,7 +163,22 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           notes: serviceResolve('Notes', 'getNotes')
         },
-        action: a.note
+        context: {
+          title: 'Notater',
+          right: {
+            type: 'link',
+            url: '/notes/new',
+            title: 'Nytt notat'
+          },
+          action: {
+            type: 'link',
+            url: '/notes/new',
+            title: 'Nytt notat'
+          },
+          left: {
+            type: 'menu'
+          }
+        }
       },
       note: {
         controller: 'NoteCtrl',
@@ -171,7 +186,26 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           note: serviceResolve('Notes', 'getNote')
         },
-        action: a.noteEdit
+        context: ['note', function(note) {
+          return {
+            title: note.name,
+            action: {
+              type: 'link',
+              url: '/notes/' + note._id + '/edit',
+              title: 'Rediger'
+            },
+            right: {
+              type: 'link',
+              url: '/notes/' + note._id + '/edit',
+              title: 'Rediger'
+            },
+            left: {
+              type: 'back',
+              url: '/notes',
+              title: 'Notater'
+            }
+          };
+        }]
       },
       noteEdit: {
         controller: 'NoteEditCtrl',
@@ -179,13 +213,47 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           note: serviceResolve('Notes', 'getNote')
         },
-        action: a.note
+        context: {
+          title: 'Rediger notat',
+          right: {
+            type: 'action',
+            action: 'saveNote()',
+            title: 'Lagre'
+          },
+          action: {
+            type: 'action',
+            action: 'saveNote()',
+            title: 'Lagre'
+          },
+          left: {
+            type: 'link',
+            url: '/notes',
+            title: 'Avbryt'
+          }
+        }
       },
       noteNew: {
         controller: 'NoteNewCtrl',
         templateUrl: '/views/note/edit.html',
         resolve: {},
-        action: a.note
+        context: {
+          title: 'Nytt notat',
+          right: {
+            type: 'action',
+            action: 'saveNote()',
+            title: 'Lagre'
+          },
+          action: {
+            type: 'action',
+            action: 'saveNote()',
+            title: 'Lagre'
+          },
+          left: {
+            type: 'link',
+            url: '/notes',
+            title: 'Avbryt'
+          }
+        }
       },
       groupList: {
         controller: 'GroupListCtrl',

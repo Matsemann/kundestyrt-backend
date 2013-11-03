@@ -9,8 +9,12 @@ angular.module('kundestyrtApp')
         };
 
         $scope.saveNote = function() {
-            Notes.save($scope.note).then(function(result) {
-                $location.path('/notes/' + result.data._id);
-            });
+            if ($scope.note.name !== '' && $scope.note.content !== '') {
+                Notes.save($scope.note).then(function(result) {
+                    $location.path('/notes/' + result.data._id);
+                });
+            } else {
+                alert('Du må fylle i feltene');
+            }
         };
     }]);

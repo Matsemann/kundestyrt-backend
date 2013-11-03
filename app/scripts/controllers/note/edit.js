@@ -11,8 +11,10 @@ angular.module('kundestyrtApp')
         };
 
         $scope.deleteNote = function() {
-            Notes.delete($scope.note).then(function() {
-                $location.path('/notes');
-            });
+            if (confirm('Er du sikker på at du vil slette dette notatet?')) {
+                Notes.delete($scope.note).then(function() {
+                    $location.path('/notes');
+                });
+            }
         };
     }]);
