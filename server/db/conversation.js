@@ -20,7 +20,7 @@ function find(id, done) {
 function forUser(userId, done) {
     var db = connect();
 
-    db.view('groups', 'all', function(err, body) {
+    db.view('groups', 'for_user', {key: userId}, function(err, body) {
         if (err) {
             done(err);
         } else {

@@ -3,7 +3,7 @@
         <img ng-src="https://en.gravatar.com/avatar/{{conv.image}}?s=50&r=g" alt="image" />
     </div>
     <div class="content">
-        <div class="topic">{{conv.topic}}</div>
+        <div class="topic">{{conv.topic || '&nbsp;'}}</div>
         <br />
         <div class="date">{{conv.lastDate | date}}</div>
     </div>

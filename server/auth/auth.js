@@ -26,11 +26,12 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     console.log('authenticate');
     db.users.findByUsername(username, function(err, user) {
+      if (!user) { return done(null, false); }
+      
       var hash = sha256(password + user._id);
       console.log('user \'' + user.name + '\' with password-hash: ' + user.password);
 
       if (err) { return done(err); }
-      if (!user) { return done(null, false); }
       if (user.password !== hash) { return done(null, false); }
       return done(null, user);
     });

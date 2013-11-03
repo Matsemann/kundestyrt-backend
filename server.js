@@ -284,7 +284,7 @@ server.get(/^(?!\/api\/)/, useSession(staticFileRoute));
 
 server.on('uncaughtException', function(request, response, route, error) {
     debugger;
-    console.log(error);
+    console.log(error, error.stack);
 });
 
 server.listen(port, function() {

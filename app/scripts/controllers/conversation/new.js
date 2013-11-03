@@ -42,7 +42,7 @@ angular.module('kundestyrtApp')
             }
         };
 
-        $scope.createConversation = function() {
+        $scope.create = function() {
             Conversation.create($scope.conversation).then(function(id) {
                 console.log(id);
                 $location.path('/conversation/' + id);

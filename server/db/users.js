@@ -8,7 +8,7 @@ function findByUsername(username, done) {
     db.view('users', 'by_email', {key: username}, function(err, body) {
         if (err) {
             done(err);
-        } else if(body.total_rows === 0) {
+        } else if(body.rows.length === 0) {
             done(null, null);
         } else {
             console.log('got user: ' + body.rows[0].id);

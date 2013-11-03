@@ -9,6 +9,12 @@
                 });
             },
 
+            get: function(id) {
+                return $http.get('/api/users/' + id).then(function(xhr) {
+                    return xhr.data;
+                });
+            },
+
             getGroups: function() {
                 return $http.get('/api/groups').then(function(xhr) {
                     return xhr.data.rows;

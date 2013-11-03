@@ -19,9 +19,14 @@ angular.module('kundestyrtApp')
 
         // Needs to wrapped inside a timeout so that it is put in the end of the event queue and happens after the DOM is updated
         function scrollToBottom()  {
-            $timeout(function () {
-                $location.hash('newMessageBox');
-                $anchorScroll();
-            }, 0);
+            var fragment = $('.fragment:last-child');
+
+            function doScroll() {
+                setTimeout(function() {
+                    fragment.animate({scrollTop: fragment[0].scrollHeight});
+                }, 100); // no idea why this should be 100...
+            }
+
+            doScroll();
         }
   }]);

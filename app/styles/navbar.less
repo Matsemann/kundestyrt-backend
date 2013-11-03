@@ -1,0 +1,77 @@
+.navbar {
+    > .navbar-header {
+        width: 100%;
+        text-align: center;
+
+        > .navbar-brand {
+            display: none;
+        }
+
+        > .arrow,
+        > .menu {
+            background-size: 24px 44px;
+            background-repeat: no-repeat;
+        }
+
+        > .left,
+        > .title,
+        > .right {
+            padding: @navbar-padding-vertical @navbar-padding-horizontal;
+            font-size: @font-size-large;
+            line-height: @line-height-computed;
+            color: @navbar-default-brand-color;
+        }
+
+        > .left,
+        > .right {
+            &:hover,
+            &:focus {
+                text-decoration: none;
+                color: @navbar-default-brand-hover-color;
+                background-color: @navbar-default-brand-hover-bg;
+            }
+        }
+
+        > .left {
+            float: left;
+
+            &.arrow {
+                padding-left: @navbar-padding-horizontal + 13px;
+                background-image: url(../images/backBtn.svg);
+                background-position: left center;
+            }
+
+            &.menu {
+                padding-left: @navbar-padding-horizontal + 13px;
+                background-image: url(../images/nextBtn.svg);
+                background-position: left center;
+            }
+        }
+
+        > .right {
+            float: right;
+        }
+
+        > .title {
+            margin: 0 auto;
+            display: inline-block;
+        }
+    }
+}
+
+@media (min-width: @screen-tablet) {
+    .navbar > .navbar-header {
+        width: auto;
+        text-align: left;
+
+        > .left,
+        > .title,
+        > .right {
+            display: none;
+        }
+
+        > .navbar-brand {
+            display: inherit;
+        }
+    }
+}

@@ -21,6 +21,12 @@
   @media (min-width: @grid-float-breakpoint) {
     border-radius: @navbar-border-radius;
   }
+
+  button.btn-link {
+    text-decoration: none;
+    outline: none;
+    border: none;
+  }
 }
 
 
@@ -205,7 +211,8 @@
 .navbar-nav {
   margin: (@navbar-padding-vertical / 2) -@navbar-padding-horizontal;
 
-  > li > a {
+  > li > a,
+  > li > button.btn.btn-link {
     padding-top:    10px;
     padding-bottom: 10px;
     line-height: @line-height-computed;
@@ -222,10 +229,12 @@
       border: 0;
       box-shadow: none;
       > li > a,
+      > li > button.btn.btn-link,
       .dropdown-header {
         padding: 5px 15px 5px 25px;
       }
-      > li > a {
+      > li > a,
+      > li > button.btn.btn-link {
         line-height: @line-height-computed;
         &:hover,
         &:focus {
@@ -242,7 +251,8 @@
 
     > li {
       float: left;
-      > a {
+      > a,
+      > button.btn.btn-link {
         padding-top: ((@navbar-height - @line-height-computed) / 2);
         padding-bottom: ((@navbar-height - @line-height-computed) / 2);
       }
@@ -377,7 +387,16 @@
         background-color: @navbar-default-link-hover-bg;
       }
     }
-    > .active > a {
+    > li > button.btn.btn-link {
+      color: @navbar-default-link-color;
+
+      &:hover{
+        color: @navbar-default-link-hover-color;
+        background-color: @navbar-default-link-hover-bg;
+      }
+    }
+    > .active > a,
+    > .active > button.btn.btn-link {
       &,
       &:hover,
       &:focus {
@@ -385,7 +404,8 @@
         background-color: @navbar-default-link-active-bg;
       }
     }
-    > .disabled > a {
+    > .disabled > a,
+    > .disabled > button.btn.btn-link {
       &,
       &:hover,
       &:focus {
@@ -415,7 +435,9 @@
   .navbar-nav {
     // Caret should match text color on hover
     > .dropdown > a:hover .caret,
-    > .dropdown > a:focus .caret {
+    > .dropdown > a:focus .caret,
+    > .dropdown > button.btn.btn-link:hover .caret,
+    > .dropdown > button.btn.btn-link:focus .caret {
       border-top-color: @navbar-default-link-hover-color;
       border-bottom-color: @navbar-default-link-hover-color;
     }
@@ -433,7 +455,19 @@
         }
       }
     }
-    > .dropdown > a .caret {
+    > .open > button.btn.btn-link {
+      &,
+      &:hover {
+        background-color: @navbar-default-link-active-bg;
+        color: @navbar-default-link-active-color;
+        .caret {
+          border-top-color: @navbar-default-link-active-color;
+          border-bottom-color: @navbar-default-link-active-color;
+        }
+      }
+    }
+    > .dropdown > a .caret,
+    > .dropdown > button.btn.btn-link .caret {
       border-top-color: @navbar-default-link-color;
       border-bottom-color: @navbar-default-link-color;
     }
@@ -442,7 +476,8 @@
     @media (max-width: @screen-xs-max) {
       // Dropdowns get custom display when collapsed
       .open .dropdown-menu {
-        > li > a {
+        > li > a,
+        > li > button.btn.btn-link {
           color: @navbar-default-link-color;
           &:hover,
           &:focus {
@@ -450,7 +485,8 @@
             background-color: @navbar-default-link-hover-bg;
           }
         }
-        > .active > a {
+        > .active > a,
+        > .active > button.btn.btn-link {
           &,
           &:hover,
           &:focus {
@@ -458,7 +494,8 @@
             background-color: @navbar-default-link-active-bg;
           }
         }
-        > .disabled > a {
+        > .disabled > a,
+        > .disabled > button.btn.btn-link {
           &,
           &:hover,
           &:focus {
@@ -504,7 +541,8 @@
   }
 
   .navbar-nav {
-    > li > a {
+    > li > a,
+    > li > button.btn.btn-link {
       color: @navbar-inverse-link-color;
 
       &:hover,
@@ -513,7 +551,8 @@
         background-color: @navbar-inverse-link-hover-bg;
       }
     }
-    > .active > a {
+    > .active > a,
+    > .active > button.btn.btn-link {
       &,
       &:hover,
       &:focus {
@@ -521,7 +560,8 @@
         background-color: @navbar-inverse-link-active-bg;
       }
     }
-    > .disabled > a {
+    > .disabled > a,
+    > .disabled > button.btn.btn-link {
       &,
       &:hover,
       &:focus {
@@ -550,7 +590,8 @@
 
   // Dropdowns
   .navbar-nav {
-    > .open > a {
+    > .open > a,
+    > .open > button.btn.btn-link {
       &,
       &:hover,
       &:focus {
@@ -558,15 +599,18 @@
         color: @navbar-inverse-link-active-color;
       }
     }
-    > .dropdown > a:hover .caret {
+    > .dropdown > a:hover .caret,
+    > .dropdown > button.btn.btn-link:hover .caret {
       border-top-color: @navbar-inverse-link-hover-color;
       border-bottom-color: @navbar-inverse-link-hover-color;
     }
-    > .dropdown > a .caret {
+    > .dropdown > a .caret,
+    > .dropdown > button.btn.btn-link .caret {
       border-top-color: @navbar-inverse-link-color;
       border-bottom-color: @navbar-inverse-link-color;
     }
-    > .open > a {
+    > .open > a,
+    > .open > button.btn.btn-link {
       &,
       &:hover,
       &:focus {
@@ -583,7 +627,8 @@
         > .dropdown-header {
           border-color: @navbar-inverse-border;
         }
-        > li > a {
+        > li > a,
+        > li > button.btn.btn-link {
           color: @navbar-inverse-link-color;
           &:hover,
           &:focus {
@@ -591,7 +636,8 @@
             background-color: @navbar-inverse-link-hover-bg;
           }
         }
-        > .active > a {
+        > .active > a,
+        > .active > button.btn.btn-link {
           &,
           &:hover,
           &:focus {
@@ -599,7 +645,8 @@
             background-color: @navbar-inverse-link-active-bg;
           }
         }
-        > .disabled > a {
+        > .disabled > a,
+        > .disabled > button.btn.btn-link {
           &,
           &:hover,
           &:focus {

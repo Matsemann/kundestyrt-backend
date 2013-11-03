@@ -59,10 +59,48 @@ function remove(id, rev, done) {
     });
 }
 
+function forUser(userId, done) {
+    var db = connect();
+
+    db.view('groups', 'for_user', {key: userId}, function(err, body) {
+        if(err) {
+            done(err);
+        } else {
+            done(null, {
+                total_rows: body.total_rows,
+                offset: body.offset,
+                rows: body.rows.map(function(row) {
+                    return row.value;
+                })
+            });
+        }
+    });
+}
+
+function appendUserIds(userIds, groupIds, done) {
+    var db = connect();
+
+    db.view_with_list('groups', 'user_ids', 'no_duplicates', {keys: groupIds}, function(err, body) {
+        if(err) {
+            done(err);
+        } else {
+            body.forEach(function(uid) {
+                if(userIds.indexOf(uid) < 0) {
+                    userIds.push(uid);
+                }
+            });
+
+            done(null);
+        }
+    });
+}
+
 
 module.exports = {
     all: all,
     find: find,
     save: save,
-    remove: remove
+    remove: remove,
+    forUser: forUser,
+    appendUserIds: appendUserIds
 };

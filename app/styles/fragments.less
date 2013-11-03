@@ -1,8 +1,12 @@
 .fragments {
     .make-row();
     overflow-x: auto;
+    overflow-y: hidden;
+    height: 100%;
 
     > .fragment {
+        max-height: 100%;
+        overflow-y: auto;
         display: none;
         position: relative;
         float: left;

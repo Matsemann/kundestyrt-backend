@@ -15,6 +15,10 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         url: '/conversation/new',
         title: 'Compose'
       },
+      save: {
+        title: 'Save',
+        action: 'save()'
+      },
       note: {
         url: '/notes/new',
         title: 'Compose'
@@ -32,7 +36,22 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           conversations: serviceResolve('Conversation', 'list')
         },
-        action: a.conversation
+        context: {
+          title: 'Conversations',
+          right: {
+            type: 'link',
+            url: '/conversation/new',
+            title: 'Compose'
+          },
+          action: {
+            type: 'link',
+            url: '/conversation/new',
+            title: 'Compose'
+          },
+          left: {
+            type: 'menu'
+          }
+        }
       },
       conversation: {
         controller: 'ConversationCtrl',
@@ -40,11 +59,21 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           conversation: serviceResolve('Conversation', 'get')
         },
-        back: {
-          url: '/conversation',
-          title: 'Conversations'
-        },
-        action: a.conversation
+        context: ['conversation', function(conversation) {
+          return {
+            title: conversation.topic,
+            action: {
+              type: 'link',
+              url: '/conversation/new',
+              title: 'Compose'
+            },
+            left: {
+              type: 'back',
+              url: '/conversation',
+              title: 'Conversations'
+            }
+          };
+        }]
       },
       inquiryMessages: {
         controller: 'InquiryMessagesCtrl',
@@ -52,7 +81,27 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         resolve: {
           conversation: serviceResolve('Conversation', 'get')
         },
-        action: a.conversation
+        context: ['id', 'conversation', 'sub', '$scope', 'userFilter', '$q', '$rootScope', function(id, conversation, sub, $scope, userFilter, $q) {
+          var ret = {};
+          var userId = conversation.conversations[parseInt(sub, 10) - 1].recipient;
+          $q.when(userFilter(userId)).then(function(user) {
+            ret.title = user.name;
+          });
+          angular.extend(ret, {
+            title: '',
+            action: {
+              type: 'link',
+              url: '/conversation/new',
+              title: 'Compose'
+            },
+            left: {
+              type: 'back',
+              url: '/conversation/' + id,
+              title: conversation.topic
+            }
+          });
+          return ret;
+        }]
       },
       newConversation: {
         controller: 'NewConversationCtrl',
@@ -61,7 +110,26 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
           users: serviceResolve('Contacts', 'getUsers'),
           groups: serviceResolve('Groups', 'getGroups')
         },
-        action: a.conversation
+        context: ['$scope', function(scope) {
+          return {
+            title: 'New Conversation',
+            left: {
+              type: 'link',
+              url: '/conversation/',
+              title: 'Cancel'
+            },
+            right: {
+              type: 'action',
+              title: 'Create',
+              action: 'create()'
+            },
+            action: {
+              type: 'action',
+              title: 'Create',
+              action: 'create()'
+            }
+          }
+        }]
       },
       userList: {
         controller: 'UserListCtrl',
@@ -245,6 +313,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
 
     var awaitingLogin = [];
     var returnPath = null;
+    $rootScope.$debug = function() {debugger;};
     $rootScope.$login = function(deferred) {
       if(deferred) { awaitingLogin.push(deferred); }
       if($location.path() !== '/login') {

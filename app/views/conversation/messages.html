@@ -1,7 +1,8 @@
 <div ng-repeat="msg in conversation.messages" class="message well" ng-class="{self: msg.sender === $user._id}">
     <div class="image">
-        <img ng-src="https://en.gravatar.com/avatar/{{msg.image}}?s=50&r=g" alt="image"/>
+        <img ng-src="https://en.gravatar.com/avatar/{{(msg.sender | user).image}}?s=50&r=g" alt="image"/>
     </div>
+    <div class="sender">{{(msg.sender | user).name || '&nbsp;'}}</div>
     <div class="content">{{msg.content}}</div>
     <br/>
 

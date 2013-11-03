@@ -569,28 +569,22 @@ function $RouteProvider(){
               }
               $rootScope.$broadcast('$routeChangeSuccess', next, last);
 
-
-              var back = null, action = null;
+              var context = null;
               if(next && next.fragments) {
-                if(next.fragments[next.fragments.length - 1].back) {
-                  back = next.fragments[next.fragments.length - 1].back;
-                }
-
-                if(next.fragments[next.fragments.length - 1].action) {
-                  action = next.fragments[next.fragments.length - 1].action;
+                if(next.fragments[next.fragments.length - 1].context) {
+                  context = next.fragments[next.fragments.length - 1].context;
                 }
               }
 
-              if(!$rootScope.$navigation) { $rootScope.$navigation = {}; }
-              $rootScope.$navigation.back = back === null ? null : {
-                url: $interpolate(back.url)($routeParams),
-                title: back.title
-              };
-
-              $rootScope.$navigation.action = action === null ? null : {
-                url: $interpolate(action.url)($routeParams),
-                title: action.title
-              };
+              if(isFunction(context) || 
+                (isArray(context) && isFunction(context[context.length - 1]))) {
+                context = $injector.invoke(context, null, extend({}, $routeParams, fragments[fragments.length - 1]));
+              }
+              if(fragments && context) {
+                $rootScope.$navigation = extend(context, fragments[fragments.length - 1]);
+              } else {
+                $rootScope.$navigation = {};
+              }
             }
           }, function(error) {
             if (next === $route.current) {

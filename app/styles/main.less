@@ -1,6 +1,7 @@
 @import 'bootstrap/bootstrap.less';
 @import 'fragments.less';
 @import 'input-groups.less';
+@import 'navbar.less';
 
 @conversation-hover-bg: @nav-link-hover-bg;
 @conversation-active-bg: @brand-primary;
@@ -17,8 +18,8 @@ body {
     padding-top: 70px
 }
 
-.wrap {
-    min-height: 100%;
+.wrap, .main {
+    height: 100%;
 }
 
 .conversations {
@@ -81,8 +82,8 @@ body {
 }
 
 .message {
-    min-height: 51px;
-    clear: both;
+    min-height: 60px;
+    .clearfix();
 
     .image {
         float: left;

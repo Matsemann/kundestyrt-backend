@@ -44,12 +44,17 @@
       <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" ng-click="barShowing = !barShowing">
+          <!--<button type="button" class="navbar-toggle" ng-click="barShowing = !barShowing">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
+          </button>-->
+          <button class="left menu btn btn-link" ng-if="$navigation.left &amp;&apm; $navigation.left.type === 'menu'">&nbsp;</button>
+          <a class="left" ng-if="$navigation.left &amp;&apm; $navigation.left.type !== 'menu'" ng-class="{arrow: $navigation.left.type === 'back'}" ng-href="#{{$navigation.left.url}}">{{$navigation.left.title}}</a>
+          <span class="title">{{$navigation.title}}</span>
+          <a ng-if="$navigation.right &amp;&amp; $navigation.right.type === 'link'" class="right" href="#{{$navigation.right.url}}">{{$navigation.right.title}}</a>
+          <button ng-if="$navigation.right &amp;&amp; $navigation.right.type === 'action'" class="right btn btn-link" ng-click="$navigation.$scope.$eval($navigation.right.action)">{{$navigation.right.title}}</button>
           <a class="navbar-brand" href="#/">Defero</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -63,8 +68,14 @@
               <li ng-class="{active: $isActive('/users')}"><a href="#/users">Users</a></li>
           </ul>
 
-          <ul class="nav navbar-nav pull-right" ng-if="$navigation.action">
-            <li><a ng-href="{{$navigation.action.url}}">{{$navigation.action.title}}</a></li>
+          <ul class="nav navbar-nav pull-right" ng-if="$navigation.right">
+            <li ng-if="$navigation.action.type === 'link'">
+              <a ng-href="#{{$navigation.action.url}}">{{$navigation.action.title}}</a>
+            </li>
+            <li ng-if="$navigation.action.type === 'action'">
+              <button ng-click="$navigation.$scope.$eval($navigation.action.action)" class="btn-link btn">{{$navigation.right.title}}</button>
+            </li>
+            <!--<li ng-if="$navigation.action.url"><a ng-href="#{{$navigation.action.url}}">{{$navigation.action.title}}</a></li>-->
           </ul>
         </div><!-- /.navbar-collapse -->
       </nav>
@@ -74,7 +85,6 @@
         <div ng-fragments>
         </div>
       </div>
-      {{$navigation | json}}
     </div>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -119,6 +129,7 @@
     <script src="/scripts/services/groups.js"></script>
     <script src="/scripts/services/authInterceptor.js"></script>
     <script src="/scripts/filters/marked.js"></script>
+    <script src="/scripts/filters/db.js"></script>
     <script src="/scripts/modules/fragmentRoute/fragmentRoute.js"></script>
     <!-- endbuild -->
 </body>
