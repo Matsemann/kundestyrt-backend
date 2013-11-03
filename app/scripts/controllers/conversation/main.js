@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('kundestyrtApp')
-  .controller('ConversationCtrl', ['$scope', 'conversation', 'Conversation', '$location', '$anchorScroll', '$timeout', function ($scope, conversation, Conversation, $location, $anchorScroll, $timeout) {
+  .controller('ConversationCtrl', ['$scope', 'conversation', 'Conversation', function ($scope, conversation, Conversation) {
         $scope.conversation = conversation;
         $scope.msg = {text: ''};
 
@@ -19,7 +19,7 @@ angular.module('kundestyrtApp')
 
         // Needs to wrapped inside a timeout so that it is put in the end of the event queue and happens after the DOM is updated
         function scrollToBottom()  {
-            var fragment = $('.fragment:last-child');
+            var fragment = jQuery('.fragment:last-child');
 
             function doScroll() {
                 setTimeout(function() {

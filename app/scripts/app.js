@@ -110,7 +110,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
           users: serviceResolve('Contacts', 'getUsers'),
           groups: serviceResolve('Groups', 'getGroups')
         },
-        context: ['$scope', function(scope) {
+        context: [function() {
           return {
             title: 'New Conversation',
             left: {
@@ -128,7 +128,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
               title: 'Create',
               action: 'create()'
             }
-          }
+          };
         }]
       },
       userList: {
@@ -313,7 +313,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
 
     var awaitingLogin = [];
     var returnPath = null;
-    $rootScope.$debug = function() {debugger;};
+    //$rootScope.$debug = function() {debugger;};
     $rootScope.$login = function(deferred) {
       if(deferred) { awaitingLogin.push(deferred); }
       if($location.path() !== '/login') {

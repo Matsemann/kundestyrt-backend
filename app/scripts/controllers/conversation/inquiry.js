@@ -18,7 +18,7 @@ angular.module('kundestyrtApp')
 
         // Needs to wrapped inside a timeout so that it is put in the end of the event queue and happens after the DOM is updated
         function scrollToBottom()  {
-            var fragment = $('.fragment:last-child');
+            var fragment = jQuery('.fragment:last-child');
 
             function doScroll() {
                 setTimeout(function() {

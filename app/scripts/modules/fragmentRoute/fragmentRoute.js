@@ -576,7 +576,7 @@ function $RouteProvider(){
                 }
               }
 
-              if(isFunction(context) || 
+              if(isFunction(context) ||
                 (isArray(context) && isFunction(context[context.length - 1]))) {
                 context = $injector.invoke(context, null, extend({}, $routeParams, fragments[fragments.length - 1]));
               }
