@@ -18,6 +18,8 @@ angular.module('kundestyrtApp')
         };
 
         $scope.deleteGroup = function() {
+            /* global confirm */
+            // ^ so jshint doesn't complain where confirm is coming from
             if (confirm('Er du sikker på du vil slette denne gruppen?')) {
                 Groups.delete($scope.group).then(function() {
                     $location.path('/groups');

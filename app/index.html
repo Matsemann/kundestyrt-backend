@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <!-- build:css(.tmp) /styles/main.css -->
+    <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="/styles/main.less">
     <!-- endbuild -->
 
@@ -91,26 +91,16 @@
         </div>
       </div>
     </div>
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
 
 
-    <!-- build:js /scripts/lib.js -->
+    <!-- build:js scripts/lib.js -->
     <script src="/bower_components/jquery/jquery.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-resource/angular-resource.js"></script>
     <script src="/bower_components/marked/lib/marked.js"></script>
     <!-- endbuild -->
 
-    <!-- build:js /scripts/scripts.js -->
+    <!-- build:js scripts/scripts.js -->
     <script src="/scripts/app.js"></script>
     <script src="/scripts/controllers/user/list.js"></script>
     <script src="/scripts/controllers/user/edit.js"></script>
@@ -128,6 +118,7 @@
     <script src="/scripts/controllers/group/list.js"></script>
     <script src="/scripts/controllers/group/edit.js"></script>
     <script src="/scripts/controllers/login.js"></script>
+    <script src="/scripts/services/baseUrl.js"></script>
     <script src="/scripts/services/utils.js"></script>
     <script src="/scripts/services/users.js"></script>
     <script src="/scripts/services/conversation.js"></script>

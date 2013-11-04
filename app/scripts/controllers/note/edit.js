@@ -17,6 +17,8 @@ angular.module('kundestyrtApp')
         };
 
         $scope.deleteNote = function() {
+            /* global confirm */
+            // ^ so jshint doesn't complain where confirm is coming from
             if (confirm('Er du sikker på at du vil slette dette notatet?')) {
                 Notes.delete($scope.note).then(function() {
                     $location.path('/notes');

@@ -10,29 +10,10 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       }];
     }
 
-    var a = {
-      conversation: {
-        url: '/conversation/new',
-        title: 'Compose'
-      },
-      save: {
-        title: 'Save',
-        action: 'save()'
-      },
-      note: {
-        url: '/notes/new',
-        title: 'Compose'
-      },
-      noteEdit: {
-        url: '/notes/{{id}}/edit',
-        title: 'Edit'
-      }
-    };
-
     var f = {
       conversationList: {
         controller: 'ConversationListCtrl',
-        templateUrl: '/views/conversation/list.html',
+        templateUrl: 'views/conversation/list.html',
         resolve: {
           conversations: serviceResolve('Conversation', 'list')
         },
@@ -55,7 +36,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       conversation: {
         controller: 'ConversationCtrl',
-        templateUrl: '/views/conversation/main.html',
+        templateUrl: 'views/conversation/main.html',
         resolve: {
           conversation: serviceResolve('Conversation', 'get')
         },
@@ -77,7 +58,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       inquiryMessages: {
         controller: 'InquiryMessagesCtrl',
-        templateUrl: '/views/conversation/messages.html',
+        templateUrl: 'views/conversation/messages.html',
         resolve: {
           conversation: serviceResolve('Conversation', 'get')
         },
@@ -105,7 +86,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       newConversation: {
         controller: 'NewConversationCtrl',
-        templateUrl: '/views/conversation/new.html',
+        templateUrl: 'views/conversation/new.html',
         resolve: {
           users: serviceResolve('Contacts', 'getUsers'),
           groups: serviceResolve('Groups', 'getGroups')
@@ -133,33 +114,33 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       userList: {
         controller: 'UserListCtrl',
-        templateUrl: '/views/user/list.html',
+        templateUrl: 'views/user/list.html',
         resolve: {
           users: serviceResolve('Users', 'getUsers')
         }
       },
       user: {
         controller: 'UserCtrl',
-        templateUrl: '/views/user/main.html',
+        templateUrl: 'views/user/main.html',
         resolve: {
           user: serviceResolve('Users', 'getUser')
         }
       },
       userEdit: {
         controller: 'UserEditCtrl',
-        templateUrl: '/views/user/edit.html',
+        templateUrl: 'views/user/edit.html',
         resolve: {
           user: serviceResolve('Users', 'getUser')
         }
       },
       userNew: {
         controller: 'UserNewCtrl',
-        templateUrl: '/views/user/edit.html',
+        templateUrl: 'views/user/edit.html',
         resolve: {}
       },
       noteList: {
         controller: 'NoteListCtrl',
-        templateUrl: '/views/note/list.html',
+        templateUrl: 'views/note/list.html',
         resolve: {
           notes: serviceResolve('Notes', 'getNotes')
         },
@@ -182,7 +163,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       note: {
         controller: 'NoteCtrl',
-        templateUrl: '/views/note/main.html',
+        templateUrl: 'views/note/main.html',
         resolve: {
           note: serviceResolve('Notes', 'getNote')
         },
@@ -209,7 +190,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       noteEdit: {
         controller: 'NoteEditCtrl',
-        templateUrl: '/views/note/edit.html',
+        templateUrl: 'views/note/edit.html',
         resolve: {
           note: serviceResolve('Notes', 'getNote')
         },
@@ -234,7 +215,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       noteNew: {
         controller: 'NoteNewCtrl',
-        templateUrl: '/views/note/edit.html',
+        templateUrl: 'views/note/edit.html',
         resolve: {},
         context: {
           title: 'Nytt notat',
@@ -257,14 +238,14 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       groupList: {
         controller: 'GroupListCtrl',
-        templateUrl: '/views/group/list.html',
+        templateUrl: 'views/group/list.html',
         resolve: {
           groups: serviceResolve('Groups', 'getGroups')
         }
       },
       groupEdit: {
         controller: 'GroupEditCtrl',
-        templateUrl: '/views/group/edit.html',
+        templateUrl: 'views/group/edit.html',
         resolve: {
           group: serviceResolve('Groups', 'getGroup'),
           users: serviceResolve('Contacts', 'getUsers')
@@ -272,7 +253,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       groupNew: {
         controller: 'GroupEditCtrl',
-        templateUrl: '/views/group/edit.html',
+        templateUrl: 'views/group/edit.html',
         resolve: {
           group: function(){}, // no group
           users: serviceResolve('Contacts', 'getUsers')
@@ -280,12 +261,12 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       login: {
         controller: 'LoginCtrl',
-        templateUrl: '/views/login.html',
+        templateUrl: 'views/login.html',
         resolve: {}
       },
       password: {
         controller: 'UserEditPasswordCtrl',
-        templateUrl: '/views/user/editPassword.html',
+        templateUrl: 'views/user/editPassword.html',
         resolve: {},
         context: {
           title: 'Endre passord',
@@ -308,7 +289,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       },
       unauthorized: {
         controller: 'LoginCtrl',
-        templateUrl: '/views/unauthorized.html',
+        templateUrl: 'views/unauthorized.html',
         resolve: {}
       }
     };
@@ -392,7 +373,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       .otherwise({
         redirectTo: '/'
       });
-  }]).run(['$rootScope', '$location', '$http', function($rootScope, $location, $http) {
+  }]).run(['$rootScope', '$location', '$http', 'BaseUrl', function($rootScope, $location, $http, BaseUrl) {
     $rootScope.$isActive = function(location) {
       if(location.substring(location.length - 1) === '%') {
         var start = location.substring(0, location.length - 1);
@@ -426,7 +407,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       returnPath = null;
     };
 
-    $rootScope.$userPromise = $http.get('/api/users/me');
+    $rootScope.$userPromise = $http.get(BaseUrl + 'api/users/me');
     $rootScope.$userPromise.success(function(user) {
       $rootScope.$user = user;
       $rootScope.$login.$complete();

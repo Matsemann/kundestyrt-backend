@@ -1,17 +1,17 @@
 'use strict';
 
 (function(undefined) {
-    angular.module('kundestyrtApp').factory('Account', ['$http', function($http) {
+    angular.module('kundestyrtApp').factory('Account', ['$http', 'BaseUrl', function($http, BaseUrl) {
         return {
             login: function(username, password) {
-                return $http.post('/login', {
+                return $http.post(BaseUrl + 'login', {
                     username: username,
                     password: password
                 });
             },
 
             editPassword: function(oldPw, newPw) {
-                return $http.post('/api/password', {
+                return $http.post(BaseUrl + 'password', {
                     'old': oldPw,
                     'new': newPw
                 });
