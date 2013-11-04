@@ -283,6 +283,29 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         templateUrl: '/views/login.html',
         resolve: {}
       },
+      password: {
+        controller: 'UserEditPasswordCtrl',
+        templateUrl: '/views/user/editPassword.html',
+        resolve: {},
+        context: {
+          title: 'Endre passord',
+          right: {
+            type: 'action',
+            action: 'editPassword()',
+            title: 'Lagre'
+          },
+          action: {
+            type: 'action',
+            action: 'editPassword()',
+            title: 'Lagre'
+          },
+          left: {
+            type: 'link',
+            url: '/',
+            title: 'Avbryt'
+          }
+        }
+      },
       unauthorized: {
         controller: 'LoginCtrl',
         templateUrl: '/views/unauthorized.html',
@@ -297,6 +320,10 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       .when('/login', {
         auth: false,
         fragments: [f.login]
+      })
+      .when('/password', {
+        auth: true,
+        fragments: [f.password]
       })
       .when('/unauthorized', {
         auth: true,
@@ -404,6 +431,23 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       $rootScope.$user = user;
       $rootScope.$login.$complete();
     });
+
+    $rootScope.$alert = function(msg) {
+      var alert = {
+        message: msg,
+        type: 'warning',
+        destroy: function() {
+          var index = $rootScope.$alert.items.indexOf(alert);
+          $rootScope.$alert.items.splice(index, 1);
+        }
+      };
+
+        if($rootScope.$alert.items.length >= 2) { // max to allerts på en gang
+        $rootScope.$alert.items.shift();
+      }
+      $rootScope.$alert.items.push(alert);
+    };
+    $rootScope.$alert.items = [];
   }]).directive('inputGroupSingular', function() {
     return {
       restrict: 'C',

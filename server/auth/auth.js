@@ -9,11 +9,15 @@ var passport = require('passport')
   , db = require('../db')
   , crypto = require('crypto');
 
+module.exports = {};
+
 function sha256(str) {
   var shasum = crypto.createHash('sha256');
   shasum.update(str);
   return shasum.digest('hex');
 }
+
+module.exports.hash = sha256;
 
 /**
  * LocalStrategy

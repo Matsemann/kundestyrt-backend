@@ -1,18 +1,12 @@
 'use strict';
 
 angular.module('kundestyrtApp')
-  .controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.alert = '';
+  .controller('LoginCtrl', ['$scope', 'Account', function ($scope, Account) {
     $scope.login = function() {
-        var data = {
-            username: $scope.username,
-            password: $scope.password
-        };
-
-        $http.post('/login', data).success(function() {
+        Account.login($scope.username, $scope.password).success(function() {
             $scope.$login.$complete();
         }).error(function() {
-            $scope.alert = 'Galt brukernavn eller passord';
+            $scope.$alert('Galt brukernavn eller passord');
         });
     };
   }]);

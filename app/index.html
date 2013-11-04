@@ -50,11 +50,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>-->
-          <button class="left menu btn btn-link" ng-if="$navigation.left &amp;&apm; $navigation.left.type === 'menu'">&nbsp;</button>
-          <a class="left" ng-if="$navigation.left &amp;&apm; $navigation.left.type !== 'menu'" ng-class="{arrow: $navigation.left.type === 'back'}" ng-href="#{{$navigation.left.url}}">{{$navigation.left.title}}</a>
-          <span class="title">{{$navigation.title}}</span>
-          <a ng-if="$navigation.right &amp;&amp; $navigation.right.type === 'link'" class="right" href="#{{$navigation.right.url}}">{{$navigation.right.title}}</a>
-          <button ng-if="$navigation.right &amp;&amp; $navigation.right.type === 'action'" class="right btn btn-link" ng-click="$navigation.$scope.$eval($navigation.right.action)">{{$navigation.right.title}}</button>
+          <button class="left menu btn btn-link" ng-if="$navigation.left &amp;&apm; $navigation.left.type === 'menu'" ng-cloak>&nbsp;</button>
+          <a  ng-cloak class="left" ng-if="$navigation.left &amp;&apm; $navigation.left.type !== 'menu'" ng-class="{arrow: $navigation.left.type === 'back'}" ng-href="#{{$navigation.left.url}}">{{$navigation.left.title}}</a>
+          <span  ng-cloak class="title">{{$navigation.title}}</span>
+          <a  ng-cloak ng-if="$navigation.right &amp;&amp; $navigation.right.type === 'link'" class="right" href="#{{$navigation.right.url}}">{{$navigation.right.title}}</a>
+          <button  ng-cloak ng-if="$navigation.right &amp;&amp; $navigation.right.type === 'action'" class="right btn btn-link" ng-click="$navigation.$scope.$eval($navigation.right.action)">{{$navigation.right.title}}</button>
           <a class="navbar-brand" href="#/">Defero</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -68,7 +68,7 @@
               <li ng-class="{active: $isActive('/users')}"><a href="#/users">Users</a></li>
           </ul>
 
-          <ul class="nav navbar-nav pull-right" ng-if="$navigation.right">
+          <ul ng-cloak class="nav navbar-nav pull-right" ng-if="$navigation.right">
             <li ng-if="$navigation.action.type === 'link'">
               <a ng-href="#{{$navigation.action.url}}">{{$navigation.action.title}}</a>
             </li>
@@ -81,7 +81,12 @@
       </nav>
 
       <!-- Add your site or application content here -->
-      <div class="container main">
+      <div class="container main" ng-cloak>
+        <div ng-repeat="alert in $alert.items" class="alert alert-{{alert.type}}">
+          <button type="button" class="close" aria-hidden="true" ng-click="alert.destroy()">&times;</button>
+          {{alert.message}}
+        </div>
+
         <div ng-fragments>
         </div>
       </div>
@@ -111,6 +116,7 @@
     <script src="/scripts/controllers/user/edit.js"></script>
     <script src="/scripts/controllers/user/user.js"></script>
     <script src="/scripts/controllers/user/new.js"></script>
+    <script src="/scripts/controllers/user/editPassword.js"></script>
     <script src="/scripts/controllers/conversation/main.js"></script>
     <script src="/scripts/controllers/conversation/list.js"></script>
     <script src="/scripts/controllers/conversation/inquiry.js"></script>
@@ -122,12 +128,14 @@
     <script src="/scripts/controllers/group/list.js"></script>
     <script src="/scripts/controllers/group/edit.js"></script>
     <script src="/scripts/controllers/login.js"></script>
+    <script src="/scripts/services/utils.js"></script>
     <script src="/scripts/services/users.js"></script>
     <script src="/scripts/services/conversation.js"></script>
     <script src="/scripts/services/notes.js"></script>
     <script src="/scripts/services/contacts.js"></script>
     <script src="/scripts/services/groups.js"></script>
     <script src="/scripts/services/authInterceptor.js"></script>
+    <script src="/scripts/services/account.js"></script>
     <script src="/scripts/filters/marked.js"></script>
     <script src="/scripts/filters/db.js"></script>
     <script src="/scripts/modules/fragmentRoute/fragmentRoute.js"></script>

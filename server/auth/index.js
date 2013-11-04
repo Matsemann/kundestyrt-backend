@@ -1,6 +1,6 @@
 'use strict';
 
-require('./auth');
+var auth = require('./auth');
 var passport = require('passport');
 
 var login = [
@@ -33,5 +33,6 @@ function authorize(role) {
 module.exports = {
     login: login,
     oauth2: require('./oauth2'),
-    authorize: authorize
+    authorize: authorize,
+    hash: auth.hash
 };

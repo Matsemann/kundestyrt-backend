@@ -14,22 +14,22 @@
     <input id="email" class="form-control" type="text" ng-model="user.email"
            placeholder="Skriv inn e-post">
 </div>
+
+<!--Password-->
+<div class="form-group">
+    <label for="pw1">Nytt passord</label>
+    <input ng-model="pw1" type="text" id="pw1" class="form-control"
+           placeholder="Nytt passord">
+</div>
+<div class="form-group">
+    <label for="pw2">Gjenta nytt passord</label>
+    <input ng-model="pw2" type="text" id="pw2" class="form-control"
+           placeholder="Gjenta nytt passord">
+</div>
+
+<!--Admin-->
 <div class="checkbox">
-	<label for="admin">Admin</label>
+  <label for="admin">Admin</label>
     <input id="admin" type="checkbox" ng-model="user.role"
-			ng-true-value="admin" ng-false-value="user">
+      ng-true-value="admin" ng-false-value="user">
 </div>
-<!-- TEST
-<div class="form-group">
-    <label for="pwOld">Passord</label>
-    <input ng-model="pwOld" type="text" id="pwOld" class="form-control"
-           placeholder="Passord">
-</div>
--->
-<!-- CHECKBOX TEST
-<div class="form-group">
-    <label for="admin">Admin test</label>
-    <input ng-model="user.role" type="text" id="admin" class="form-control"
-           placeholder="null" disabled>
-</div>
--->
