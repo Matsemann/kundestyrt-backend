@@ -1,3 +1,8 @@
+<div ng-show="alert &amp;&amp; alert.length" class="alert alert-warning">
+    <button type="button" class="close" aria-hidden="true" ng-click="alert = ''">&times;</button>
+    {{alert}}
+</div>
+
 <button ng-click="deleteNote()" ng-show="note._id" class="btn btn-default">Slett dette notatet</button>
 
 <div class="form-group">

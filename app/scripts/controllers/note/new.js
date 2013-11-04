@@ -2,6 +2,7 @@
 
 angular.module('kundestyrtApp')
     .controller('NoteNewCtrl', ['$scope', '$location', 'Notes', function ($scope, $location, Notes) {
+        $scope.alert = '';
 
         $scope.note = {
             name: '',
@@ -13,8 +14,9 @@ angular.module('kundestyrtApp')
                 Notes.save($scope.note).then(function(result) {
                     $location.path('/notes/' + result.data._id);
                 });
+                $scope.alert = '';
             } else {
-                alert('Du må fylle i feltene');
+                $scope.alert = 'Du må fylle i alle feltene.';
             }
         };
     }]);
