@@ -29,6 +29,7 @@ var EXPOSE_HEADERS = [
 // Normal
 var AC_ALLOW_ORIGIN = 'Access-Control-Allow-Origin';
 var AC_ALLOW_CREDS = 'Access-Control-Allow-Credentials';
+var AC_ALLOW_HEADERS = 'Access-Control-Allow-Headers';
 var AC_EXPOSE_HEADERS = 'Access-Control-Expose-Headers';
 
 
@@ -97,6 +98,8 @@ function cors(opts) {
                 }
 
                 function corsOnHeader() {
+                        res.setHeader(AC_EXPOSE_HEADERS, ALLOW_HEADERS.join(', '));
+
                         if (opts.credentials) {
                                 origin = req.headers['origin'];
                                 res.setHeader(AC_ALLOW_ORIGIN, origin);
