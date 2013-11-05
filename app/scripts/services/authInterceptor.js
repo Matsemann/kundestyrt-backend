@@ -6,6 +6,9 @@
         return {
             request: function(config) {
                 return $q.when(config).then(function(conf) {
+                    if(conf.url.substring(0, 'api/'.length) === 'api/') {
+                        conf.url = BaseUrl + conf.url;
+                    }
                     conf.withCredentials = true;
                     return conf;
                 });

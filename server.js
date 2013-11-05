@@ -11,7 +11,7 @@ var less = require('less');
 var express = require('express');
 var passport = require('passport');
 var once = require('once');
-//var auth = require('./server/auth');
+var cors = require('./server/cors');
 
 var port = process.env.PORT || 9000;
 
@@ -31,7 +31,10 @@ if(!process.env.PORT) {
 
 
 //server.use(restify.gzipResponse());
-server.use(restify.CORS());
+server.use(cors({
+    headers: [],
+    credentials: true
+}));
 server.use(restify.queryParser({ mapParams: false }));
 server.use(restify.jsonp());
 server.use(restify.fullResponse());
