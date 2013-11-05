@@ -57,7 +57,10 @@ module.exports = function(server) {
             'password': sentUser.password
         };
 
-        if (sentUser.role) {
+        if (sentUser.role === 'null') {
+            if (user.role)
+                delete user.role;
+        } else {
             user.role = sentUser.role;
         }
         // if (sentUser.admin) {
@@ -67,17 +70,12 @@ module.exports = function(server) {
         // }
 
         db.users.save(user, function(err, id) {
-            debugger;
             if(err) {
-                console.log('err 1');
                 response.send(err);
                 next(false);
             } else {
                 db.users.find(id, function(err, body) {
-                    debugger;
                     if(err) {
-                        debugger;
-                        console.log('err 2');
                         response.send(err);
                         next(false);
 
@@ -86,7 +84,6 @@ module.exports = function(server) {
                         body.password = auth.hash(sentUser.password + id);
                         db.users.save(body, function(err, id) {
                             if(err) {
-                                console.log('err 3');
                                 response.send(err);
                                 next(false);
                             } else {
@@ -109,10 +106,17 @@ module.exports = function(server) {
                     response.send(err);
                     next(false);
                 } else {
-                    var user = request.params;
-                    body.name = user.name;
-                    body.email = user.email;
-                    body.password = auth.hash(user.password + body._id);
+                    var sentUser = request.params;
+                    body.name = sentUser.name;
+                    body.email = sentUser.email;
+                    body.password = auth.hash(sentUser.password + body._id);
+
+                    if (sentUser.role === 'null') {
+                        if (body.role)
+                            delete body.role;
+                    } else {
+                        body.role = sentUser.role;
+                    }
 
                     db.users.save(body, function(err, id) {
                         if(err) {
@@ -154,8 +158,21 @@ module.exports = function(server) {
                     next(false);
                 } else {
                     getUser(request, response, next, userId);
+                    //TODO call next?
                 }
             });
+        });
+    }
+
+    function deleteUser(request, response, next) {
+        db.users.remove(request.params, function(err, id) {
+            if (err) {
+                response.send(err);
+                next(false);
+            } else {
+                response.send(200);
+                next();
+            }
         });
     }
 
@@ -187,6 +204,11 @@ module.exports = function(server) {
     server.post('/api/password', [ //TODO is it POST????
         auth.authorize(),
         updatePassword
+    ]);
+
+    server.del('api/users/:id/:rev', [
+        auth.authorize("admin"),
+        deleteUser
     ]);
 
 };

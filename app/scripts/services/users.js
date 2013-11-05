@@ -18,7 +18,6 @@
             }],
 
             save: function(user) {
-//                                                                    console.log('/services/users.js: user._id = '+user._id);
                 if(user._id) { // update
                     return $http.put(BaseUrl + 'api/users/' + user._id, user);
                 } else { // save new

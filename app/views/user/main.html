@@ -1,7 +1,7 @@
-<a href="#/users/{{user._id}}/edit" class="btn btn-default">Rediger info</a>
-<a href="#/users/{{user._id}}/editPassword" class="btn btn-default">Endre passord</a>
+<a href="#/users/{{user._id}}/edit" class="btn btn-default">Rediger bruker</a>
+<!--<a href="#/users/{{user._id}}/editPassword" class="btn btn-default">Endre passord</a>-->
 
-<h2>{{user.name}}</h2>
+<h2>{{user.name}} <label ng-show="user.role">({{user.role}})</label></h2>
 <hr>
 
 <div class="form-group">

@@ -56,15 +56,30 @@ function save(user, done) {
         if (err) {
             done(err);
         } else {
-            debugger;
             done(null, body.id);
         }
     });
+}
+
+function remove(user, done) {
+    if (user.doc_type != 'user') {
+        done('Error: db/users.js remove(..): document is not of type user');
+    } else {
+        var db = connect();
+
+        db.destroy(user.id, user.rev, function(err, body) {
+            if (err)
+                done(err);
+            else
+                done(null, body);
+        });
+    }
 }
 
 module.exports = {
     find: find,
     findByUsername: findByUsername,
     all: all,
-    save: save
+    save: save,
+    remove: remove
 };

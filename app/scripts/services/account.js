@@ -11,7 +11,7 @@
             },
 
             editPassword: function(oldPw, newPw) {
-                return $http.post(BaseUrl + 'password', {
+                return $http.post(BaseUrl + 'password', { //POST? Or rather PUT?
                     'old': oldPw,
                     'new': newPw
                 });
