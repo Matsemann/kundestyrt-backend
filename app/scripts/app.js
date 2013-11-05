@@ -373,7 +373,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       .otherwise({
         redirectTo: '/'
       });
-  }]).run(['$rootScope', '$location', 'Account', function($rootScope, $location, Account) {
+  }]).run(['$rootScope', '$location', '$timeout', 'Account', function($rootScope, $location, $timeout, Account) {
     $rootScope.$isActive = function(location) {
       if(location.substring(location.length - 1) === '%') {
         var start = location.substring(0, location.length - 1);
@@ -414,16 +414,22 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
     });
 
     $rootScope.$alert = function(msg) {
+      var destroyed = false;
+
       var alert = {
         message: msg,
         type: 'warning',
         destroy: function() {
+          if(destroyed) return;
+          destroyed = true;
           var index = $rootScope.$alert.items.indexOf(alert);
           $rootScope.$alert.items.splice(index, 1);
         }
       };
 
-        if($rootScope.$alert.items.length >= 2) { // max to allerts på en gang
+      $timeout(alert.destroy, 10000);
+
+      if($rootScope.$alert.items.length >= 2) { // max to allerts på en gang
         $rootScope.$alert.items.shift();
       }
       $rootScope.$alert.items.push(alert);
