@@ -98,7 +98,7 @@ function cors(opts) {
                 }
 
                 function corsOnHeader() {
-                        res.setHeader(AC_EXPOSE_HEADERS, ALLOW_HEADERS.join(', '));
+                        res.setHeader(AC_ALLOW_HEADERS, ALLOW_HEADERS.join(', '));
 
                         if (opts.credentials) {
                                 origin = req.headers['origin'];
