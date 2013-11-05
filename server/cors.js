@@ -111,7 +111,13 @@ function cors(opts) {
                 }
 
                 res.once('header', corsOnHeader);
-                next();
+
+                if(req.method === 'OPTIONS') {
+                        res.send(200);
+                        next(false);
+                } else {
+                        next();
+                }
         }
 
         return (restifyCORSSimple);

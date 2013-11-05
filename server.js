@@ -13,6 +13,8 @@ var passport = require('passport');
 var once = require('once');
 var cors = require('./server/cors');
 
+restify.CORS.ALLOW_HEADERS.splice(0, restify.CORS.ALLOW_HEADERS.length); // empty
+
 var port = process.env.PORT || 9000;
 
 var server = restify.createServer();
@@ -47,6 +49,27 @@ server.use(function(request, response, next) {
     response.setHeader('X-Use-Session', 'true');
     next();
 });
+
+
+// hack - need options
+(function() {
+    var optionsCache = {};
+    ['get', 'put', 'post'].forEach(function(method) {
+        var orig = server[method];
+        server[method] = function(url, handlers) {
+            orig.apply(server, [url, handlers]);
+            if(!optionsCache[url]) {
+                server.opts(url, preflight);
+            }
+        }
+    });
+
+    function preflight(request, response, next) {
+        response.send(500);
+        next(false);
+    }
+})();
+
 
 var useSession = (function() {
     var handlers = [
@@ -295,11 +318,7 @@ server.get(/^(?!\/api\/)/, useSession(staticFileRoute));
 
 server.on('uncaughtException', function(request, response, route, error) {
     debugger;
-    console.log(error, error.stack);
-});
-
-server.on('MethodNotAllowed', function(request, response, route, error) {
-    console.log('Method not allowed: ' + request.method + ': ' + request.url);
+    console.log(error), console.log(error.stack);
 });
 
 server.listen(port, function() {
