@@ -18,9 +18,13 @@ angular.module('kundestyrtApp')
         };
 
         $scope.deleteGroup = function() {
-            Groups.delete($scope.group).then(function() {
-                $location.path('/groups');
-            });
+            /* global confirm */
+            // ^ so jshint doesn't complain where confirm is coming from
+            if (confirm('Er du sikker på du vil slette denne gruppen?')) {
+                Groups.delete($scope.group).then(function() {
+                    $location.path('/groups');
+                });
+            }
         };
 
         $scope.toggleUser = function(user) {

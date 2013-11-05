@@ -1,11 +1,11 @@
 'use strict';
 
 (function(undefined) {
-    angular.module('kundestyrtApp').factory('AuthInterceptor', ['$q', '$injector', '$rootScope', function($q, $injector, $rootScope) {
+    angular.module('kundestyrtApp').factory('AuthInterceptor', ['$q', '$injector', '$rootScope', 'BaseUrl', function($q, $injector, $rootScope, BaseUrl) {
 
         return {
             responseError: function(response) {
-                if(response.status === 401 && response.config.url !== '/login') {
+                if(response.status === 401 && response.config.url !== BaseUrl + 'login') {
                     var $http = $injector.get('$http'); // trick to avoid circular dependency.
                     var config = response.config;
                     if(!$rootScope.$user) {
