@@ -9,7 +9,7 @@ module.exports = function(server) {
                 next(false);
             } else {
                 response.send(200, body);
-                next();
+            next();
             }
         });
     }
@@ -52,23 +52,32 @@ module.exports = function(server) {
         var sentUser = request.params;
         var user = {
             'doc_type': 'user',
-            'name': sendUser.name,
-            'email': sentUser.email
+            'name': sentUser.name,
+            'email': sentUser.email,
+            'password': sentUser.password
         };
 
-        if(sentUser.admin) {
-            user.role = 'admin';
-        } else if(user.role) {
-            delete user.role;
+        if (sentUser.role) {
+            user.role = sentUser.role;
         }
+        // if (sentUser.admin) {
+        //     user.role = 'admin';
+        // } else if (user.role) {
+        //     delete user.role;
+        // }
 
         db.users.save(user, function(err, id) {
+            debugger;
             if(err) {
+                console.log('err 1');
                 response.send(err);
                 next(false);
             } else {
                 db.users.find(id, function(err, body) {
+                    debugger;
                     if(err) {
+                        debugger;
+                        console.log('err 2');
                         response.send(err);
                         next(false);
 
@@ -77,6 +86,7 @@ module.exports = function(server) {
                         body.password = auth.hash(sentUser.password + id);
                         db.users.save(body, function(err, id) {
                             if(err) {
+                                console.log('err 3');
                                 response.send(err);
                                 next(false);
                             } else {
@@ -91,37 +101,33 @@ module.exports = function(server) {
     }
 
     function putUser(request, response, next) {
-        //todo keep old values for pw and picture
-        var current;
-        if (request.params.id)
-            current = db.users.find(request.params.id, function(err,body) {});
+        console.log('putUser in server');
 
+        if (request.params.id) {
+            db.users.find(request.params.id, function(err, body) {
+                if (err) {
+                    response.send(err);
+                    next(false);
+                } else {
+                    var user = request.params;
+                    body.name = user.name;
+                    body.email = user.email;
+                    body.password = auth.hash(user.password + body._id);
 
-        var sentUser = request.params;
-console.log('putUser in server');
-debugger;
-        var user = {
-            '_id': request.params.id, // we want the ID from the url
-            '_rev': sentUser._rev,
-            'doc_type': 'user',
-            'name': sentUser.name,
-            'image': sentUser.image,
-            'email': sentUser.email,
-            'password': current.password,
-            'role': sentUser.role
-        };
-debugger;
-
-        db.users.save(user, function(err, id) {
-            if(err) {
-                response.send(err);
-                next(false);
-            } else {
-                response.send(201, id);
-                next();
-            }
-        });
-debugger;
+                    db.users.save(body, function(err, id) {
+                        if(err) {
+                            response.send(err);
+                            next(false);
+                        } else {
+                            getUser(request, response, next, body._id);
+                        }
+                    });
+                }
+            });
+        } else {
+            response.send(404);
+            next(false);
+        }
     }
 
     function updatePassword(request, response, next) {
@@ -170,7 +176,7 @@ debugger;
 
     server.post('/api/users', [
         auth.authorize('admin'),
-        getUsers
+        addUser
     ]);
 
     server.put('/api/users/:id', [
@@ -178,7 +184,7 @@ debugger;
         putUser
     ]);
 
-    server.post('/api/password', [
+    server.post('/api/password', [ //TODO is it POST????
         auth.authorize(),
         updatePassword
     ]);

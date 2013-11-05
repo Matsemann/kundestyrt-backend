@@ -18,7 +18,7 @@
             }],
 
             save: function(user) {
-                                                                    console.log('scipts/services/users.js - user._id = '+user._id);
+//                                                                    console.log('/services/users.js: user._id = '+user._id);
                 if(user._id) { // update
                     return $http.put(BaseUrl + 'api/users/' + user._id, user);
                 } else { // save new
@@ -30,8 +30,8 @@
                 if(user._id) { // delete
                     return $http.delete(BaseUrl + 'api/users/' + user._id +'/'+ user._rev);
                 } else {
-                    console.log('services/users.js: Error! Can not delete user that does not exist.');
-                    return null; //vil nok krasje
+                    $scope.$alert('/services/users.js: Error! Can not delete user that does not exist.');
+                    return null;
                 }
             }
         };

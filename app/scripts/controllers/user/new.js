@@ -2,7 +2,7 @@
 
 angular.module('kundestyrtApp')
     .controller('UserNewCtrl', ['$scope', '$location', 'Users', function ($scope, $location, Users) {
-        // angular.extend($scope, {
+        // angular.extend($scope.user, {
         //     name: '',
         //     email: '',
         //     pw1: '',
@@ -36,11 +36,13 @@ angular.module('kundestyrtApp')
 
 
             Users.save($scope.user)
-            .then(function(result) {
+            .success(function(result) {
                 console.log("result: "+result);
                 console.log("result.data._id = "+result.data._id);
                 //$location.path('/users/' + result.data._id);
                 $location.path('/users');
+            }).error(function(err) {
+                $scope.$alert(err);
             });
         };
     }]);
