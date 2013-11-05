@@ -30,7 +30,7 @@ if(!process.env.PORT) {
 }
 
 
-server.use(restify.gzipResponse());
+//server.use(restify.gzipResponse());
 server.use(restify.CORS());
 server.use(restify.queryParser({ mapParams: false }));
 server.use(restify.jsonp());

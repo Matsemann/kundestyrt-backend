@@ -15,6 +15,10 @@
                     'old': oldPw,
                     'new': newPw
                 });
+            },
+
+            get: function() {
+                return $http.get(BaseUrl + 'api/users/me');
             }
         };
     }]);

@@ -373,7 +373,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       .otherwise({
         redirectTo: '/'
       });
-  }]).run(['$rootScope', '$location', '$http', 'BaseUrl', function($rootScope, $location, $http, BaseUrl) {
+  }]).run(['$rootScope', '$location', 'Account', function($rootScope, $location, Account) {
     $rootScope.$isActive = function(location) {
       if(location.substring(location.length - 1) === '%') {
         var start = location.substring(0, location.length - 1);
@@ -407,7 +407,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
       returnPath = null;
     };
 
-    $rootScope.$userPromise = $http.get(BaseUrl + 'api/users/me');
+    $rootScope.$userPromise = Account.get();
     $rootScope.$userPromise.success(function(user) {
       $rootScope.$user = user;
       $rootScope.$login.$complete();

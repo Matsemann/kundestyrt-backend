@@ -4,6 +4,13 @@
     angular.module('kundestyrtApp').factory('AuthInterceptor', ['$q', '$injector', '$rootScope', 'BaseUrl', function($q, $injector, $rootScope, BaseUrl) {
 
         return {
+            request: function(config) {
+                return $q.when(config).then(function(conf) {
+                    conf.withCredentials = true;
+                    return conf;
+                });
+            },
+
             responseError: function(response) {
                 if(response.status === 401 && response.config.url !== BaseUrl + 'login') {
                     var $http = $injector.get('$http'); // trick to avoid circular dependency.
