@@ -21,6 +21,15 @@ server.use(function(request, response, next) {
     next();
 });
 
+
+if(!process.env.PORT) {
+    server.use(function(request, response, next) {
+        console.log(request.method + ': ' + request.url);
+        next();
+    });
+}
+
+
 server.use(restify.gzipResponse());
 server.use(restify.CORS());
 server.use(restify.queryParser({ mapParams: false }));
@@ -245,7 +254,6 @@ function serveLess(file, request, response, next) {
 }
 
 function staticFileRoute(request, response, next) {
-    console.log('Request for: ' + request.url);
     var file = root + request.url;
     fs.stat(file, function(err, stats) {
         if((err || !stats.isFile()) && !(

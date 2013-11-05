@@ -5,9 +5,11 @@ angular.module('kundestyrtApp')
         $scope.user = user;
 
         $scope.saveUser = function() {
-            console.log('Save user');
+            console.log('Update user:');
+            console.log($scope.user);
             Users.save($scope.user).then(function() {
-                $location.path('/users/' + user._id);
+                //$location.path('/users/' + user._id);
+                $location.path('/users');
                 console.log('done');
             });
         };

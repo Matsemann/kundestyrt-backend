@@ -18,6 +18,7 @@
             }],
 
             save: function(user) {
+                                                                    console.log('scipts/services/users.js - user._id = '+user._id);
                 if(user._id) { // update
                     return $http.put('/api/users/' + user._id, user);
                 } else { // save new

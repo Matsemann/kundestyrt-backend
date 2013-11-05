@@ -22,7 +22,7 @@ angular.module('kundestyrtApp')
             }
 
             if($scope.pw1 !== $scope.pw2) {
-                $scope.$alert('Password missmatch');
+                $scope.$alert('Passordene må være like');
                 return;
             }
 

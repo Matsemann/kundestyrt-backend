@@ -50,13 +50,15 @@ function all(done) {
 }
 
 function save(user, done) {
+    console.log('save user in db');
+    debugger;
     var db = connect();
 
     db.insert(user, function(err, body) {
         if (err) {
             done(err);
         } else {
-            done(null, body.id);
+            done(null, body);
         }
     });
 }

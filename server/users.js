@@ -19,22 +19,75 @@ module.exports = function(server) {
         next();
     }
 
-    function returnUser(request, response, next) {
-        return function(err, body) {
+    // function returnUser(request, response, next) {
+    //     return function(err, body) {
+    //         if (err) {
+    //             response.send(err);
+    //             next(false);
+    //         } else {
+    //             body.password = '';
+    //             response.send(200, body);
+    //             next();
+    //         }
+    //     };
+    // }
+
+    function getUser(request, response, next, id, responseCode) {
+        var id = id || request.params.id;
+        var responseCode = responseCode || 200;
+
+        db.users.find(id, function(err, body) {
             if (err) {
                 response.send(err);
                 next(false);
             } else {
                 body.password = '';
-                response.send(200, body);
+                response.send(responseCode, body);
                 next();
             }
-        };
+        });
     }
 
-    function getUser(request, response, next, id) {
-        var id = id || request.params.id;
-        db.users.find(id, returnUser(request, response, next));
+    function addUser(request, response, next) {
+        var sentUser = request.params;
+        var user = {
+            'doc_type': 'user',
+            'name': sendUser.name,
+            'email': sentUser.email
+        };
+
+        if(sentUser.admin) {
+            user.role = 'admin';
+        } else if(user.role) {
+            delete user.role;
+        }
+
+        db.users.save(user, function(err, id) {
+            if(err) {
+                response.send(err);
+                next(false);
+            } else {
+                db.users.find(id, function(err, body) {
+                    if(err) {
+                        response.send(err);
+                        next(false);
+
+                        //TODO: delete user?
+                    } else {
+                        body.password = auth.hash(sentUser.password + id);
+                        db.users.save(body, function(err, id) {
+                            if(err) {
+                                response.send(err);
+                                next(false);
+                            } else {
+                                response.setHeader('Location', '/api/users/' + id);
+                                getUser(request, response, next, id, 201);
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
 
     function putUser(request, response, next) {
@@ -45,6 +98,8 @@ module.exports = function(server) {
 
 
         var sentUser = request.params;
+console.log('putUser in server');
+debugger;
         var user = {
             '_id': request.params.id, // we want the ID from the url
             '_rev': sentUser._rev,
@@ -55,6 +110,7 @@ module.exports = function(server) {
             'password': current.password,
             'role': sentUser.role
         };
+debugger;
 
         db.users.save(user, function(err, id) {
             if(err) {
@@ -65,6 +121,7 @@ module.exports = function(server) {
                 next();
             }
         });
+debugger;
     }
 
     function updatePassword(request, response, next) {
@@ -100,6 +157,7 @@ module.exports = function(server) {
         auth.authorize(),
         getUsers
     ]);
+
     server.get('/api/users/me', [
         auth.authorize(),
         getMe
@@ -108,6 +166,16 @@ module.exports = function(server) {
     server.get('/api/users/:id', [
         auth.authorize(),
         getUser
+    ]);
+
+    server.post('/api/users', [
+        auth.authorize('admin'),
+        getUsers
+    ]);
+
+    server.put('/api/users/:id', [
+        auth.authorize(),
+        putUser
     ]);
 
     server.post('/api/password', [

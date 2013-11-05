@@ -1,35 +1,54 @@
-<button ng-click="saveUser()" ng-disabled="user.name === ''" class="btn btn-default">Lagre</button>
+<button ng-click="saveUser()" ng-disabled="name === ''" class="btn btn-default">Lagre</button>
 <!--<button ng-click="deleteUser()" ng-show="user._id" class="btn btn-default">Slett</button>-->
 
 <h2>{{user.name || 'Ny bruker'}}</h2>
-<hr>
 
-<div class="form-group">
-    <label for="name">Navn</label>
-    <input id="name" class="form-control" type="text" ng-model="user.name"
-           placeholder="Skriv inn navn">
+
+<!--Password-->
+
+<div class="form-horizontal">
+
+  <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">Navn</label>
+      <div class="col-sm-10">
+        <input id="name" ng-model="user.name" type="text" class="form-control"
+                 placeholder="Navn" />
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="email" class="col-sm-2 control-label">E-post</label>
+      <div class="col-sm-10">
+        <input id="email" ng-model="user.email" type="text" class="form-control"
+                 placeholder="E-post" />
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="pw1" class="col-sm-2 control-label">Nytt passord</label>
+      <div class="col-sm-10">
+        <input id="pw1" ng-model="user.password" type="password" class="form-control"
+                 placeholder="Nytt passord" />
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="pw2" class="col-sm-2 control-label">Gjennta passord</label>
+      <div class="col-sm-10">
+        <input id="pw2" ng-model="pwConfirm" type="password" class="form-control"
+                 placeholder="Gjennta passord" />
+      </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="user.role" 
+            ng-true-value="admin" ng-false-value=undefined/> Admin
+        </label>
+      </div>
+    </div>
+  </div>
+
 </div>
-<div class="form-group">
-    <label for="email">E-post</label>
-    <input id="email" class="form-control" type="text" ng-model="user.email"
-           placeholder="Skriv inn e-post">
-</div>
-<div class="checkbox">
-	<label for="admin">Admin</label>
-    <input id="admin" type="checkbox" ng-model="user.role"
-			ng-true-value="admin" ng-false-value="user">
-</div>
-<!-- TEST
-<div class="form-group">
-    <label for="pwOld">Passord</label>
-    <input ng-model="pwOld" type="text" id="pwOld" class="form-control"
-           placeholder="Passord">
-</div>
--->
-<!-- CHECKBOX TEST
-<div class="form-group">
-    <label for="admin">Admin test</label>
-    <input ng-model="user.role" type="text" id="admin" class="form-control"
-           placeholder="null" disabled>
-</div>
--->
