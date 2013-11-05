@@ -24,12 +24,12 @@ server.use(function(request, response, next) {
 });
 
 
-//if(!process.env.PORT) {
+if(!process.env.PORT) {
     server.use(function(request, response, next) {
         console.log(request.method + ': ' + request.url);
         next();
     });
-//}
+}
 
 
 //server.use(restify.gzipResponse());
