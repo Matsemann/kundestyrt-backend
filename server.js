@@ -298,6 +298,10 @@ server.on('uncaughtException', function(request, response, route, error) {
     console.log(error, error.stack);
 });
 
+server.on('MethodNotAllowed', function(request, response, route, error) {
+    console.log('Method not allowed: ' + request.method + ': ' + request.url);
+});
+
 server.listen(port, function() {
     console.log('Listening on port ' + port);
 });
