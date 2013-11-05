@@ -159,7 +159,7 @@ debugger;
     ]);
 
     server.get('/api/users/me', [
-        //auth.authorize(),
+        auth.authorize(),
         getMe
     ]);
 
