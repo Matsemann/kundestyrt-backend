@@ -17,13 +17,17 @@
         > .title,
         > .right {
             padding: @navbar-padding-vertical @navbar-padding-horizontal;
-            font-size: @font-size-large;
             line-height: @line-height-computed;
             color: @navbar-default-brand-color;
+            overflow:hidden;
+            white-space: nowrap;
+            text-overflow:ellipsis;
         }
 
         > .left,
         > .right {
+//            width: 30%;
+
             &:hover,
             &:focus {
                 text-decoration: none;
@@ -34,6 +38,7 @@
 
         > .left {
             float: left;
+            text-align: left;
 
             &.arrow {
                 padding-left: @navbar-padding-horizontal + 13px;
@@ -50,9 +55,12 @@
 
         > .right {
             float: right;
+            text-align: right;
         }
 
         > .title {
+            font-size: @font-size-large;
+            width: 40%;
             margin: 0 auto;
             display: inline-block;
         }

@@ -13,6 +13,9 @@
                         conf.url = BASE_URL + conf.url;
                     }
                     conf.withCredentials = true;
+
+
+                    console.log('Request ' + conf.url + ' using ' + conf.method);
                     return conf;
                 });
             },
