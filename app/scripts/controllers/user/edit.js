@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('kundestyrtApp')
-    .controller('UserEditCtrl', ['$scope', '$location', 'user', 'Users', function ($scope, $location, user, Users) {
+    .controller('UserEditCtrl', ['$scope', '$location', 'user', 'Users', 'utils', function ($scope, $location, user, Users, utils) {
         $scope.user = user;
 
         $scope.saveUser = function() {
