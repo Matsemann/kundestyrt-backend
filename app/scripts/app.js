@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
+angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
   .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
     $httpProvider.interceptors.push('AuthInterceptor');
 
@@ -510,7 +510,7 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
   }]).directive('inputGroupSingular', function() {
     return {
       restrict: 'C',
-      link: function(scope, elm, ctrls) {
+      link: function(scope, elm) {
         /*jshint unused:false */
         elm.children().on('focus', function() {
           elm.addClass('focus');
@@ -519,7 +519,32 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         });
       }
     };
-  });
+  }).directive('ngLoad', ['$parse', function($parse) {
+    var parsed = {};
+
+    return {
+        restrict: 'A',
+        link: function(scope, elm, attrs) {
+            function trigger() {
+                scope.$apply(function() {
+                    var str = attrs.ngLoad,
+                        p;
+                    if(parsed[str]) {
+                        p = parsed[str];
+                    } else {
+                        p = parsed[str] = $parse(str);
+                    }
+                    p(scope);
+                });
+            }
+
+            elm.bind('load', trigger);
+            scope.$on('$destroy', function() {
+                elm.unbind('load', trigger);
+            });
+        }
+    }
+  }]);
 
 if(!Date.prototype.toISOString) {
   (function() {

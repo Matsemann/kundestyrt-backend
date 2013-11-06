@@ -29,4 +29,5 @@ angular.module('kundestyrtApp')
 
             doScroll();
         }
+        $scope.scrollToBottom = scrollToBottom;
   }]);
