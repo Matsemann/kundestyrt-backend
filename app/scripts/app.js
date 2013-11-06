@@ -50,7 +50,7 @@ angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
             },
             left: {
               type: 'back',
-              url: '/conversation',
+              url: '/conversation/',
               title: 'Conversations'
             }
           };
