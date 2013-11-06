@@ -109,8 +109,12 @@ module.exports = function(server) {
                     var sentUser = request.params;
                     body.name = sentUser.name;
                     body.email = sentUser.email;
-                    body.password = auth.hash(sentUser.password + body._id);
 
+                    //only update password if a new password was actually set
+                    if (sentUser.password)
+                        body.password = auth.hash(sentUser.password + body._id);
+
+                    //eliminate role field if role is null
                     if (sentUser.role === 'null') {
                         if (body.role)
                             delete body.role;
@@ -158,14 +162,13 @@ module.exports = function(server) {
                     next(false);
                 } else {
                     getUser(request, response, next, userId);
-                    //TODO call next?
                 }
             });
         });
     }
 
     function deleteUser(request, response, next) {
-        db.users.remove(request.params, function(err, id) {
+        db.users.remove(request.params.id, request.params.rev, function(err, id) {
             if (err) {
                 response.send(err);
                 next(false);

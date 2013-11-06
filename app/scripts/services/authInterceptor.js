@@ -2,7 +2,7 @@
 
 (function(undefined) {
 
-    var BASE_URL = 'http://kundestyrt.azurewebsites.net/';
+    var BASE_URL = '/';//'http://kundestyrt.azurewebsites.net/';
 
     angular.module('kundestyrtApp').factory('AuthInterceptor', ['$q', '$injector', '$rootScope', function($q, $injector, $rootScope) {
 

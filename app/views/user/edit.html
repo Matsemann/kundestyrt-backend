@@ -1,10 +1,7 @@
-<button ng-click="saveUser()" ng-disabled="name === ''" class="btn btn-default">Lagre</button>
-<button ng-click="deleteUser()" ng-show="user._id" class="btn btn-default">Slett</button> <!--TODO PROMPT-->
+<!--button ng-click="saveUser()" ng-disabled="name === ''" class="btn btn-default">Lagre</button-->
+<button ng-click="deleteUser()" ng-show="user._id" class="btn btn-default">Slett</button>
 
-<h2>{{user.name || 'Ny bruker'}}</h2>
-
-
-<!--Password-->
+<!--h2>{{user.name || 'Ny bruker'}}</h2-->
 
 <div class="form-horizontal">
 
@@ -28,7 +25,7 @@
       <label for="pw1" class="col-sm-2 control-label">Nytt passord</label>
       <div class="col-sm-10">
         <input id="pw1" ng-model="user.password" type="password" class="form-control"
-                 placeholder="Nytt passord" />
+                 placeholder="Behold gammelt passord" />
       </div>
   </div>
 
@@ -36,7 +33,7 @@
       <label for="pw2" class="col-sm-2 control-label">Gjennta passord</label>
       <div class="col-sm-10">
         <input id="pw2" ng-model="pwConfirm" type="password" class="form-control"
-                 placeholder="Gjennta passord" />
+                 placeholder="{{user.password?'Gjenta passord':'Behold gammelt passord'}}" />
       </div>
   </div>
 

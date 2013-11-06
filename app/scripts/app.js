@@ -117,6 +117,22 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         templateUrl: 'views/user/list.html',
         resolve: {
           users: serviceResolve('Users', 'getUsers')
+        },
+        context: {
+          title: 'Brukere',
+          right: {
+            type: 'link',
+            url: '/users/new',
+            title: 'Ny bruker'
+          },
+          action: {
+            type: 'link',
+            url: '/users/new',
+            title: 'Ny bruker'
+          },
+          left: {
+            type: 'menu'
+          }
         }
       },
       user: {
@@ -124,19 +140,75 @@ angular.module('kundestyrtApp', ['ng', 'ngResource', 'fgmt'])
         templateUrl: 'views/user/main.html',
         resolve: {
           user: serviceResolve('Users', 'getUser')
-        }
+        },
+        context: ['user', function(user) {
+          return {
+            title: user.name+(user.role?' ('+user.role+')':''),
+            action: {
+              type: 'link',
+              url: '/users/' + user._id + '/edit',
+              title: 'Rediger'
+            },
+            right: {
+              type: 'link',
+              url: '/users/' + user._id + '/edit',
+              title: 'Rediger'
+            },
+            left: {
+              type: 'back',
+              url: '/users',
+              title: 'Brukere'
+            }
+          };
+        }]
       },
       userEdit: {
         controller: 'UserEditCtrl',
         templateUrl: 'views/user/edit.html',
         resolve: {
           user: serviceResolve('Users', 'getUser')
+        },
+        context: {
+          title: 'Rediger bruker',
+          right: {
+            type: 'action',
+            action: 'saveUser()',
+            title: 'Lagre'
+          },
+          action: {
+            type: 'action',
+            action: 'saveUser()',
+            title: 'Lagre'
+          },
+          left: {
+            type: 'link',
+            url: '/users',
+            title: 'Avbryt'
+          }
         }
       },
       userNew: {
         controller: 'UserNewCtrl',
         templateUrl: 'views/user/edit.html',
-        resolve: {}
+        resolve: {},
+        context: {
+          title: 'Ny bruker',
+          right: {
+            type: 'action',
+            action: 'saveUser()',
+            title: 'Lagre'
+          },
+          action: {
+            type: 'action',
+            action: 'saveUser()',
+            title: 'Lagre'
+          },
+          left: {
+            type: 'link',
+            url: '/users',
+            title: 'Avbryt'
+          }
+        }
       },
       noteList: {
         controller: 'NoteListCtrl',

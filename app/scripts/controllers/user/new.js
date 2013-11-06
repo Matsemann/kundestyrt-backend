@@ -31,14 +31,8 @@ angular.module('kundestyrtApp')
             }
 
 
-            console.log('Save user:');
-            console.log($scope.user);
-
-
             Users.save($scope.user)
             .success(function(result) {
-                console.log("result: "+result);
-                console.log("result.data._id = "+result._id);
                 $location.path('/users/' + result._id);
             }).error(function(err) {
                 $scope.$alert(err);
