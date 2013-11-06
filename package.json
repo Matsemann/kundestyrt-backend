@@ -41,7 +41,8 @@
     "passport-local": "~0.1.6",
     "passport-http": "~0.2.2",
     "passport-oauth2-client-password": "~0.1.1",
-    "once": "~1.2.0"
+    "once": "~1.2.0",
+    "assert-plus": "~0.1.4"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

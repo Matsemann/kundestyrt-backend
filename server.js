@@ -11,7 +11,9 @@ var less = require('less');
 var express = require('express');
 var passport = require('passport');
 var once = require('once');
-//var auth = require('./server/auth');
+var cors = require('./server/cors');
+
+restify.CORS.ALLOW_HEADERS.splice(0, restify.CORS.ALLOW_HEADERS.length); // empty
 
 var port = process.env.PORT || 9000;
 
@@ -30,8 +32,11 @@ if(!process.env.PORT) {
 }
 
 
-server.use(restify.gzipResponse());
-server.use(restify.CORS());
+//server.use(restify.gzipResponse());
+server.use(cors({
+    headers: [],
+    credentials: true
+}));
 server.use(restify.queryParser({ mapParams: false }));
 server.use(restify.jsonp());
 server.use(restify.fullResponse());
@@ -44,6 +49,27 @@ server.use(function(request, response, next) {
     response.setHeader('X-Use-Session', 'true');
     next();
 });
+
+
+// hack - need options
+(function() {
+    var optionsCache = {};
+    ['get', 'put', 'post'].forEach(function(method) {
+        var orig = server[method];
+        server[method] = function(url, handlers) {
+            orig.apply(server, [url, handlers]);
+            if(!optionsCache[url]) {
+                server.opts(url, preflight);
+            }
+        }
+    });
+
+    function preflight(request, response, next) {
+        response.send(500);
+        next(false);
+    }
+})();
+
 
 var useSession = (function() {
     var handlers = [
@@ -292,7 +318,7 @@ server.get(/^(?!\/api\/)/, useSession(staticFileRoute));
 
 server.on('uncaughtException', function(request, response, route, error) {
     debugger;
-    console.log(error, error.stack);
+    console.log(error), console.log(error.stack);
 });
 
 server.listen(port, function() {
