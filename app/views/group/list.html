@@ -1,4 +1,4 @@
-<a href="#/groups/new" class="btn btn-default">Ny gruppe</a>
+<!--a href="#/groups/new" class="btn btn-default">Ny gruppe</a-->
 <div ng-repeat="group in groups" class="conversation" ng-class="{selected: $isActive('/groups/{{group._id}}%')}" ng-click="$goTo('/groups/{{group._id}}')">
     <div class="image">
         <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=pg"

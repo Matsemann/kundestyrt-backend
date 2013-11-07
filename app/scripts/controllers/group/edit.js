@@ -9,11 +9,12 @@ angular.module('kundestyrtApp')
         $scope.saveGroup = function() {
             Groups.save($scope.group).then(function(xhr) {
                 console.log(xhr);
-                if ($scope.group._id) {
-                    $scope.group = xhr.data;
-                } else {
-                    $location.path('/groups/' + xhr.data.id);
-                }
+
+                if (group.name === '' ||
+                    group.members.length === 0)
+                    $scope.$alert('En gruppe må ha både navn og medlemmer.');
+                else
+                    $location.path('/groups');
             });
         };
 

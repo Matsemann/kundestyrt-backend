@@ -313,6 +313,22 @@ angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
         templateUrl: 'views/group/list.html',
         resolve: {
           groups: serviceResolve('Groups', 'getGroups')
+        },
+        context: {
+          title: 'Grupper',
+          right: {
+            type: 'link',
+            url: '/groups/new',
+            title: 'Ny gruppe'
+          },
+          action: {
+            type: 'link',
+            url: '/groups/new',
+            title: 'Ny gruppe'
+          },
+          left: {
+            type: 'menu',
+          }
         }
       },
       groupEdit: {
@@ -321,14 +337,53 @@ angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
         resolve: {
           group: serviceResolve('Groups', 'getGroup'),
           users: serviceResolve('Contacts', 'getUsers')
-        }
+        },
+        context: ['group', function(group) {
+          return {
+            title: group.name,
+            right: {
+              type: 'action',
+              action: 'saveGroup()',
+              title: 'Lagre'
+            },
+            action: {
+              type: 'action',
+              action: 'saveGroup()',
+              name: 'Lagre'
+            },
+            left: {
+              type: 'back',
+              url: '/groups',
+              title: 'Grupper'
+            }
+          };
+        }]
       },
       groupNew: {
         controller: 'GroupEditCtrl',
         templateUrl: 'views/group/edit.html',
         resolve: {
           group: function(){}, // no group
+          //group: {},
           users: serviceResolve('Contacts', 'getUsers')
+        },
+        context: {
+          title: 'Ny gruppe',
+          right: {
+            type: 'action',
+            action: 'saveGroup()',
+            title: 'Lagre'
+          },
+          action: {
+            type: 'action',
+            action: 'saveGroup()',
+            title: 'Lagre'
+          },
+          left: {
+            type: 'back',
+            url: '/groups',
+            title: 'Grupper'
+          }
         }
       },
       login: {
