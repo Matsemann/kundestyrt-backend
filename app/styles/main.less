@@ -157,3 +157,43 @@ body {
         margin-right: 10px;
     }
 }
+
+.hidden-menu {
+
+  position:absolute;
+  background-color: @navbar-default-bg;
+  top: -1px;
+  left: -1px;
+  width: 300px;
+  min-height: 100%;
+  z-index: 1031;
+
+  transition: left ease-in-out 0.4s;
+  opacity: 1;
+  display: block;
+
+  &.hidden-menu-hide {
+    top: -1px;
+    left: -300px;
+  }
+
+
+
+  .nav-stacked {
+
+      .divider {
+          background-color: #E5E5E5;
+          height: 1px;
+          margin: 9px 0;
+          overflow: hidden;
+      }
+      a {
+        color: @navbar-default-link-color;
+      }
+
+      > .active {
+        color: @navbar-default-link-active-color;
+        background-color: @navbar-default-link-active-bg;
+      }
+  }
+}
