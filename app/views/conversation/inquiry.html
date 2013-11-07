@@ -8,7 +8,7 @@
             <div class="content">
                 <div class="topic">{{(conv.recipient | user).name}}</div>
                 <br />
-                <div class="date">{{conv.messages[conv.messages.length - 1].date | date}}</div>
+                <div class="date">{{conv.messages[conv.messages.length - 1].date | date:'HH:mm, d/M'}}</div>
             </div>
         </div>
     </div>
