@@ -10,7 +10,7 @@
             request: function(config) {
                 return $q.when(config).then(function(conf) {
                     if(conf.url.substring(0, 'api/'.length) === 'api/' || conf.url === 'login') {
-                        conf.url = BASE_URL + conf.url;
+                        conf.url = BASE_URL + conf.url + '?ver=' + new Date().getTime();
                     }
                     conf.withCredentials = true;
 
