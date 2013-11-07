@@ -73,10 +73,11 @@
              ng-class="{in: barShowing, collapse: !barShowing}"
              ng-click="barShowing = false"><!-- Hide it when menu item is clicked -->
           <ul class="nav navbar-nav">
-            <li ng-class="{active: $isActive('/') || $isActive('/conversation%')}"><a href="#/">Conversations</a></li>
-            <li ng-class="{active: $isActive('/notes')}"><a href="#/notes">Notes</a></li>
-            <li ng-class="{active: $isActive('/groups')}"><a href="#/groups">Groups</a></li>
-            <li ng-class="{active: $isActive('/users')}"><a href="#/users">Users</a></li>
+              <li ng-class="{active: $isActive('/') || $isActive('/conversation%')}"><a href="#/">Samtaler</a></li>
+              <li ng-class="{active: $isActive('/notes')}"><a href="#/notes">Notater</a></li>
+              <li ng-class="{active: $isActive('/password')}"><a href="#/password">Endre passord</a></li>
+              <li ng-show="$user.role == 'admin'" ng-class="{active: $isActive('/groups')}"><a href="#/groups">Grupper</a></li>
+              <li ng-show="$user.role == 'admin'" ng-class="{active: $isActive('/users')}"><a href="#/users">Brukere</a></li>
           </ul>
 
           <ul ng-cloak class="nav navbar-nav pull-right" ng-if="$navigation.right">

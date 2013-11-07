@@ -18,16 +18,16 @@ angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
           conversations: serviceResolve('Conversation', 'list')
         },
         context: {
-          title: 'Conversations',
+          title: 'Samtaler',
           right: {
             type: 'link',
             url: '/conversation/new',
-            title: 'Compose'
+            title: 'Start ny'
           },
           action: {
             type: 'link',
             url: '/conversation/new',
-            title: 'Compose'
+            title: 'Start ny'
           },
           left: {
             type: 'menu'
@@ -46,12 +46,12 @@ angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
             action: {
               type: 'link',
               url: '/conversation/new',
-              title: 'Compose'
+              title: 'Start ny'
             },
             left: {
               type: 'back',
               url: '/conversation/',
-              title: 'Conversations'
+              title: 'Samtaler'
             }
           };
         }]
@@ -73,7 +73,7 @@ angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
             action: {
               type: 'link',
               url: '/conversation/new',
-              title: 'Compose'
+              title: 'Start ny'
             },
             left: {
               type: 'back',
@@ -327,7 +327,7 @@ angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
             title: 'Ny gruppe'
           },
           left: {
-            type: 'menu',
+            type: 'menu'
           }
         }
       },
