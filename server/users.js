@@ -9,7 +9,7 @@ module.exports = function(server) {
                 next(false);
             } else {
                 response.send(200, body);
-            next();
+                next();
             }
         });
     }

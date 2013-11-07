@@ -8,13 +8,15 @@
 
         return {
             list: [function() {
-                return $http.get('api/conversations', {cache: cache}).then(function(xhr) {
+                //return $http.get('api/conversations', {cache: cache}).then(function(xhr) {
+                return $http.get('api/conversations').then(function(xhr) {
                     return xhr.data.rows;
                 });
             }],
 
             get: ['id', function(id) {
-                return $http.get('api/conversations/' + id, {cache: cache}).then(function(xhr) {
+                //return $http.get('api/conversations/' + id, {cache: cache}).then(function(xhr) {
+                return $http.get('api/conversations/' + id).then(function(xhr) {
                     return xhr.data;
                 });
             }],

@@ -5,14 +5,27 @@ module.exports = function(server) {
     function getConversation(request, response, next, id, responseCode) {
         var id = id || request.params.id;
         var responseCode = responseCode || 200;
+        var userId = request.user._id;
 
         db.conversation.find(id, function(err, body) {
             if (err) {
                 response.send(err);
                 next(false);
             } else {
-                response.send(responseCode, fixInqueries(request.user._id)(body));
-                next();
+                // Add user requesting conversation to list of users that have read it
+                if (body.usersRead.indexOf(userId) === -1) {
+                    body.usersRead.push(userId);
+                }
+
+                db.conversation.save(body, function(err, id) {
+                    if(err) {
+                        response.send('When registering that you read the conversation: '+err);
+                        next(false);
+                    } else {
+                        response.send(responseCode, fixInqueries(request.user._id)(body));
+                        next();
+                    }
+                });
             }
         });
     }
@@ -41,7 +54,9 @@ module.exports = function(server) {
             topic: sentConversation.topic,
             doc_type: 'conversation',
             type: sentConversation.inquiry ? 1 : 0,
-            participants: []
+            participants: [],
+            usersRead: [sentFromUserId],
+            date: new Date().toISOString()
         };
 
         var firstMessage = {
@@ -105,9 +120,9 @@ module.exports = function(server) {
             });
 
             // And the groups
-            for (var j = 0; i < sentConversation.recipients.groups.length; j++) {
+            for (i = 0; i < sentConversation.recipients.groups.length; i++) {
                 conversation.participants.push({
-                    _id: sentConversation.recipients.groups[j]._id,
+                    _id: sentConversation.recipients.groups[i]._id,
                     type: "group"
                 });
             }
@@ -161,8 +176,6 @@ module.exports = function(server) {
         if(attempt === undefined) { attempt = 0; }
 
         db.conversation.find(id, function(err, body) {
-            debugger;
-            
             if(err) {
                 done(err);
                 return;
@@ -204,6 +217,9 @@ module.exports = function(server) {
             } else {
                 body.conversations[sub].messages.push(msg);
             }
+
+            body.usersRead = [msg.sender];
+            body.date = new Date().toISOString()
 
             db.conversation.save(body, function(err, body) {
                 if (err) {
