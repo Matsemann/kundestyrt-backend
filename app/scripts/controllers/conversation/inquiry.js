@@ -16,17 +16,22 @@ angular.module('kundestyrtApp')
 
         scrollToBottom();
 
+        var maxScroll = 0;
         // Needs to wrapped inside a timeout so that it is put in the end of the event queue and happens after the DOM is updated
         function scrollToBottom()  {
             var fragment = jQuery('.fragment:last-child');
 
             function doScroll() {
                 setTimeout(function() {
-                    fragment.animate({scrollTop: fragment[0].scrollHeight});
+                    if (fragment[0].scrollHeight > maxScroll) {
+                        maxScroll = fragment[0].scrollHeight;
+                        fragment.animate({scrollTop: fragment[0].scrollHeight});
+                    }
                 }, 100); // no idea why this should be 100...
             }
 
             doScroll();
         }
+
         $scope.scrollToBottom = scrollToBottom;
     }]);

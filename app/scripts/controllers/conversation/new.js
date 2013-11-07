@@ -43,9 +43,29 @@ angular.module('kundestyrtApp')
         };
 
         $scope.create = function() {
-            Conversation.create($scope.conversation).then(function(id) {
-                console.log(id);
-                $location.path('/conversation/' + id);
-            });
+            if (canSend($scope.conversation)) {
+                Conversation.create($scope.conversation).then(function(id) {
+                    console.log(id);
+                    $location.path('/conversation/' + id);
+                });
+            }
         };
+
+        function canSend(conv) {
+            if (conv.topic === '') {
+                $scope.$alert('Du må fylle inn et emne');
+                return false;
+            } else if (conv.message === '') {
+                $scope.$alert('Du må skrive en melding');
+                return false;
+            } else if (conv.message === '') {
+                $scope.$alert('Du må skrive en melding');
+                return false;
+            } else if (conv.recipients.users.length === 0 && conv.recipients.groups.length === 0) {
+                $scope.$alert('Du må velge mottakere');
+                return false;
+            }
+
+            return true;
+        }
     }]);
