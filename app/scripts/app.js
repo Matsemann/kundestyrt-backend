@@ -408,9 +408,7 @@ angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
             title: 'Lagre'
           },
           left: {
-            type: 'link',
-            url: '/',
-            title: 'Avbryt'
+            type: 'menu'
           }
         }
       },

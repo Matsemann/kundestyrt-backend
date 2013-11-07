@@ -1,7 +1,14 @@
 <!--a href="#/users/new" class="btn btn-default">Ny bruker</a-->
 
-<div ng-repeat="user in users" class="conversation" ng-class="{selected: $isActive('/users/{{user._id}}%')}" ng-click="$goTo('/users/{{user._id}}')">
-    <div class="topic">{{user.name}}</div>
-    <br />
+<div class="form-group user-list">
+	<div class="user"
+	     ng-repeat="user in users | orderBy:'name'"
+	     ng-click="$goTo('/users/{{user._id}}')"
+	     ng-class="{selected: $isActive('/users/{{user._id}}%')}">
+	    <div class="image">
+	        <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
+	             alt="image"/>
+	    </div>
+	    <div class="name">{{user.name}}</div>
+	</div>
 </div>
-<!-- change name of topic property? -->

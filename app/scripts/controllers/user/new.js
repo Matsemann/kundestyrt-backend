@@ -25,7 +25,7 @@ angular.module('kundestyrtApp')
                 return;
 
             } else if ($scope.user.password !== $scope.pwConfirm) {
-                $scope.$alert('Passordene må være like')
+                $scope.$alert('Passordene må være like');
                 return;
 
             }
