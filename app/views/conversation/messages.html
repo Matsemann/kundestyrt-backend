@@ -14,7 +14,7 @@
     <div class="input-group" id="newMessageBox">
         <input type="text" class="form-control" ng-model="msg.text"/>
         <span class="input-group-btn">
-            <button class="btn btn-default" type="submit" ng-click="send()">Send</button>
+            <button ng-disabled="msg.text == ''" class="btn btn-default" type="submit" ng-click="send()">Send</button>
         </span>
     </div>
 </form>
