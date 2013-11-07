@@ -55,8 +55,7 @@ module.exports = function(server) {
             doc_type: 'conversation',
             type: sentConversation.inquiry ? 1 : 0,
             participants: [],
-            usersRead: [sentFromUserId],
-            date: new Date().toISOString()
+            usersRead: [sentFromUserId]
         };
 
         var firstMessage = {
@@ -219,7 +218,6 @@ module.exports = function(server) {
             }
 
             body.usersRead = [msg.sender];
-            body.date = new Date().toISOString()
 
             db.conversation.save(body, function(err, body) {
                 if (err) {

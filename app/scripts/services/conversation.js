@@ -24,7 +24,7 @@
             send: function(msg, id, sub) {
                 var data = {content: msg};
                 var url = 'api/conversations/' + id;
-                if(sub) {
+                if(sub || sub === 0) {
                     url += '/' + sub;
                 }
                 url += '/send';
