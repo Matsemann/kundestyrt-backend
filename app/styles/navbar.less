@@ -19,15 +19,12 @@
             padding: @navbar-padding-vertical @navbar-padding-horizontal;
             line-height: @line-height-computed;
             color: @navbar-default-brand-color;
-            overflow:hidden;
             white-space: nowrap;
-            text-overflow:ellipsis;
+            display: block;
         }
 
         > .left,
         > .right {
-//            width: 30%;
-
             &:hover,
             &:focus {
                 text-decoration: none;
@@ -60,9 +57,11 @@
 
         > .title {
             font-size: @font-size-large;
-            width: 40%;
-            margin: 0 auto;
-            display: inline-block;
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            text-align: center;
         }
     }
 }
