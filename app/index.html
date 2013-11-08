@@ -39,7 +39,7 @@
         <script src="/bower_components/json3/lib/json3.min.js"></script>
       <![endif]-->
 
-        <div class="hidden-menu" ng-class="{'hidden-menu-hide': !val.showHiddenMenu, 'hidden-menu-show': val.showHiddenMenu}" ng-click="val.showHiddenMenu = false" ng-cloak>
+        <div ng-cloak class="hidden-menu" ng-class="{'hidden-menu-hide': !val.showHiddenMenu, 'hidden-menu-show': val.showHiddenMenu}" ng-click="val.showHiddenMenu = false">
             <nav class="navbar navbar-default">
                 <div class="navbar-header">
                     <a class="left arrow">&nbsp;</a>
@@ -69,9 +69,7 @@
 
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="navbar-collapse"
-             ng-class="{in: barShowing, collapse: !barShowing}"
-             ng-click="barShowing = false"><!-- Hide it when menu item is clicked -->
+        <div class="navbar-collapse" ng-cloak>
           <ul class="nav navbar-nav">
               <li ng-class="{active: $isActive('/') || $isActive('/conversation%')}"><a href="#/">Samtaler</a></li>
               <li ng-class="{active: $isActive('/notes')}"><a href="#/notes">Notater</a></li>
@@ -80,7 +78,7 @@
               <li ng-show="$user.role == 'admin'" ng-class="{active: $isActive('/users')}"><a href="#/users">Brukere</a></li>
           </ul>
 
-          <ul ng-cloak class="nav navbar-nav pull-right" ng-if="$navigation.right">
+          <ul ng-cloak class="nav navbar-nav pull-right" ng-if="$navigation.action">
             <li ng-if="$navigation.action.type === 'link'">
               <a ng-href="#{{$navigation.action.url}}">{{$navigation.action.title}}</a>
             </li>

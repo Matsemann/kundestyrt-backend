@@ -25,7 +25,7 @@ body {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
-}    
+}
 
 .wrap, .main {
     height: 100%;
@@ -34,58 +34,6 @@ body {
 .conversations {
     height: 100%;
 }
-
-
-// .conversation {
-//     height: 51px;
-//     clear: both;
-//     border-bottom: 1px solid gray;
-//     cursor: pointer;
-
-//     .image {
-//         position: relative;
-//         float: left;
-
-//         // Prevent columns from collapsing when empty
-//         min-height: 1px;
-//         // Inner gutter via padding
-//         padding-right: (@grid-gutter-width / 2);
-
-//         width: 50px;
-//         height: 50px;
-//     }
-
-//     &.unread {
-//         background-color: #ccc;
-//     }
-
-//     .topic, .recipent {
-//         float: left;
-//         font-weight: bold;
-//         padding-left: 10px;
-//     }
-
-//     .date {
-//         float: left;
-//         padding-left: 10px;
-//     }
-
-//     &:hover {
-//         background-color: @conversation-hover-bg;
-//     }
-
-//     &.selected {
-//         background-color: @conversation-active-bg;
-
-//         &:hover {
-//             background-color: @conversation-active-hover-bg;
-//         }
-//     }
-
-//     &:last-child {
-//         border-bottom: none;
-//     }
-// }
 
 
 .note-content {
@@ -130,15 +78,18 @@ body {
 
         &.selected {
             background-color: @conversation-active-bg;
-
+          @media (min-width: @screen-tablet) {
             &:hover {
                 background-color: @conversation-active-hover-bg;
             }
+          }
         }
 
+      @media (min-width: @screen-tablet) {
         &:hover {
             background-color: @conversation-hover-bg;
         }
+      }
 
         .name {
             line-height: 50px;
@@ -159,13 +110,17 @@ body {
     &.selected {
       background-color: @conversation-active-bg;
 
-      &:hover {
-        background-color: @conversation-active-hover-bg;
+      @media (min-width: @screen-tablet) {
+        &:hover {
+          background-color: @conversation-active-hover-bg;
+        }
       }
     }
 
-    &:hover {
-      background-color: @conversation-hover-bg;
+    @media (min-width: @screen-tablet) {
+      &:hover {
+        background-color: @conversation-hover-bg;
+      }
     }
 
     .name {
@@ -227,17 +182,21 @@ body {
   background-color: @navbar-default-bg;
   top: -1px;
   left: -1px;
-  width: 300px;
+  width: 90%;
   min-height: 100%;
   z-index: 1031;
 
-  transition: left ease-in-out 0.4s;
+  .transition(left ease-in-out 0.4s);
   opacity: 1;
   display: block;
 
+  @media (min-width: @screen-tablet) {
+    display: none;
+  }
+
   &.hidden-menu-hide {
     top: -1px;
-    left: -300px;
+    left: -90%;
   }
 
 
