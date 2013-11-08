@@ -36,6 +36,10 @@
                 if(response.status === 401 && response.config.url !== BASE_URL + 'login') {
                     var $http = $injector.get('$http'); // trick to avoid circular dependency.
                     var config = response.config;
+                    if($rootScope.$user) {
+                        $rootScope.$user = null;
+                    }
+                    
                     if(!$rootScope.$user) {
                         var deferred = $q.defer();
                         $rootScope.$login(deferred);
