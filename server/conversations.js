@@ -17,9 +17,9 @@ module.exports = function(server) {
                 }
 
                 // Add user requesting conversation to list of users that have read it
-                if(conversation.type === 1) {
-                    for(var i = 0, l = conversation.conversations.length; i < l; i++) {
-                        var c = conversation.conversations[i];
+                if(body.type === 1) {
+                    for(var i = 0, l = body.conversations.length; i < l; i++) {
+                        var c = body.conversations[i];
                         if(c.recipient === userId) {
                             if(!c.usersRead) {
                                 c.usersRead = [];

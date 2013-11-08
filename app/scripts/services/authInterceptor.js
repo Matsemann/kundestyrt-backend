@@ -6,6 +6,11 @@
 
     angular.module('kundestyrtApp').factory('AuthInterceptor', ['$q', '$injector', '$rootScope', function($q, $injector, $rootScope) {
 
+        function log(response) {
+            console.log(response.status + ': ' + response.config.url);
+            return response;
+        }
+
         return {
             request: function(config) {
                 return $q.when(config).then(function(conf) {
@@ -23,7 +28,11 @@
                 });
             },
 
+            response: log,
+
             responseError: function(response) {
+                log(response);
+
                 if(response.status === 401 && response.config.url !== BASE_URL + 'login') {
                     var $http = $injector.get('$http'); // trick to avoid circular dependency.
                     var config = response.config;
