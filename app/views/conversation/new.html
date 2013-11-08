@@ -40,41 +40,43 @@
         </ul>
 
         <div ng-show="tab == 'users'">
-
-            <div class="user"
-                 ng-repeat="user in filteredUsers = (users | filter:{name: filter} | orderBy:'name')"
-                 ng-click="toggleUser(user)"
-                 ng-class="{ selected: isUserSelected(user) }">
-                <div class="image">
-                    <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
-                         alt="image"/>
+            <div class="user-list">
+                <div class="user"
+                     ng-repeat="user in filteredUsers = (users | filter:{name: filter} | orderBy:'name')"
+                     ng-click="toggleUser(user)"
+                     ng-class="{ selected: isUserSelected(user) }">
+                    <div class="image">
+                        <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
+                             alt="image"/>
+                    </div>
+                    <div class="name">{{user.name}}</div>
                 </div>
-                <div class="name">{{user.name}}</div>
-            </div>
 
-            <div ng-show="!filteredUsers.length">
-                Ingen brukere matcher filteret
-            </div>
 
+                <div ng-show="!filteredUsers.length">
+                    Ingen brukere matcher filteret
+                </div>
+            </div>
         </div>
         <div ng-show="tab == 'groups'">
-            <div class="group"
-                 ng-repeat="group in filteredGroups = (groups | filter:{name: filter} | orderBy:'name')"
-                 ng-click="toggleGroup(group)"
-                 ng-class="{ selected: isGroupSelected(group) }">
+            <div class="group-list">
+                <div class="group"
+                     ng-repeat="group in filteredGroups = (groups | filter:{name: filter} | orderBy:'name')"
+                     ng-click="toggleGroup(group)"
+                     ng-class="{ selected: isGroupSelected(group) }">
 
-                <div class="image">
-                    <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=pg"
-                         alt="image"/>
+                    <div class="image">
+                        <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=pg"
+                             alt="image"/>
+                    </div>
+                    <div class="name">{{group.name}}</div>
                 </div>
-                <div class="name">{{group.name}}</div>
+
+
+                <div ng-show="!filteredGroups.length">
+                    Ingen grupper matcher filteret
+                </div>
             </div>
-
-
-            <div ng-show="!filteredGroups.length">
-                Ingen grupper matcher filteret
-            </div>
-
         </div>
     </div>
 
@@ -82,45 +84,41 @@
     <div class="hidden-xs hidden-sm visible-md visible-lg">
 
         <div class="col-md-6">
-
-
-            <div class="user"
-                 ng-repeat="user in filteredUsers = (users | filter:{name: filter} | orderBy:'name')"
-                 ng-click="toggleUser(user)"
-                 ng-class="{ selected: isUserSelected(user) }">
-                <div class="image">
-                    <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
-                         alt="image"/>
+            <div class="user-list">
+                <div class="user"
+                     ng-repeat="user in filteredUsers = (users | filter:{name: filter} | orderBy:'name')"
+                     ng-click="toggleUser(user)"
+                     ng-class="{ selected: isUserSelected(user) }">
+                    <div class="image">
+                        <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
+                             alt="image"/>
+                    </div>
+                    <div class="name">{{user.name}}</div>
                 </div>
-                <div class="name">{{user.name}}</div>
+
+                <div ng-show="!filteredUsers.length">
+                    Ingen brukere matcher filteret
+                </div>
             </div>
-
-            <div ng-show="!filteredUsers.length">
-                Ingen brukere matcher filteret
-            </div>
-
-
         </div>
         <div class="col-md-6">
+            <div class="group-list">
+                <div class="group"
+                     ng-repeat="group in filteredGroups = (groups | filter:{name: filter} | orderBy:'name')"
+                     ng-click="toggleGroup(group)"
+                     ng-class="{ selected: isGroupSelected(group) }">
 
-            <div class="group"
-                 ng-repeat="group in filteredGroups = (groups | filter:{name: filter} | orderBy:'name')"
-                 ng-click="toggleGroup(group)"
-                 ng-class="{ selected: isGroupSelected(group) }">
-
-                <div class="image">
-                    <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=pg"
-                         alt="image"/>
+                    <div class="image">
+                        <img ng-src="https://en.gravatar.com/avatar/{{group.image}}?s=50&amp;r=pg"
+                             alt="image"/>
+                    </div>
+                    <div class="name">{{group.name}}</div>
                 </div>
-                <div class="name">{{group.name}}</div>
+
+                <div ng-show="!filteredGroups.length">
+                    Ingen grupper matcher filteret
+                </div>
             </div>
-
-
-            <div ng-show="!filteredGroups.length">
-                Ingen grupper matcher filteret
-            </div>
-
-
         </div>
     </div>
 

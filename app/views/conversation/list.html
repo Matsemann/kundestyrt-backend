@@ -1,12 +1,15 @@
-<div ng-repeat="conv in conversations | orderBy:'-messages[messages.length-1].date'" class="row conversation"
-     ng-class="{selected: $isActive('/conversation/{{conv._id}}%'), unread: isUnread(conv)}"
-     ng-click="$goTo('/conversation/{{conv._id}}')">
-    <div class="image">
-        <img ng-src="https://en.gravatar.com/avatar/{{conv.image}}?s=50&r=g" alt="image" />
-    </div>
-    <div class="content">
-        <div class="topic">{{conv.topic || '&nbsp;'}}</div>
-        <br />
-        <div class="date">{{conv.messages[conv.messages.length-1].date | date:'HH:mm, d/M'}}</div>
+
+<div class="conversation-list">
+    <div ng-repeat="conv in conversations | orderBy:'-messages[messages.length-1].date'" class="row conversation"
+         ng-class="{selected: $isActive('/conversation/{{conv._id}}%'), unread: isUnread(conv)}"
+         ng-click="$goTo('/conversation/{{conv._id}}')">
+        <div class="image">
+            <img ng-src="https://en.gravatar.com/avatar/{{conv.image}}?s=50&r=g" alt="image" />
+        </div>
+        <div class="content">
+            <div class="topic">{{conv.topic || '&nbsp;'}}</div>
+            <!-- <br /> -->
+            <div class="date">{{conv.messages[conv.messages.length-1].date | date:'HH:mm, d. MMM'}}</div>
+        </div>
     </div>
 </div>

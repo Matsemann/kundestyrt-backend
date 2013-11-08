@@ -1,4 +1,12 @@
-<div ng-repeat="note in notes" class="conversation" ng-class="{selected: $isActive('/notes/{{note._id}}%')}" ng-click="$goTo('/notes/{{note._id}}')">
-    <div class="topic">{{note.name}}</div>
-    <br />
+
+<div class="row">
+	<div class="note-list">
+		<div ng-repeat="note in notes" class="note" 
+			 ng-class="{selected: $isActive('/notes/{{note._id}}%')}"
+			 ng-click="$goTo('/notes/{{note._id}}')">
+
+		    <div class="topic">{{note.name}}</div>
+		</div>	
+	</div>
 </div>
+

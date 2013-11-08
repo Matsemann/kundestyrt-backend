@@ -3,6 +3,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     height: 100%;
+    padding-bottom: 30px;
 
     > .fragment {
         max-height: 100%;
@@ -19,6 +20,10 @@
 
         &:last-child {
             display: block;
+
+            .keyboard-active & {
+                padding-bottom: 120px;
+            }
         }
     }
 }
@@ -27,6 +32,10 @@
     .fragments > .fragment {
         &:last-child {
             width: percentage((8 / @grid-columns));
+
+            .keyboard-active & {
+                padding-bottom: 0px;
+            }
         }
 
         &:nth-last-child(2) {

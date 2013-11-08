@@ -36,56 +36,56 @@ body {
 }
 
 
-.conversation {
-    height: 51px;
-    clear: both;
-    border-bottom: 1px solid gray;
-    cursor: pointer;
+// .conversation {
+//     height: 51px;
+//     clear: both;
+//     border-bottom: 1px solid gray;
+//     cursor: pointer;
 
-    .image {
-        position: relative;
-        float: left;
+//     .image {
+//         position: relative;
+//         float: left;
 
-        // Prevent columns from collapsing when empty
-        min-height: 1px;
-        // Inner gutter via padding
-        padding-right: (@grid-gutter-width / 2);
+//         // Prevent columns from collapsing when empty
+//         min-height: 1px;
+//         // Inner gutter via padding
+//         padding-right: (@grid-gutter-width / 2);
 
-        width: 50px;
-        height: 50px;
-    }
+//         width: 50px;
+//         height: 50px;
+//     }
 
-    &.unread {
-        background-color: #ccc;
-    }
+//     &.unread {
+//         background-color: #ccc;
+//     }
 
-    .topic, .recipent {
-        float: left;
-        font-weight: bold;
-        padding-left: 10px;
-    }
+//     .topic, .recipent {
+//         float: left;
+//         font-weight: bold;
+//         padding-left: 10px;
+//     }
 
-    .date {
-        float: left;
-        padding-left: 10px;
-    }
+//     .date {
+//         float: left;
+//         padding-left: 10px;
+//     }
 
-    &:hover {
-        background-color: @conversation-hover-bg;
-    }
+//     &:hover {
+//         background-color: @conversation-hover-bg;
+//     }
 
-    &.selected {
-        background-color: @conversation-active-bg;
+//     &.selected {
+//         background-color: @conversation-active-bg;
 
-        &:hover {
-            background-color: @conversation-active-hover-bg;
-        }
-    }
+//         &:hover {
+//             background-color: @conversation-active-hover-bg;
+//         }
+//     }
 
-    &:last-child {
-        border-bottom: none;
-    }
-}
+//     &:last-child {
+//         border-bottom: none;
+//     }
+// }
 
 
 .note-content {
@@ -118,8 +118,14 @@ body {
     }
 }
 
-.conversation-new, .group-edit, .user-list {
-    .user, .group {
+/*.group-edit,  //.user
+.user-list,   //.user
+.group-list,  //.group
+.note-list    //.note
+.conversation-list, //.conversation
+.conversation-new, //.user, .group
+{
+    .user, .group, .note, .conversation {
         cursor: pointer;
 
         &.selected {
@@ -138,34 +144,76 @@ body {
             line-height: 50px;
         }
     }
-}
+}*/
 
-// .user-bordered {
-//     border-bottom: 1px solid gray;
+.list (@name) {
+  padding-left: 15px;
+  padding-right: 15px;
 
-//     cursor: pointer;
-
-//     &.selected {
-//         background-color: @conversation-active-bg;
-
-//         &:hover {
-//             background-color: @conversation-active-hover-bg;
-//         }
-//     }
-
-//     &:hover {
-//         background-color: @conversation-hover-bg;
-//     }
-
-//     .name {
-//         line-height: 50px;
-//     }
-// }
-
-.user, .group {
-    clear: both;
+  > .@{name} {
+    .clearfix();
+    cursor: pointer;
     height: 50px;
     margin-bottom: 5px;
+
+    &.selected {
+      background-color: @conversation-active-bg;
+
+      &:hover {
+        background-color: @conversation-active-hover-bg;
+      }
+    }
+
+    &:hover {
+      background-color: @conversation-hover-bg;
+    }
+
+    .name {
+      line-height: 50px;
+    }
+  }
+}
+
+.user-list{
+  .list(user);
+}
+
+.note-list {
+  .list(note);
+
+  > .note {
+    margin-bottom: 0px;
+    border-bottom: 1px solid @table-border-color;
+    padding-top: 14px;
+
+    &:first-child {
+      border-top: 1px solid @table-border-color;
+    }
+  }
+}
+
+.group-list,
+.group-edit {
+  .list(group);
+}
+
+.conversation-list {
+  .list(conversation);
+
+  > .conversation {
+    > .content {
+      > .topic {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+
+.user, .group, .conversation {
+    // clear: both;
+    // height: 50px;
+    // margin-bottom: 5px;
 
     .image {
         float: left;
