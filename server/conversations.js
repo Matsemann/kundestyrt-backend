@@ -12,17 +12,35 @@ module.exports = function(server) {
                 response.send(err);
                 next(false);
             } else {
+                if(conversation.type === 0 && !body.usersRead) {
+                    body.usersRead = [];
+                }
+
                 // Add user requesting conversation to list of users that have read it
-                if (body.usersRead.indexOf(userId) === -1) {
+                if(conversation.type === 1) {
+                    for(var i = 0, l = conversation.conversations.length; i < l; i++) {
+                        var c = conversation.conversations[i];
+                        if(c.recipient === userId) {
+                            if(!c.usersRead) {
+                                c.usersRead = [];
+                            }
+
+                            if(c.usersRead.indexOf(userId) === -1) {
+                                c.usersRead.push(userId);
+                            }
+                            break;
+                        }
+                    }
+                } else if (body.usersRead.indexOf(userId) === -1) {
                     body.usersRead.push(userId);
                 }
 
                 db.conversation.save(body, function(err, id) {
                     if(err) {
-                        response.send('When registering that you read the conversation: '+err);
+                        response.send(err);
                         next(false);
                     } else {
-                        response.send(responseCode, fixInqueries(request.user._id)(body));
+                        response.send(responseCode, fixInqueries(userId)(body));
                         next();
                     }
                 });
@@ -247,6 +265,7 @@ module.exports = function(server) {
                     var c = conversation.conversations[i];
                     if(c.recipient === userId) {
                         conversation.messages = c.messages;
+                        conversation.userRead = c.userRead;
                         break;
                     }
                 }
