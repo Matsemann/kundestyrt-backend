@@ -12,13 +12,13 @@ module.exports = function(server) {
                 response.send(err);
                 next(false);
             } else {
-                debugger
+                var updated = false;
+                
                 if(body.type === 0 && !body.usersRead) {
                     body.usersRead = [];
                 }
 
                 // Add user requesting conversation to list of users that have read it
-                var updated = false;
                 if(body.type === 1) { // Inquiry
                     for(var i = 0, l = body.conversations.length; i < l; i++) {
                         var c = body.conversations[i];
@@ -42,21 +42,31 @@ module.exports = function(server) {
                 }
 
                 if (!updated) { // Send message
-                    response.send(responseCode, fixInqueries(userId)(body));
-
+                    sendResult(null, body);
                 } else { // Save update, then send
-                    db.conversation.save(body, function(err, id) {
-                        if(err) {
-                            response.send(err);
-                            next(false);
-                        } else {
-                            response.send(responseCode, fixInqueries(userId)(body));
-                            next();
-                        }
-                    });
+                    db.conversation.save(body, fetchNew);
                 }
             }
         });
+
+        function fetchNew(err, id) {
+            if(err) {
+                response.send(err);
+                next(false);
+            } else {
+                db.conversation.find(id, sendResult);
+            }
+        } 
+ 
+        function sendResult(err, result) {
+            if(err) {
+                response.send(err);
+                next(false);
+            } else {
+                response.send(responseCode, fixInqueries(userId)(result));
+                next();
+            }
+        }
     }
 
     function getConversationList(request, response, next) {
@@ -65,7 +75,7 @@ module.exports = function(server) {
                 response.send(err);
                 next(false);
             } else {
-                body.rows = body.rows.map(fixInqueries(request.user._id));
+                //body.rows = body.rows.map(fixInqueries(request.user._id));
                 response.send(200, body);
                 next();
             }

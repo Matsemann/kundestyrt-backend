@@ -1,6 +1,6 @@
 
 <div class="conversation-list">
-    <div ng-repeat="conv in conversations | orderBy:'-messages[messages.length-1].date'" class="row conversation"
+    <div ng-repeat="conv in conversations | orderBy:'-lastDate'" class="row conversation"
          ng-class="{selected: $isActive('/conversation/{{conv._id}}%'), unread: isUnread(conv)}"
          ng-click="$goTo('/conversation/{{conv._id}}')">
         <div class="image">
@@ -8,7 +8,7 @@
         </div>
         <div class="content">
             <div class="topic">{{conv.topic || '&nbsp;'}}</div>
-            <div class="date">{{conv.messages[conv.messages.length-1].date | date:'HH:mm, d. MMM'}}</div>
+            <div class="date">{{conv.lastDate | date:'HH:mm, d. MMM'}}</div>
         </div>
     </div>
 </div>
