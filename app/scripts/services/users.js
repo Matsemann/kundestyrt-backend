@@ -1,7 +1,7 @@
 'use strict';
 
 (function(undefined) {
-    angular.module('kundestyrtApp').factory('Users', ['$http', function($http) {
+    angular.module('kundestyrtApp').factory('Users', ['$http', '$scope', function($http, $scope) {
         return {
             getUsers: function() {
                 return $http.get('api/users').then(

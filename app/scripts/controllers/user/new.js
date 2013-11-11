@@ -21,7 +21,7 @@ angular.module('kundestyrtApp')
                 return;
 
             } else if (!$scope.user.password) {
-                $scope.$alert('Fyll inn passord')
+                $scope.$alert('Fyll inn passord');
                 return;
 
             } else if ($scope.user.password !== $scope.pwConfirm) {

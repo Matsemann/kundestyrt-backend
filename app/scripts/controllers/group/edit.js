@@ -11,10 +11,11 @@ angular.module('kundestyrtApp')
                 console.log(xhr);
 
                 if (group.name === '' ||
-                    group.members.length === 0)
+                    group.members.length === 0) {
                     $scope.$alert('En gruppe må ha både navn og medlemmer.');
-                else
+                } else {
                     $location.path('/groups');
+                }
             });
         };
 

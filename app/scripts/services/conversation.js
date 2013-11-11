@@ -1,11 +1,7 @@
 'use strict';
 
 (function(undefined) {
-    angular.module('kundestyrtApp').factory('Conversation', ['$q', '$http', '$cacheFactory', function($q, $http, $cacheFactory) {
-        var cache = $cacheFactory('conversationCache', {
-            capacity: 3
-        });
-
+    angular.module('kundestyrtApp').factory('Conversation', ['$q', '$http', function($q, $http) {
         return {
             list: [function() {
                 //return $http.get('api/conversations', {cache: cache}).then(function(xhr) {

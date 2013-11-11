@@ -545,7 +545,7 @@ angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
         message: msg,
         type: 'warning',
         destroy: function() {
-          if(destroyed) return;
+          if(destroyed) { return; }
           destroyed = true;
           var index = $rootScope.$alert.items.indexOf(alert);
           $rootScope.$alert.items.splice(index, 1);
@@ -596,7 +596,7 @@ angular.module('kundestyrtApp', ['ng', 'ngAnimate', 'fgmt'])
                 elm.unbind('load', trigger);
             });
         }
-    }
+    };
   }]);
 
 if(!Date.prototype.toISOString) {
