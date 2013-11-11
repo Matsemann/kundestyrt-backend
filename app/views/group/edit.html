@@ -26,14 +26,16 @@
             </div>
         </div>
     </div>
-    <div class="user"
-         ng-repeat="user in users | filter:{name: filter} | orderBy:'name'"
-         ng-click="toggleUser(user)"
-         ng-class="{ selected: isUserIdInGroup(user._id) }">
-        <div class="image">
-            <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
-                 alt="image"/>
+    <div class="user-list">
+        <div class="user"
+             ng-repeat="user in users | filter:{name: filter} | orderBy:'name'"
+             ng-click="toggleUser(user)"
+             ng-class="{ selected: isUserIdInGroup(user._id) }">
+            <div class="image">
+                <img ng-src="https://en.gravatar.com/avatar/{{user.image}}?s=50&amp;r=pg"
+                     alt="image"/>
+            </div>
+            <div class="name">{{user.name}}</div>
         </div>
-        <div class="name">{{user.name}}</div>
     </div>
 </div>

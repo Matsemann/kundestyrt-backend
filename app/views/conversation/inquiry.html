@@ -1,15 +1,13 @@
-<div class="inquiry">
-    <div class="first-message well">{{conversation.conversations[0].messages[0].content}}</div>
-    <div class="conversations">
-        <div ng-repeat="conv in conversation.conversations" class="conversation" ng-click="$goTo('/conversation/{{conversation._id}}/{{$index + 1}}')">
-            <div class="image">
-                <img ng-src="https://en.gravatar.com/avatar/{{(conv.recipient | user).image}}?s=50&r=g" alt="image" />
-            </div>
-            <div class="content">
-                <div class="topic">{{(conv.recipient | user).name}}</div>
-                <br />
-                <div class="date">{{conv.messages[conv.messages.length - 1].date | date:'HH:mm, d/M'}}</div>
-            </div>
+<div class="first-message well">{{conversation.conversations[0].messages[0].content}}</div>
+<div class="conversation-list">
+    <div ng-repeat="conv in conversation.conversations" class="conversation"
+         ng-click="$goTo('/conversation/{{conversation._id}}/{{$index + 1}}')">
+        <div class="image">
+            <img ng-src="https://en.gravatar.com/avatar/{{(conv.recipient | user).image}}?s=50&r=g" alt="image" />
+        </div>
+        <div class="content">
+            <div class="topic">{{(conv.recipient | user).name}}</div>
+            <div class="date">{{conv.messages[conv.messages.length - 1].date | date:'HH:mm, d. MMM'}}</div>
         </div>
     </div>
 </div>

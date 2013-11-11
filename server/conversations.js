@@ -12,12 +12,14 @@ module.exports = function(server) {
                 response.send(err);
                 next(false);
             } else {
-                if(conversation.type === 0 && !body.usersRead) {
+                debugger
+                if(body.type === 0 && !body.usersRead) {
                     body.usersRead = [];
                 }
 
                 // Add user requesting conversation to list of users that have read it
-                if(body.type === 1) {
+                var updated = false;
+                if(body.type === 1) { // Inquiry
                     for(var i = 0, l = body.conversations.length; i < l; i++) {
                         var c = body.conversations[i];
                         if(c.recipient === userId) {
@@ -27,23 +29,32 @@ module.exports = function(server) {
 
                             if(c.usersRead.indexOf(userId) === -1) {
                                 c.usersRead.push(userId);
+                                updated = true;
                             }
                             break;
                         }
                     }
-                } else if (body.usersRead.indexOf(userId) === -1) {
-                    body.usersRead.push(userId);
+                } else { // Normal conv
+                    if (body.usersRead.indexOf(userId) === -1) {
+                        body.usersRead.push(userId);
+                        updated = true;
+                    }
                 }
 
-                db.conversation.save(body, function(err, id) {
-                    if(err) {
-                        response.send(err);
-                        next(false);
-                    } else {
-                        response.send(responseCode, fixInqueries(userId)(body));
-                        next();
-                    }
-                });
+                if (!updated) { // Send message
+                    response.send(responseCode, fixInqueries(userId)(body));
+
+                } else { // Save update, then send
+                    db.conversation.save(body, function(err, id) {
+                        if(err) {
+                            response.send(err);
+                            next(false);
+                        } else {
+                            response.send(responseCode, fixInqueries(userId)(body));
+                            next();
+                        }
+                    });
+                }
             }
         });
     }
