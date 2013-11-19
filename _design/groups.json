@@ -1,0 +1,18 @@
+{
+    "_id": "_design/groups",
+    "language": "javascript",
+    "views": {
+        "all": {
+            "map": "function(doc) {\n   if(doc.doc_type === 'group') emit(null, doc);\n}"
+        },
+        "for_user": {
+            "map": "function(doc) {\n   if(doc.doc_type === 'group') doc.members.forEach(function(memberId) { emit(memberId, doc); });\n}"
+        },
+        "user_ids": {
+            "map": "function(doc) {\n   if(doc.doc_type === 'group') doc.members.forEach(function(memberId) { emit(doc._id, memberId); });\n}"
+        }
+    },
+    "lists": {
+        "no_duplicates": "function(head, req) {\n  provides('json', function() {\n    var row, results = [];\n    var dupes = [];\n    while(row = getRow()) {\n      if (dupes.indexOf(row.value._id) === -1) {\n        dupes.push(row.value._id);\n        results.push(row.value);\n      }\n    }\n\n    // make sure to stringify the results :)\n    send(JSON.stringify(results));\n  });\n}"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "_id": "_design/notes",
+    "language": "javascript",
+    "views": {
+        "all": {
+            "map": "function(doc) {\n   if(doc.doc_type === 'note') emit(null, doc);\n}"
+        }
+    }
+}

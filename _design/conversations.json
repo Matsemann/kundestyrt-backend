@@ -1,0 +1,15 @@
+{
+    "_id": "_design/conversations",
+    "language": "javascript",
+    "views": {
+        "all": {
+            "map": "function(doc) {\n   if(doc.doc_type === 'conversation') emit(null, doc);\n}"
+        },
+        "by_user": {
+            "map": "function (doc) {\n    if (doc.doc_type === 'conversation') {\n        doc.participants.forEach(function (p) {\n            var ret = simplify(doc, p._id, p.type);\n            if (ret !== null) {\n                emit(p._id, ret);\n            }\n        });\n    }\n\n    function simplify(doc, uid, utype) {\n        if (doc.type === 0) {\n            return {\n                _id: doc._id,\n                _rev: doc._rev,\n                doc_type: doc.doc_type,\n                topic: doc.topic,\n                type: 0,\n                usersRead: doc.usersRead,\n                lastDate: last(doc.messages).date\n            };\n        } else {\n            if (utype !== 'user') {\n                return null;\n            }\n\n            var conv, convs = doc.conversations;\n            if (doc.owner === uid) {\n                var lastDate = null;\n\n                convs.forEach(function(c) {\n                    lastDate = last(c.messages).date;\n                });\n\n                return {\n                    _id: doc._id,\n                    _rev: doc._rev,\n                    doc_type: doc.doc_type,\n                    topic: doc.topic,\n                    type: 1,\n                    lastDate: lastDate\n                };\n            } else {\n                conv = findConv(convs, uid);\n\n                return {\n                    _id: doc._id,\n                    _rev: doc._rev,\n                    doc_type: doc.doc_type,\n                    topic: doc.topic,\n                    type: 0,\n                    usersRead: conv.usersRead || [],\n                    lastDate: last(conv.messages).date\n                };\n            }\n            return doc;\n        }\n    }\n\n    function last(array) {\n        return array[array.length - 1];\n    }\n\n    function findConv(array, uid) {\n        for (var i = 0, l = array.length; i < l; i++) {\n            if (array[i].recipient === uid) {\n                return array[i];\n            }\n        }\n    }\n}"
+        }
+    },
+    "lists": {
+        "no_duplicates": "function(head, req) {\n  provides('json', function() {\n    var row, results = [];\n    var dupes = [];\n    while(row = getRow()) {\n      if (dupes.indexOf(row.value._id) === -1) {\n        dupes.push(row.value._id);\n        results.push(row.value);\n      }\n    }\n\n    // make sure to stringify the results :)\n    send(JSON.stringify(results));\n  });\n}"
+    }
+}

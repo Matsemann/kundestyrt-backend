@@ -1,0 +1,12 @@
+{
+    "_id": "_design/users",
+    "language": "javascript",
+    "views": {
+        "all": {
+            "map": "function(doc) {\n   if(doc.doc_type === 'user') emit(null, {\n      _id: doc._id,\n      _rev: doc._rev,\n      name: doc.name,\n      image: doc.image,\n      email: doc.email\n   });\n}"
+        },
+        "by_email": {
+            "map": "function(doc) {\n   if(doc.doc_type === 'user' && doc.email) emit(doc.email, {\n      _id: doc._id,\n      _rev: doc._rev,\n      name: doc.name,\n      image: doc.image,\n      email: doc.email,\n      password: doc.password\n   });\n}"
+        }
+    }
+}
