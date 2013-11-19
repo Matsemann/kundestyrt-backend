@@ -1,7 +1,7 @@
 'use strict';
 
 (function(undefined) {
-    angular.module('kundestyrtApp').factory('Users', ['$http', '$scope', function($http, $scope) {
+    angular.module('kundestyrtApp').factory('Users', ['$http', '$q', function($http, $q) {
         return {
             getUsers: function() {
                 return $http.get('api/users').then(
@@ -29,8 +29,7 @@
                 if(user._id) { // delete
                     return $http.delete('api/users/' + user._id +'/'+ user._rev);
                 } else {
-                    $scope.$alert('/services/users.js: Error! Can not delete user that does not exist.');
-                    return null;
+                   return $q.reject(new Error('/services/users.js: Error! Can not delete user that does not exist.'));
                 }
             }
         };
